@@ -1,0 +1,711 @@
+:root {
+  --colorGreen: #17a682;
+  --colorGrey: #898a8c;
+  --colorRed: #c2653c;
+  --colorOrange: #ec5601;
+
+  --svgDimension: 25px;
+  --borderRadius: 5px;
+}
+
+/* -- TYPO -- */
+h1 {
+  font-size: 2rem;
+}
+
+h2.title {
+  font-weight: 700;
+  font-size: 1rem;
+}
+
+.friends h2.title,
+.groups h2.title,
+.account h2.title,
+.activities h2.title,
+.settled-expenses h2.page-title {
+  font-size: 1.5rem;
+  text-align: center;
+  text-decoration: underline;
+  margin-bottom: 1em;
+  text-transform: capitalize;
+}
+
+h3.date {
+  font-size: 0.75rem;
+  font-weight: 700;
+  opacity: 0.4;
+}
+
+h3.no-friends,
+h3.no-expenses {
+  text-align: center;
+}
+
+h4 {
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.right-col {
+  font-size: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+p.subtitle {
+  opacity: 0.4;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.lent-amount {
+  font-weight: 700;
+}
+
+header p {
+  font-size: 1rem;
+}
+
+/* -- BTN/LINK -- */
+.control-btns button,
+.btn {
+  box-shadow: 0px 0px 2px black;
+}
+.control-btns button:hover,
+.control-btns button:active,
+.btn:hover,
+.btn:active,
+.settled-expenses button:hover,
+.settled-expenses button:active {
+  background-color: orange;
+  color: white;
+  border: 1px solid transparent;
+  box-shadow: none;
+}
+
+button.add-expense {
+  color: white;
+  background-color: var(--colorGreen);
+  border-radius: 30px;
+  padding: 1em 1.5em;
+  position: fixed;
+  z-index: 10;
+  bottom: 70px;
+  right: 1em;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-size: 0.75rem;
+  border: none;
+}
+
+.modal-header button {
+  border: none;
+  background-color: transparent;
+  color: white;
+}
+
+.calendar button {
+  width: 100%;
+  height: 100%;
+}
+
+.add-friends {
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  font-weight: 400;
+  color: var(--colorGreen);
+  border-color: var(--colorGreen);
+  margin: 1em auto;
+}
+
+.delete-btn,
+.edit-btn,
+.logout-btn,
+.settle-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.accept-req-btn {
+  margin: 0 auto;
+}
+
+.back-btn {
+  margin-right: auto;
+}
+
+.save-btn {
+  margin-left: auto;
+}
+
+.friend-settings-option {
+  cursor: pointer;
+  margin-top: 2em;
+  display: grid;
+  grid-template-columns: auto 1fr;
+}
+
+.friend-settings-option svg {
+  margin-right: 2em;
+}
+
+.settle-btn {
+  margin-top: 2em;
+}
+
+/* -- LAYOUT -- */
+
+svg {
+  height: var(--svgDimension);
+  width: var(--svgDimension);
+}
+
+/* -- HERO --  */
+
+.hero-bg {
+  height: 100px;
+  max-width: 500px;
+  background: var(--colorGreen);
+  background-size: cover;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  padding: 1em;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.hero-bg svg {
+  color: white;
+}
+
+header .profile-pic {
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  height: 120px;
+  margin: 0 auto;
+  transform: translateY(30%);
+  border: 5px solid white;
+}
+
+.hero-content {
+  margin-top: 25px;
+  padding: 1em 5em 0;
+  text-align: left;
+}
+
+.total-debt-info {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+
+.hero-content .name {
+  text-align: center;
+}
+
+/* -- MAIN -- */
+
+main {
+  padding: 1em 1em 10em;
+  position: relative;
+}
+
+.control-btns {
+  display: flex;
+  justify-content: center;
+  gap: 0.5em;
+  margin: 1em 0;
+}
+
+section.expenses {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+div.expense {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1em;
+}
+
+.title-container {
+  margin-right: auto;
+}
+
+/* -- EXPENSE -- */
+
+.expense-content {
+  margin-top: 100px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.expense-detail h1 {
+  font-size: 1.5rem;
+  margin-bottom: -0.5em;
+}
+
+.expense-detail h1,
+.expense-detail .subtitle {
+  text-align: center;
+}
+
+.expense-detail {
+  display: flex;
+  flex-direction: column;
+}
+
+/* -- MODAL -- */
+.modal {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  height: 100svh;
+  width: 100%;
+  z-index: 100;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: white;
+  border: 1px solid black;
+}
+
+.modal-header {
+  background-color: var(--colorGreen);
+  color: white;
+  display: flex;
+  align-items: center;
+  padding: 1em;
+  height: 100px;
+}
+
+.modal-header * {
+  font-size: 1rem;
+}
+
+.modal-header button {
+  padding: 0;
+}
+
+.modal form {
+  display: grid;
+  grid-template-columns: 1fr 4fr;
+  gap: 1em;
+  padding: 1em 5em;
+  margin: auto;
+}
+
+.modal form input,
+.account-settings input {
+  border-bottom: 1px solid black;
+  width: 100%;
+  text-align: left;
+  outline: none;
+  font-size: 2rem;
+}
+
+.between {
+}
+
+#amount,
+#title {
+  font-size: 1.5rem;
+}
+
+select {
+  border: 1px solid black;
+  border-radius: 5px;
+  outline: none;
+  padding: 0.25em;
+}
+
+option,
+select {
+  text-align: center;
+}
+
+.modal form .pay-options-btn,
+.modal form p {
+  grid-column: 1/-1;
+  margin: 0 auto;
+  font-weight: 400;
+  text-transform: none;
+}
+
+.modal form p {
+  opacity: 0.75;
+}
+
+.modal-footer {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  background-color: var(--colorGrey);
+  padding: 0.25em;
+  right: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.expense-context {
+  padding: 0.25em;
+}
+
+.react-calendar {
+  position: absolute;
+  background-color: white;
+  height: max-content;
+  z-index: 2;
+  left: 0;
+  right: 0;
+  margin: auto;
+  top: 0;
+  bottom: 0;
+}
+
+.split,
+.sucker {
+  grid-column: 1/-1;
+}
+
+.sucker {
+  display: flex;
+  gap: 1em;
+}
+
+.split {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 1em;
+}
+
+.sucker * {
+  width: 50%;
+}
+
+/* -- Friends -- */
+
+.friend {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1em;
+  color: black;
+}
+
+.friend p {
+  margin-right: auto;
+}
+
+.profile-pic-small {
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  height: 50px;
+  display: inline-block;
+  margin: 0 0.25em;
+  cursor: pointer;
+}
+
+.profile-pic-tiny {
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  height: var(--svgDimension);
+  display: inline-block;
+}
+
+.friends-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+.search-users {
+  margin-top: 2em;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+  align-items: center;
+}
+
+.search-users * {
+  width: 80%;
+}
+
+.dropdown {
+  border: 1px solid black;
+  display: flex;
+  flex-direction: column;
+  grid-area: 0.25em;
+  border-radius: var(--borderRadius);
+  margin-top: -0.9em;
+  padding: 0.25em 1em;
+}
+
+.dropdown-elem {
+  cursor: pointer;
+}
+
+.friend-request {
+  margin: 1em 0;
+}
+
+.friend-request-info {
+  display: flex;
+  align-items: center;
+}
+.friend-request-info p {
+  margin-left: 0.5em;
+}
+
+.btns {
+  display: grid;
+  grid-template-columns: min-content min-content auto;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.search-list {
+  display: flex;
+  align-items: center;
+  gap: 2em;
+}
+
+.search-list img {
+  height: 1.5em;
+  width: 1.5em;
+}
+
+.friend-info {
+  margin-right: auto;
+  padding-left: 1em;
+}
+
+/* -- LOGIN/REGISTER -- */
+.login,
+.register {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.login-form,
+.register-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1em;
+  flex-grow: 1;
+}
+
+.login-form input,
+.register-form input,
+.search {
+  font-size: 0.9rem;
+  padding: 0.5em 1em;
+  border: 1px solid black;
+  border-radius: var(--borderRadius);
+}
+
+/* -- ACCOUNT -- */
+.account {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+}
+
+.account-image {
+  display: flex;
+}
+
+.account-image svg {
+  align-self: end;
+}
+
+.account .profile-pic {
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  height: 150px;
+  margin: 0 auto;
+  border: 5px solid white;
+}
+
+.account-info {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* -- ACCOUNT SETTINGS */
+
+.account-settings,
+.account-info,
+.friend-settings {
+  text-align: left;
+  padding: 1em 3em;
+  align-items: unset !important;
+  gap: 1em;
+}
+
+.account-settings select {
+  width: fit-content;
+}
+
+label {
+  font-size: 0.8rem;
+  margin-bottom: -1.25em;
+}
+
+.account-settings h2 {
+  display: flex;
+  gap: 0.25em;
+  align-items: center;
+}
+
+/* -- ACTIVITY -- */
+
+.activities-list {
+  width: 100%;
+  padding: 0 2em;
+}
+
+.activity {
+  margin: 1em 0;
+}
+
+/* -- FOOTER -- */
+.footer-nav {
+  padding: 0.4em 3em;
+  border-top: 1px solid var(--colorGrey);
+  font-size: 0.75rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+}
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+nav a {
+  color: var(--colorGrey);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+nav a:active,
+nav a:hover,
+.active {
+  color: var(--colorGreen);
+}
+
+/* -- POPUP -- */
+
+.popup {
+  position: fixed;
+  left: 1em;
+  bottom: 4em;
+  width: fit-content;
+  padding: 0.5em;
+  border: 1px solid black;
+  border-radius: var(--borderRadius);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: white;
+  z-index: 1;
+}
+
+/* -- UTILITY -- */
+.green {
+  color: var(--colorGreen);
+  font-weight: bold;
+}
+
+.red {
+  color: var(--colorRed);
+  font-weight: bold;
+}
+
+.flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.fd-column {
+  flex-direction: column;
+}
+
+.jc-sb {
+  justify-content: space-between;
+}
+
+.hidden {
+  display: none;
+  opacity: 0;
+}
+
+.bg-orange {
+  background-color: var(--colorOrange);
+  color: white;
+}
+
+.bg-green {
+  background-color: var(--colorGreen);
+  color: white;
+}
+
+.regular-font {
+  font-weight: 400;
+}
+
+.divider {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+  height: 0px;
+  margin: 0 -1em;
+}
+
+.pb-1em {
+  padding-bottom: 1em;
+}
+
+/* Firefox */
+.no-spinners {
+  -moz-appearance: textfield;
+}
+
+/* Webkit browsers like Chrome and Safari */
+.no-spinners::-webkit-inner-spin-button,
+.no-spinners::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Microsoft Edge */
+.no-spinners::-ms-clear {
+  display: none;
+}
+
+/* -- MEDIA -- */

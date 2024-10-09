@@ -232,11 +232,25 @@ section.expenses {
   gap: 1em;
 }
 
-div.expense {
+div.expense,
+p.expense {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 1em;
+}
+
+div.expense :first-child,
+p.expense :first-child {
+  flex: 1;
+}
+
+div.expense :nth-child(2) {
+  flex: 4;
+}
+
+div.expense :nth-child(3) {
+  flex: 2;
 }
 
 .title-container {

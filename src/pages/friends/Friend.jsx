@@ -30,7 +30,9 @@ function Friend() {
         currentMonth = expense.date.toDate().getMonth();
         return (
           <div key={nanoid()}>
-            <p>{convertToMonthYear(expense.date.toDate())}</p>
+            <p className="expense">
+              {convertToMonthYear(expense.date.toDate())}
+            </p>
             <Expense
               expense={expense}
               friend={friend}

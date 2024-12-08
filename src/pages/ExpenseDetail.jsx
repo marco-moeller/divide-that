@@ -1,18 +1,25 @@
-import { useParams } from "react-router-dom";
-import useExpense from "../../hooks/useExpense";
-import BackButton from "../layout/BackButton";
-import EditExpenseButton from "./EditExpenseButton";
-import { convertToMonthDayYear } from "../../utility/date";
-import { addZeros } from "../../utility/money";
-import { useAuth } from "../../context/AuthContext";
-import useFriend from "../../hooks/useFriend";
+import { useNavigate, useParams } from "react-router-dom";
+import useExpense from "../hooks/useExpense";
+import BackButton from "../components/layout/BackButton";
+import EditExpenseButton from "../components/expenses/EditExpenseButton";
+import { convertToMonthDayYear } from "../utility/date";
+import { addZeros } from "../utility/money";
+import { useAuth } from "../context/AuthContext";
+import useFriend from "../hooks/useFriend";
 import { useEffect } from "react";
-import FriendProfilePicture from "../friends/FriendProfilePicture";
-import { addExpenseToDatabase } from "../../database/expenses";
-import { getExpenseColor, userHasPaid } from "../../utility/expenseDisplay";
+import FriendProfilePicture from "../components/friends/FriendProfilePicture";
+import {
+  addExpenseToDatabase,
+  deleteExpenseFromDatabase
+} from "../database/expenses";
+import { getExpenseColor, userHasPaid } from "../utility/expenseDisplay";
+import { FaHandshake } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";
 
 function ExpenseDetail() {
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   const { expense, refreshExpense } = useExpense(id);
 
@@ -54,6 +61,11 @@ function ExpenseDetail() {
     }
   };
 
+  const handleDelete = () => {
+    deleteExpenseFromDatabase(id);
+    navigate(-1);
+  };
+
   useEffect(() => {
     const handleExpenseUpdate = async () => {
       await refreshExpense();
@@ -70,24 +82,27 @@ function ExpenseDetail() {
     <main className="expense-detail">
       <div className="hero-bg">
         <BackButton />
+        <div className="delete-btn" onClick={() => handleDelete(expense.id)}>
+          <MdDeleteForever />
+        </div>
         <EditExpenseButton expense={expense} />
       </div>
       <div className="expense-content">
-        <p className="between flex">
-          Between{" "}
+        <div className="grid">
           <img
             src={userProfileUrl}
             alt="profile image"
             className="profile-pic-small"
           />
-          You and{" "}
+          <FaHandshake />
           <FriendProfilePicture
             profileImgUrl={profileImgUrl}
             friendID={friend.id}
           />
-          {friend.userName}
-        </p>
-        <div className="divider"></div>
+          <h2 className="name">You</h2>
+          <p></p>
+          <h2 className="name">{friend.userName}</h2>
+        </div>
         <h1>
           {expense.title} - {expense.currency + addZeros(expense.amount)}
         </h1>

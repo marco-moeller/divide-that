@@ -9,11 +9,11 @@ import Friend from "./pages/friends/Friend";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Protected from "./components/layout/Protected";
-import ExpenseDetail from "./components/expenses/ExpenseDetail";
 import ProtectedFriend from "./components/layout/ProtectedFriend";
 import Error from "./pages/Error";
 import SettledExpenses from "./pages/friends/SettledExpenses";
 import { StatusProvider } from "./context/StatusContext";
+import ExpenseDetail from "./pages/ExpenseDetail";
 
 function App() {
   return (

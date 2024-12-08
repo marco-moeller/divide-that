@@ -29,12 +29,8 @@ function FriendListComponent({ friendId }) {
         />
       )}
       <p>{friend.userName}</p>
-      <div
-        className={`right-col ${getOwedAmountColor(
-          totalDebtInDefaultCurrency
-        )}`}
-      >
-        <span>{getOweOrOwes(totalDebtInDefaultCurrency)}</span>
+      <div className={` ${getOwedAmountColor(totalDebtInDefaultCurrency)}`}>
+        <span>{getOweOrOwes(totalDebtInDefaultCurrency)} </span>
         <span className="lent-amount">
           {getCurrencyIconFromSymbol(user.defaultCurrency)}
           {Math.abs(totalDebtInDefaultCurrency)}

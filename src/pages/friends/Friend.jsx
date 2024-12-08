@@ -8,7 +8,6 @@ import useExpensesList from "../../hooks/useExpensesList";
 import { convertToMonthYear } from "../../utility/date";
 import AddExpenseButton from "../../components/expenses/AddExpenseButton";
 import { addExpenseToDatabase } from "../../database/expenses";
-import usePopup from "../../hooks/usePopup";
 import Popup from "../../components/popups/Popup";
 import DebtInfo from "../../components/friends/DebtInfo";
 
@@ -17,10 +16,6 @@ function Friend() {
 
   const expensesList = useExpensesList(id);
   const { friend, profileImgUrl } = useFriend(id);
-  const {
-    toggle: toggleExpenseDeletedPopup,
-    isShowing: isShowingExpenseDeletedPopup
-  } = usePopup();
 
   const renderExpenses = () => {
     let currentMonth = null;
@@ -33,21 +28,13 @@ function Friend() {
             <p className="expense">
               {convertToMonthYear(expense.date.toDate())}
             </p>
-            <Expense
-              expense={expense}
-              friend={friend}
-              toggleExpenseDeletedPopup={toggleExpenseDeletedPopup}
-            />
+            <Expense expense={expense} friend={friend} />
           </div>
         );
       } else {
         return (
           <div key={nanoid()}>
-            <Expense
-              friend={friend}
-              expense={expense}
-              toggleExpenseDeletedPopup={toggleExpenseDeletedPopup}
-            />
+            <Expense friend={friend} expense={expense} />
           </div>
         );
       }
@@ -84,7 +71,6 @@ function Friend() {
           {expensesList.length > 0 && renderExpenses()}
         </section>
         <AddExpenseButton />
-        {isShowingExpenseDeletedPopup && <Popup>Expense Deleted</Popup>}
       </main>
     </>
   );

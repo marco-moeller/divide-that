@@ -1,20 +1,12 @@
 import { convertToLocaleDate } from "../../utility/date";
 import { addZeros } from "../../utility/money";
-import { MdDeleteOutline } from "react-icons/md";
 import { useAuth } from "../../context/AuthContext";
 import { NavLink } from "react-router-dom";
-import EditExpenseButton from "./EditExpenseButton";
-import { deleteExpenseFromDatabase } from "../../database/expenses";
 import { memo } from "react";
 import { getExpenseColor, userHasPaid } from "../../utility/expenseDisplay";
 
-function Expense({ expense, friend, toggleExpenseDeletedPopup }) {
+function Expense({ expense, friend }) {
   const { user } = useAuth();
-
-  const handleDelete = (expenseID) => {
-    toggleExpenseDeletedPopup();
-    deleteExpenseFromDatabase(expenseID);
-  };
 
   const getLentOrBorrowed = () => {
     return userHasPaid(user.id, expense.sucker) ? "you lent" : "you borrowed";
@@ -52,10 +44,6 @@ function Expense({ expense, friend, toggleExpenseDeletedPopup }) {
           {addZeros(getSplitAmount())}
         </span>
       </div>
-      <div className="delete-btn" onClick={() => handleDelete(expense.id)}>
-        <MdDeleteOutline />
-      </div>
-      <EditExpenseButton expense={expense} />
     </div>
   );
 }

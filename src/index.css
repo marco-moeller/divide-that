@@ -55,7 +55,8 @@ ul:not(article ul) {
 /* -- BTN/LINK -- */
 button,
 .btn {
-  background-color: white;
+  background-color: var(--colorWhite);
+  color: var(--colorBlack);
   border: 1px solid black;
   border-radius: 5px;
   padding: 0.5em 1em;
@@ -68,7 +69,7 @@ button,
 }
 
 a {
-  color: black;
+  color: var(--colorWhite);
 }
 
 /* -- LAYOUT -- */
@@ -79,6 +80,7 @@ body,
   display: flex;
   flex-direction: column;
   font-family: "Montserrat", sans-serif;
+  background-color: var(--colorBlack);
 }
 
 main,

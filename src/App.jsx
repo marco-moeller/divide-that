@@ -14,35 +14,38 @@ import Error from "./pages/Error";
 import SettledExpenses from "./pages/friends/SettledExpenses";
 import { StatusProvider } from "./context/StatusContext";
 import ExpenseDetail from "./pages/ExpenseDetail";
+import { PopupProvider } from "./context/PopupContext";
 
 function App() {
   return (
-    <StatusProvider>
-      <BrowserRouter>
-        <Routes>
-          <Route element={<Layout />}>
-            <Route element={<Protected />}>
-              <Route index element={<Friends />} />
-              <Route path="friends" element={<Friends />} />
-              <Route element={<ProtectedFriend />}>
-                <Route path="friend/:id" element={<Friend />}></Route>
-                <Route
-                  path="friend/:id/settledExpenses"
-                  element={<SettledExpenses />}
-                ></Route>
+    <PopupProvider>
+      <StatusProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route element={<Layout />}>
+              <Route element={<Protected />}>
+                <Route index element={<Friends />} />
+                <Route path="friends" element={<Friends />} />
+                <Route element={<ProtectedFriend />}>
+                  <Route path="friend/:id" element={<Friend />}></Route>
+                  <Route
+                    path="friend/:id/settledExpenses"
+                    element={<SettledExpenses />}
+                  ></Route>
+                </Route>
+                <Route path="groups" element={<Groups />}></Route>
+                <Route path="activity" element={<Activity />}></Route>
+                <Route path="account" element={<Account />}></Route>
+                <Route path="expense/:id" element={<ExpenseDetail />}></Route>
               </Route>
-              <Route path="groups" element={<Groups />}></Route>
-              <Route path="activity" element={<Activity />}></Route>
-              <Route path="account" element={<Account />}></Route>
-              <Route path="expense/:id" element={<ExpenseDetail />}></Route>
+              <Route path="login" element={<Login />}></Route>
+              <Route path="register" element={<Register />}></Route>
+              <Route path="*" element={<Error />} />
             </Route>
-            <Route path="login" element={<Login />}></Route>
-            <Route path="register" element={<Register />}></Route>
-            <Route path="*" element={<Error />} />
-          </Route>
-        </Routes>
-      </BrowserRouter>
-    </StatusProvider>
+          </Routes>
+        </BrowserRouter>
+      </StatusProvider>
+    </PopupProvider>
   );
 }
 

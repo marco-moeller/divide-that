@@ -6,14 +6,16 @@ import useFriend from "../../hooks/useFriend";
 import { addExpenseToDatabase } from "../../database/expenses";
 import { addActivityToUser } from "../../API/userAPI";
 import ExpenseForm from "./ExpenseForm";
+import { usePopup } from "../../context/PopupContext";
 
-function EditExpenseModal({ toggleModal, oldExpense, toggleEditExpensePopup }) {
+function EditExpenseModal({ toggleModal, oldExpense }) {
   const [expense, setExpense] = useState({
     ...oldExpense,
     date: oldExpense.date.toDate()
   });
 
   const { user, profileImgUrl: userProfileUrl } = useAuth();
+  const { showPopup } = usePopup();
 
   const friendID =
     oldExpense.users[0] === user?.id
@@ -31,7 +33,7 @@ function EditExpenseModal({ toggleModal, oldExpense, toggleEditExpensePopup }) {
       await addExpenseToDatabase(newExpense);
       await handleNewActivity();
       window.dispatchEvent(new Event("expenseUpdate"));
-      toggleEditExpensePopup();
+      showPopup("Expense Updated");
     } catch (error) {
       console.log(error);
     }

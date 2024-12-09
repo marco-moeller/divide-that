@@ -15,6 +15,7 @@ import {
 import { getExpenseColor, userHasPaid } from "../utility/expenseDisplay";
 import { FaHandshake } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
+import { usePopup } from "../context/PopupContext";
 
 function ExpenseDetail() {
   const { id } = useParams();
@@ -28,6 +29,8 @@ function ExpenseDetail() {
   const { friend, profileImgUrl } = useFriend(
     expense?.users[0] === user?.id ? expense?.users[1] : expense?.users[0]
   );
+
+  const { showPopup } = usePopup();
 
   const handleSettleClick = async () => {
     await addExpenseToDatabase({ ...expense, settled: true });
@@ -63,6 +66,8 @@ function ExpenseDetail() {
 
   const handleDelete = () => {
     deleteExpenseFromDatabase(id);
+    showPopup("Expense Deleted");
+
     navigate(-1);
   };
 

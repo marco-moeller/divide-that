@@ -1,13 +1,19 @@
 import { memo } from "react";
-import usePopup from "../../hooks/usePopup";
+import "./popup.css";
+import Portal from "./Portal";
+import { usePopup } from "../../context/PopupContext";
 
-function Popup({ children }) {
-  const { toggle } = usePopup();
+function Popup() {
+  const { popup, hidePopup } = usePopup();
 
   return (
-    <div className="popup" onClick={toggle}>
-      {children}
-    </div>
+    popup.visible && (
+      <Portal>
+        <div className="popup" onClick={hidePopup}>
+          {popup.message}
+        </div>
+      </Portal>
+    )
   );
 }
 

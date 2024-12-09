@@ -1,18 +1,11 @@
 import { FaRegEdit } from "react-icons/fa";
 import useModal from "../../hooks/useModal";
-import usePopup from "../../hooks/usePopup";
 import Modal from "../modals/Modal";
 import EditExpenseModal from "./EditExpenseModal";
-import Popup from "../popups/Popup";
 import { memo } from "react";
 
 function EditExpenseButton({ expense }) {
   const { toggle, isShowing } = useModal();
-
-  const {
-    toggle: toggleEditExpensePopup,
-    isShowing: isShowingExpenseEditedPopup
-  } = usePopup();
 
   return (
     <>
@@ -21,14 +14,9 @@ function EditExpenseButton({ expense }) {
       </div>
       {isShowing && (
         <Modal>
-          <EditExpenseModal
-            toggleModal={toggle}
-            oldExpense={expense}
-            toggleEditExpensePopup={toggleEditExpensePopup}
-          />
+          <EditExpenseModal toggleModal={toggle} oldExpense={expense} />
         </Modal>
       )}
-      {isShowingExpenseEditedPopup && <Popup>Expense Updated</Popup>}
     </>
   );
 }

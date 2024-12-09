@@ -1,27 +1,10 @@
 :root {
-  --colorRed: #c2653c;
-  --colorGrey: #898a8c;
-
-  /* OLD SCHEME*/
-  /* --colorGreen: #1ab90f;
-  --colorOrange: #fd7b12;
-  --colorBlack: #22231f;
-  --colorWhite: whitesmoke;
-  --colorYellow: #fcbf49; */
-
   --svgDimension: 25px;
   --borderRadius: 5px;
 
-  /* PETRA  */
-  /* --colorGreen: #4285f4;
-  --colorBlack: #5c2018;
-  --colorOrange: #bc4639;
-  --colorYellow: #d4a59a;
-  --colorWhite: #f3e0dc; */
-
   /* BRITNEY  */
   --colorGreen: #1ab90f;
-  --colorBlack: #2d283e;
+  --colorBlack: #17141f;
   --colorPink: #902bb1;
   --colorDark: #4c495d;
   --colorWhite: #d1d7e0;
@@ -200,7 +183,7 @@ header .profile-pic {
   height: 120px;
   margin: 0 auto;
   transform: translateY(30%);
-  border: 5px solid white;
+  border: 5px solid var(--colorBlack);
 }
 
 .hero-content {
@@ -643,9 +626,8 @@ select {
   border-radius: 50%;
   aspect-ratio: 1/1;
   object-fit: cover;
-  height: 150px;
+  height: 200px;
   margin: 0 auto;
-  border: 5px solid white;
 }
 
 .account-info {
@@ -721,22 +703,6 @@ nav a:active,
 nav a:hover,
 .active {
   color: var(--colorGreen);
-}
-
-/* -- POPUP -- */
-
-.popup {
-  position: fixed;
-  left: 1em;
-  bottom: 4em;
-  width: fit-content;
-  padding: 0.5em;
-  border: 1px solid black;
-  border-radius: var(--borderRadius);
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  background-color: white;
-  z-index: 1;
 }
 
 /* -- UTILITY -- */

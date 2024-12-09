@@ -1,0 +1,15 @@
+/* -- POPUP -- */
+
+.popup {
+  position: fixed;
+  left: 1em;
+  bottom: 4em;
+  width: fit-content;
+  padding: 0.5em;
+  border-radius: var(--borderRadius);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background-color: var(--colorWhite);
+  color: var(--colorBlack);
+  z-index: 1;
+}

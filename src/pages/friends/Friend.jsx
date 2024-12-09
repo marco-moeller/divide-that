@@ -8,7 +8,6 @@ import useExpensesList from "../../hooks/useExpensesList";
 import { convertToMonthYear } from "../../utility/date";
 import AddExpenseButton from "../../components/expenses/AddExpenseButton";
 import { addExpenseToDatabase } from "../../database/expenses";
-import Popup from "../../components/popups/Popup";
 import DebtInfo from "../../components/friends/DebtInfo";
 
 function Friend() {

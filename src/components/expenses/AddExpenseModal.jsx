@@ -1,5 +1,5 @@
 import ModalHeader from "../modals/ModalHeader";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import "react-calendar/dist/Calendar.css";
 import { nanoid } from "nanoid";
 import { useAuth } from "../../context/AuthContext";
@@ -9,8 +9,9 @@ import useFriend from "../../hooks/useFriend";
 import { useParams } from "react-router-dom";
 import { getCurrencyIconFromSymbol } from "../../utility/money";
 import ExpenseForm from "./ExpenseForm";
+import { usePopup } from "../../context/PopupContext";
 
-function AddExpenseModal({ toggleModal, toggleAddExpensePopup }) {
+function AddExpenseModal({ toggleModal }) {
   const { user, profileImgUrl: userProfileUrl } = useAuth();
   const { id } = useParams();
   const { friend, profileImgUrl } = useFriend(id);
@@ -25,6 +26,8 @@ function AddExpenseModal({ toggleModal, toggleAddExpensePopup }) {
     sucker: user.id
   });
 
+  const { showPopup } = usePopup();
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     toggleModal();
@@ -32,7 +35,7 @@ function AddExpenseModal({ toggleModal, toggleAddExpensePopup }) {
       await handleNewExpense();
       await handleNewActivity();
 
-      toggleAddExpensePopup();
+      showPopup("Expense Added");
     } catch (error) {
       console.log(error);
     }

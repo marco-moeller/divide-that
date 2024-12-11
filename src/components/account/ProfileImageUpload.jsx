@@ -15,6 +15,8 @@ function ProfileImageUpload({ toggleModal }) {
   const { user } = useAuth();
 
   const handleSubmit = async () => {
+    if (!file) return;
+
     const croppedImg = await handleCrop();
     const croppedFile = await urlToFile(croppedImg);
 

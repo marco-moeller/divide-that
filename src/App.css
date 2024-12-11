@@ -126,10 +126,6 @@ button.add-expense {
   margin-right: auto;
 }
 
-.save-btn {
-  margin-left: auto;
-}
-
 .friend-settings-option {
   cursor: pointer;
   margin-top: 2em;
@@ -143,6 +139,11 @@ button.add-expense {
 
 .settle-btn {
   margin-top: 2em;
+}
+
+.save-btn {
+  margin-left: auto;
+  height: 24px;
 }
 
 /* -- LAYOUT -- */
@@ -309,6 +310,7 @@ div.expense :nth-child(3) {
 .modal-header {
   background-color: var(--colorPink);
   display: flex;
+  justify-content: space-between;
   align-items: center;
   padding: 1em;
   height: 100px;
@@ -317,6 +319,16 @@ div.expense :nth-child(3) {
 .modal-header * {
   font-size: 1rem;
   text-transform: uppercase;
+}
+
+/* if this is removed, the modal header items
+   are no longer on the same line,
+   couldn't figure out why... */
+.modal-header h1,
+.modal-header .save-btn,
+.modal-header .back-btn {
+  border: 1px solid transparent;
+  height: 24px;
 }
 
 .modal-header button {
@@ -661,6 +673,38 @@ label {
   display: flex;
   gap: 0.25em;
   align-items: center;
+}
+
+.profile-img-upload {
+  padding: 2em 1em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+}
+
+.profile-img-preview-wrapper {
+  position: relative;
+  width: 80%;
+  min-height: 260px;
+  min-width: 260px;
+  aspect-ratio: 1/1;
+  overflow: visible;
+}
+
+img.reactEasyCrop_Image {
+  overflow: visible;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+div.reactEasyCrop_CropArea {
+  border-radius: 50%;
+  width: 100% !important;
+  height: 100% !important;
 }
 
 /* -- ACTIVITY -- */

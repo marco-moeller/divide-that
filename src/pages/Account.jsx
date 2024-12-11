@@ -61,9 +61,7 @@ function Account() {
       )}
       {isShowingAccountSettings && (
         <Modal>
-          <StatusProvider>
-            <AccountSettings toggleModal={toggleAccountSettings} />
-          </StatusProvider>
+          <AccountSettings toggleModal={toggleAccountSettings} />
         </Modal>
       )}
     </main>

@@ -803,6 +803,10 @@ nav a:hover,
   padding-bottom: 1em;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 /* Firefox */
 .no-spinners {
   -moz-appearance: textfield;

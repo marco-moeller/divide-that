@@ -3,6 +3,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { getAllUsersFromDatabase } from "../database/user";
 import { registerNewUser } from "../API/userAPI";
 
+const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 function Register() {
   const [registerFormData, setRegisterFormData] = useState({
     email: "",
@@ -39,6 +41,10 @@ function Register() {
           .length !== 0
       ) {
         throw new Error("Email already taken!");
+      }
+
+      if (!EMAIL_REGEX.test(registerFormData.email)) {
+        throw new Error("Invalid Email!");
       }
 
       await registerNewUser({

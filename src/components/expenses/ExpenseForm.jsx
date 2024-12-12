@@ -84,7 +84,7 @@ function ExpenseForm({
   };
 
   const getSuckerBtnBg = (id) => {
-    return expense.sucker === id ? "bg-orange" : "";
+    return expense.sucker === id ? "bg-purple" : "";
   };
 
   const setSucker = (id) => {

@@ -13,7 +13,7 @@ import {
   deleteExpenseFromDatabase
 } from "../database/expenses";
 import { getExpenseColor, userHasPaid } from "../utility/expenseDisplay";
-import { FaHandshake } from "react-icons/fa";
+import { FaHandshake, FaPlus } from "react-icons/fa";
 import { MdDeleteForever } from "react-icons/md";
 import { usePopup } from "../context/PopupContext";
 
@@ -85,21 +85,16 @@ function ExpenseDetail() {
 
   return (
     <main className="expense-detail">
-      <div className="hero-bg">
-        <BackButton />
-        <div className="delete-btn" onClick={() => handleDelete(expense.id)}>
-          <MdDeleteForever />
-        </div>
-        <EditExpenseButton expense={expense} />
-      </div>
+      <BackButton />
       <div className="expense-content">
+        <h2 className="title">{expense.title}</h2>
         <div className="grid">
           <img
             src={userProfileUrl}
             alt="profile image"
             className="profile-pic-small"
           />
-          <FaHandshake />
+          <FaPlus />
           <FriendProfilePicture
             profileImgUrl={profileImgUrl}
             friendID={friend.id}
@@ -108,9 +103,12 @@ function ExpenseDetail() {
           <p></p>
           <h2 className="name">{friend.userName}</h2>
         </div>
-        <h1>
-          {expense.title} - {expense.currency + addZeros(expense.amount)}
-        </h1>
+        <h2 className="details">
+          - {expense.currency + addZeros(expense.amount)} -
+        </h2>
+        <h3 className="details">
+          {convertToMonthDayYear(expense.date.toDate())}
+        </h3>
         <p className="subtitle">
           Added by {getCreator()}
           {expense.creationTime && (
@@ -144,6 +142,7 @@ function ExpenseDetail() {
           </>
         )}
       </div>
+      <EditExpenseButton expense={expense} />
       {!expense.settled && (
         <button className="settle-btn" onClick={handleSettleClick}>
           settle expense
@@ -154,6 +153,12 @@ function ExpenseDetail() {
           unsettle expense
         </button>
       )}
+      <button
+        className="delete-btn bg-purple"
+        onClick={() => handleDelete(expense.id)}
+      >
+        Delete Expense
+      </button>
     </main>
   );
 }

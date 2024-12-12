@@ -1,4 +1,3 @@
-import { FaRegEdit } from "react-icons/fa";
 import useModal from "../../hooks/useModal";
 import Modal from "../modals/Modal";
 import EditExpenseModal from "./EditExpenseModal";
@@ -9,9 +8,9 @@ function EditExpenseButton({ expense }) {
 
   return (
     <>
-      <div className="edit-btn" onClick={toggle}>
-        <FaRegEdit />
-      </div>
+      <button className="edit-btn" onClick={toggle}>
+        Edit Expense
+      </button>
       {isShowing && (
         <Modal>
           <EditExpenseModal toggleModal={toggle} oldExpense={expense} />

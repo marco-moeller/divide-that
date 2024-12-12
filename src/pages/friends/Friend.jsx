@@ -56,7 +56,7 @@ function Friend() {
       <DebtInfo friend={friend} expensesList={expensesList} />
       <main className="friend-main">
         <section className="control-btns">
-          <button className="bg-orange" onClick={handleSettleUp}>
+          <button className="bg-purple" onClick={handleSettleUp}>
             settle up
           </button>
           {/* <button>remind....</button>

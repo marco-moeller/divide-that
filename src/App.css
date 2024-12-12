@@ -91,7 +91,7 @@ button.add-expense {
   padding: 1em 1.5em;
   position: fixed;
   z-index: 10;
-  bottom: 70px;
+  bottom: 6em;
   right: 1em;
   display: flex;
   align-items: center;
@@ -125,6 +125,10 @@ button.add-expense {
 
 .back-btn {
   margin-right: auto;
+}
+
+.friend-settings {
+  color: var(--colorWhite);
 }
 
 .friend-settings-option {
@@ -250,6 +254,7 @@ div.expense :nth-child(3) {
 
 .friend-main {
   padding-bottom: 10em;
+  position: relative;
 }
 
 /* -- EXPENSE -- */
@@ -303,8 +308,15 @@ div.expense :nth-child(3) {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: var(--colorDark);
+  background-color: var(--colorBlack);
   border: 1px solid black;
+}
+
+.modal > * {
+  max-width: 500px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .modal-header {
@@ -314,6 +326,14 @@ div.expense :nth-child(3) {
   align-items: center;
   padding: 1em;
   height: 100px;
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.modal-header-wrapper {
+  max-width: 100%;
+  background-color: var(--colorPurple);
 }
 
 .modal-header * {
@@ -745,7 +765,7 @@ nav a {
 
 nav a:active,
 nav a:hover,
-.active {
+.footer-nav .active {
   color: var(--colorGreen);
 }
 

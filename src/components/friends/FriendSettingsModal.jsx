@@ -26,7 +26,7 @@ function FriendSettingsModal({ toggleModal, friendID }) {
   return (
     <>
       <ModalHeader toggleModal={toggleModal}>Friend Settings</ModalHeader>
-      <main>
+      <section className="friend-settings">
         <div className="flex pb-1em">
           <FriendProfilePicture profileImgUrl={profileImgUrl} />
           <div className="friend-info">
@@ -64,7 +64,7 @@ function FriendSettingsModal({ toggleModal, friendID }) {
             </p>
           </div>{" "}
         </div>
-      </main>
+      </section>
     </>
   );
 }

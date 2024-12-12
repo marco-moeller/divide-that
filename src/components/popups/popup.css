@@ -2,8 +2,9 @@
 
 .popup {
   position: fixed;
-  left: 1em;
   bottom: 4em;
+  left: 50%;
+  transform: translateX(-50%);
   width: fit-content;
   padding: 0.5em;
   border-radius: var(--borderRadius);

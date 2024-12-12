@@ -13,9 +13,8 @@ import {
   deleteExpenseFromDatabase
 } from "../database/expenses";
 import { getExpenseColor, userHasPaid } from "../utility/expenseDisplay";
-import { FaHandshake, FaPlus } from "react-icons/fa";
-import { MdDeleteForever } from "react-icons/md";
 import { usePopup } from "../context/PopupContext";
+import { FaPlus } from "react-icons/fa";
 
 function ExpenseDetail() {
   const { id } = useParams();
@@ -27,7 +26,7 @@ function ExpenseDetail() {
   const { user, profileImgUrl: userProfileUrl } = useAuth();
 
   const { friend, profileImgUrl } = useFriend(
-    expense?.users[0] === user?.id ? expense?.users[1] : expense?.users[0]
+    expense?.users?.[0] === user?.id ? expense?.users?.[1] : expense?.users?.[0]
   );
 
   const { showPopup } = usePopup();

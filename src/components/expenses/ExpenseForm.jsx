@@ -92,7 +92,7 @@ function ExpenseForm({
   };
 
   return (
-    <form>
+    <form className="expense-form">
       <div className="calendar">
         <button onClick={toggleCalendar}>
           <FaCalendarAlt />

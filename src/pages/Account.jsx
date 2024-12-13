@@ -7,9 +7,10 @@ import Modal from "../components/modals/Modal";
 import ProfileImageUpload from "../components/account/ProfileImageUpload";
 import useModal from "../hooks/useModal";
 import AccountSettings from "../components/account/AccountSettings";
-import { StatusProvider } from "../context/StatusContext";
 import { logoutUser } from "../database/auth";
 import { getCurrencyName } from "../utility/money";
+import useVisibilityToggle from "../hooks/useVisibilityToggle";
+import { TbCameraPlus } from "react-icons/tb";
 
 function Account() {
   const { user, profileImgUrl } = useAuth();
@@ -20,6 +21,8 @@ function Account() {
   } = useModal();
   const { isShowing: isShowingAccountSettings, toggle: toggleAccountSettings } =
     useModal();
+
+  const { toggle, isShowing } = useVisibilityToggle();
 
   const handleLogout = async () => {
     await logoutUser();
@@ -33,15 +36,21 @@ function Account() {
       <h2 className="title">Account</h2>
       <div className="account-info">
         <div className="account-image">
-          <MdOutlinePhotoCamera onClick={toggleProfileImageUpload} />
-          <img src={profileImgUrl} className="profile-pic" />
-          <HiOutlineCog8Tooth onClick={toggleAccountSettings} />
+          {isShowing && (
+            <TbCameraPlus
+              onClick={toggleProfileImageUpload}
+              onMouseLeave={toggle}
+            />
+          )}
+          <img
+            src={profileImgUrl}
+            className="profile-pic"
+            onMouseEnter={toggle}
+          />
         </div>
-        <label htmlFor="user-name">Username</label>
-        <h2 className="user-name" name="user-name" id="user-name">
+        <h1 className="user-name" name="user-name" id="user-name">
           {user.userName}
-        </h2>
-        <label htmlFor="email">Email</label>
+        </h1>
         <h2 className="user-email" name="email" id="email">
           {user.email}
         </h2>
@@ -50,10 +59,16 @@ function Account() {
           {getCurrencyName(user.defaultCurrency)}
         </h2>
       </div>
-      <button className="logout-btn" onClick={handleLogout}>
-        <IoMdExit />
-        Logout
-      </button>
+      <div className="account-btn-wrapper">
+        <button className="btn" onClick={toggleAccountSettings}>
+          <HiOutlineCog8Tooth />
+          Settings
+        </button>
+        <button className="logout-btn btn" onClick={handleLogout}>
+          <IoMdExit />
+          Logout
+        </button>
+      </div>
       {isShowingProfileImageUpload && (
         <Modal>
           <ProfileImageUpload toggleModal={toggleProfileImageUpload} />

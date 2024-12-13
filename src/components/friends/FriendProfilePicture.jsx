@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 function FriendProfilePicture({ profileImgUrl, friendID }) {
   const navigate = useNavigate();
   const handleClick = () => {
-    console.log("clicked");
     if (window.location.pathname !== `/friend/${friendID}`) {
       navigate(`/friend/${friendID}`);
     } else {

@@ -171,12 +171,16 @@ function AccountSettings({ toggleModal }) {
           </>
         )}
         <div className="divider"></div>
-        <button onClick={toggleDeleteBtn} disabled={status !== "idle"}>
+        <button
+          onClick={toggleDeleteBtn}
+          disabled={status !== "idle"}
+          className="btn"
+        >
           Delete Account
         </button>
         {isShowingDeleteBtn && (
           <button
-            className="red"
+            className="red btn"
             onClick={handleDeleteAccount}
             disabled={status !== "idle"}
           >

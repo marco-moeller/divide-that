@@ -25,7 +25,7 @@ function Expense({ expense, friend }) {
       <h3 className="date">{convertToLocaleDate(expense.date.toDate())}</h3>
       <div className="title-container">
         <NavLink to={`../../expense/${expense.id}`}>
-          <h2 className="title">{expense.title}</h2>
+          <h2 className="expense-title">{expense.title}</h2>
           <p className="subtitle">
             {userHasPaid(user.id, expense.sucker) ? "You" : friend.userName}{" "}
             paid {expense.currency + addZeros(expense.amount)}

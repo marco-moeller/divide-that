@@ -563,12 +563,23 @@ select {
   align-items: center;
 }
 
-.find-your-friends-below {
-  text-align: center;
-}
-
 .search-users * {
   width: 80%;
+}
+
+.find-your-friends-below {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.find-your-friends-below * {
+  width: auto;
+}
+
+.find-your-friends-below svg {
+  width: auto;
+  display: inline;
 }
 
 .dropdown {

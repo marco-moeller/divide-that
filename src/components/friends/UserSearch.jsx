@@ -4,6 +4,8 @@ import { nanoid } from "nanoid";
 import { addFriendRequestToFriend } from "../../API/userAPI";
 import { getAllUsersFromDatabase } from "../../database/user";
 import { usePopup } from "../../context/PopupContext";
+import { FaLevelDownAlt } from "react-icons/fa";
+import { IoMdArrowRoundDown } from "react-icons/io";
 
 function UserSearch() {
   const { user } = useAuth();
@@ -141,7 +143,8 @@ function UserSearch() {
   return (
     <div className="search-users">
       <p className="find-your-friends-below">
-        Find your <span className="red">friends</span> below
+        Find your <span className="red">&nbsp;friends&nbsp; </span> below{" "}
+        <IoMdArrowRoundDown />
       </p>
       <input
         className="search"

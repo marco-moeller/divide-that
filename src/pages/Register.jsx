@@ -10,7 +10,8 @@ function Register() {
     email: "",
     password: "",
     confirmPassword: "",
-    userName: ""
+    userName: "",
+    checkbox: false
   });
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState("");
@@ -24,6 +25,11 @@ function Register() {
     }
     try {
       setStatus("submitting");
+
+      if (checkbox) {
+        throw new Error("Try again!");
+      }
+
       if (registerFormData.password !== registerFormData.confirmPassword) {
         throw new Error("Passwords don't match!");
       }
@@ -47,14 +53,18 @@ function Register() {
         throw new Error("Invalid Email!");
       }
 
-      await registerNewUser({
-        ...registerFormData,
-        friends: [],
-        defaultCurrency: "USD",
-        friendRequests: [],
-        activities: [],
-        profileImage: ""
-      });
+      await registerNewUser(
+        {
+          email: registerFormData.email,
+          userName: registerFormData.userName,
+          friends: [],
+          defaultCurrency: "USD",
+          friendRequests: [],
+          activities: [],
+          profileImage: ""
+        },
+        registerFormData.password
+      );
       navigate("/");
       setError(null);
     } catch (error) {
@@ -109,6 +119,17 @@ function Register() {
           value={registerFormData.confirmPassword}
         />
         <button disabled={status === "submitting"}>Register</button>
+        <input
+          type="checkbox"
+          name="checkbox"
+          value={registerFormData.checkbox}
+          className="contact--me--by--fax--only"
+          tabIndex={-1}
+          autoComplete="off"
+          checked={registerFormData.checkbox}
+          onChange={handleChange}
+          style={{ display: "none" }}
+        ></input>
         <p className="red">{error?.message}</p>
       </form>
       <p>

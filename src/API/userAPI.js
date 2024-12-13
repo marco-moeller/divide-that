@@ -8,14 +8,15 @@ import {
 import { deleteImageFromDatabase } from "../database/profileImages";
 import { addUserToDatabase, deleteUserFromDatabase } from "../database/user";
 
-export const registerNewUser = async (userData) => {
+export const registerNewUser = async (userData, password) => {
   try {
-    const user = await createNewUserWithEmailAndPassword(userData);
+    const user = await createNewUserWithEmailAndPassword(
+      userData.email,
+      password
+    );
     await addUserToDatabase({
       ...userData,
-      id: user.uid,
-      password: null,
-      confirmPassword: null
+      id: user.uid
     });
   } catch (error) {
     console.log(error);

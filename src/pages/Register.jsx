@@ -26,7 +26,7 @@ function Register() {
     try {
       setStatus("submitting");
 
-      if (checkbox) {
+      if (registerFormData.checkbox) {
         throw new Error("Try again!");
       }
 

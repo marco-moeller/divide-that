@@ -42,7 +42,10 @@ function UserSearch() {
         {allUsers
           ?.filter(
             (userFromAllUsers) =>
-              isSubstringOf(userFromAllUsers.userName, currentSearch) &&
+              isSubstringOf(
+                userFromAllUsers.userName.toLowerCase(),
+                currentSearch.toLowerCase()
+              ) &&
               userFromAllUsers.userName !== user.userName &&
               !user.friends.includes(userFromAllUsers.id)
           )

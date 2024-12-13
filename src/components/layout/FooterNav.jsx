@@ -5,6 +5,7 @@ import { LuActivitySquare } from "react-icons/lu";
 import { MdManageAccounts } from "react-icons/md";
 import { useAuth } from "../../context/AuthContext";
 import { memo } from "react";
+import { BsInfoCircle } from "react-icons/bs";
 
 function FooterNav() {
   const { isLoggedIn, profileImgUrl } = useAuth();
@@ -40,6 +41,10 @@ function FooterNav() {
             Login
           </NavLink>
         )}
+        <NavLink to="/about">
+          <BsInfoCircle />
+          About
+        </NavLink>
       </nav>
     </footer>
   );

@@ -15,6 +15,11 @@ import SettledExpenses from "./pages/friends/SettledExpenses";
 import { StatusProvider } from "./context/StatusContext";
 import ExpenseDetail from "./pages/ExpenseDetail";
 import { PopupProvider } from "./context/PopupContext";
+import About from "./pages/About";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
+import Impressum from "./pages/Impressum";
+import Disclaimer from "./pages/Disclaimer";
 
 function App() {
   return (
@@ -40,6 +45,11 @@ function App() {
               </Route>
               <Route path="login" element={<Login />}></Route>
               <Route path="register" element={<Register />}></Route>
+              <Route path="about" element={<About />}></Route>
+              <Route path="privacypolicy" element={<PrivacyPolicy />}></Route>
+              <Route path="tos" element={<TermsOfService />}></Route>
+              <Route path="impressum" element={<Impressum />}></Route>
+              <Route path="disclaimer" element={<Disclaimer />}></Route>
               <Route path="*" element={<Error />} />
             </Route>
           </Routes>

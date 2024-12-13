@@ -149,15 +149,15 @@ function UserSearch() {
       <input
         className="search"
         type="text"
-        placeholder="search by username..."
+        placeholder="search by username or email..."
         value={currentSearch}
         onChange={handleChange}
         onFocus={showDropdown}
       />
       {currentSearch && !isHidden && renderDropdown()}
       <button
-        className="add-friend-btn"
-        disabled={status === "submitting"}
+        className="add-friend-btn btn"
+        disabled={status === "submitting" || !selectedUser}
         onClick={sendFriendRequest}
       >
         send friend request

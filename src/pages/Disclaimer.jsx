@@ -1,6 +1,9 @@
+import BackButton from "../components/layout/BackButton";
+
 function Disclaimer() {
   return (
     <main className="disclaimer">
+      <BackButton />
       <h2 className="title">Disclaimer</h2>
       <p>Last updated: 13.12.2024</p>
 

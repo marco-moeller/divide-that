@@ -1,9 +1,12 @@
+import BackButton from "../components/layout/BackButton";
+
 function Impressum() {
   return (
     <main className="impressum">
-      <h2 className="title">Impressum</h2>
+      <BackButton />
+      <h2 className="title">Legal Notice</h2>
       <p>
-        Responsible for the content of this website in accordance with § 5 TMG:
+        Responsible for the content of this website in accordance with § 5 DDG:
       </p>
 
       <h3>Contact Information</h3>
@@ -17,14 +20,6 @@ function Impressum() {
         {" "}
         Email:{" "}
         <a href="mailto:dividethat.info@gmail.com">dividethat.info@gmail.com</a>
-      </p>
-
-      <h3>Disclaimer</h3>
-      <p>
-        The information on this website is provided for general informational
-        purposes only. While we strive to ensure the accuracy of the information
-        presented, we assume no responsibility for errors, omissions, or
-        outdated content.
       </p>
 
       <h3>Liability for Links</h3>
@@ -41,7 +36,13 @@ function Impressum() {
         protected by copyright laws. Unauthorized use or reproduction is
         prohibited.
       </p>
-      <p>© Marco Moeller - {new Date().getFullYear()} - All rights reserved</p>
+      <p>
+        {" "}
+        <a href="https://marcomoeller.net/" target="_blank">
+          © Marco Moeller
+        </a>{" "}
+        - {new Date().getFullYear()} - All rights reserved
+      </p>
     </main>
   );
 }

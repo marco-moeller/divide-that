@@ -1,6 +1,9 @@
+import BackButton from "../components/layout/BackButton";
+
 function TermsOfService() {
   return (
     <main className="terms-of-service">
+      <BackButton />
       <h2 className="title">Terms of Service</h2>
       <p>Last Updated: 13.12.2024</p>
 

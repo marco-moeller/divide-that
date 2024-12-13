@@ -1,6 +1,9 @@
+import BackButton from "../components/layout/BackButton";
+
 function PrivacyPolicy() {
   return (
     <main className="privacy-policy">
+      <BackButton />
       <h2 className="title">Privacy Policy</h2>
       <p>Last updated: 13.12.2024</p>
 

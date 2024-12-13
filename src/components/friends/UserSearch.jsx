@@ -3,6 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import { nanoid } from "nanoid";
 import { addFriendRequestToFriend } from "../../API/userAPI";
 import { getAllUsersFromDatabase } from "../../database/user";
+import { usePopup } from "../../context/PopupContext";
 
 function UserSearch() {
   const { user } = useAuth();
@@ -12,6 +13,8 @@ function UserSearch() {
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
   const [isHidden, setIsHidden] = useState(false);
+
+  const { showPopup } = usePopup();
 
   const sendFriendRequest = async () => {
     if (status === "submitting") return;
@@ -25,9 +28,11 @@ function UserSearch() {
         );
 
       await addFriendRequestToFriend(selectedUser, user);
+      showPopup("Friend Request Sent");
       setSelectedUser(null);
       setCurrentSearch("");
       setError(null);
+      setAllUsers(await getAllUsersFromDatabase());
     } catch (error) {
       setError(error);
     } finally {
@@ -66,13 +71,18 @@ function UserSearch() {
       );
     };
 
+    const hasRequestFromUserAlready = (userFromAllUsers) => {
+      return userFromAllUsers.friendRequests.includes(user.id);
+    };
+
     if (!allUsers) return;
 
     if (
       allUsers?.filter(
         (userFromAllUsers) =>
-          userExistsAndINotFriendOrSelf(userFromAllUsers) ||
-          emailExistsAndINotFriendOrSelf(userFromAllUsers)
+          (userExistsAndINotFriendOrSelf(userFromAllUsers) ||
+            emailExistsAndINotFriendOrSelf(userFromAllUsers)) &&
+          !hasRequestFromUserAlready(userFromAllUsers)
       ).length === 0
     )
       return;
@@ -82,8 +92,9 @@ function UserSearch() {
         {allUsers
           ?.filter(
             (userFromAllUsers) =>
-              userExistsAndINotFriendOrSelf(userFromAllUsers) ||
-              emailExistsAndINotFriendOrSelf(userFromAllUsers)
+              (userExistsAndINotFriendOrSelf(userFromAllUsers) ||
+                emailExistsAndINotFriendOrSelf(userFromAllUsers)) &&
+              !hasRequestFromUserAlready(userFromAllUsers)
           )
           .map((userFromAllUsers) => (
             <div
@@ -145,7 +156,7 @@ function UserSearch() {
       >
         send friend request
       </button>
-      <p>{error?.message}</p>
+      <p className="red">{error?.message}</p>
     </div>
   );
 }

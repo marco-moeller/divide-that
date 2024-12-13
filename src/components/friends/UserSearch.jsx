@@ -140,6 +140,9 @@ function UserSearch() {
 
   return (
     <div className="search-users">
+      <p className="find-your-friends-below">
+        Find your <span className="red">friends</span> below
+      </p>
       <input
         className="search"
         type="text"

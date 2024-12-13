@@ -563,6 +563,10 @@ select {
   align-items: center;
 }
 
+.find-your-friends-below {
+  text-align: center;
+}
+
 .search-users * {
   width: 80%;
 }

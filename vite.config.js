@@ -8,8 +8,8 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "Divide Cleverer",
-        short_name: "Divide Cleverer",
+        name: "Divide That",
+        short_name: "Divide That",
         start_url: "/",
         display: "standalone",
         background_color: "#902bb1",

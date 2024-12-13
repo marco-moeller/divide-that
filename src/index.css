@@ -84,12 +84,16 @@ body,
 
 main,
 nav,
-.hero-content,
-header {
+.hero-content {
   max-width: 500px;
   width: 100%;
   margin-left: auto;
   margin-right: auto;
+}
+
+header {
+  background-color: var(--colorPurple);
+  height: 100px;
 }
 
 main {

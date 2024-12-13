@@ -46,6 +46,7 @@ function Account() {
             src={profileImgUrl}
             className="profile-pic"
             onMouseEnter={toggle}
+            onClick={toggleProfileImageUpload}
           />
         </div>
         <h1 className="user-name" name="user-name" id="user-name">

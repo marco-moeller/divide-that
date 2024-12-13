@@ -8,12 +8,12 @@ export default defineConfig({
     VitePWA({
       registerType: "autoUpdate",
       manifest: {
-        name: "SplitWiser",
-        short_name: "SplitWiser",
+        name: "Divide Cleverer",
+        short_name: "Divide Cleverer",
         start_url: "/",
         display: "standalone",
-        background_color: "#ffffff",
-        theme_color: "#ffffff",
+        background_color: "#902bb1",
+        theme_color: "#902bb1",
         icons: [
           {
             src: "icon-72.png",

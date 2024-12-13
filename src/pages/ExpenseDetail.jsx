@@ -143,12 +143,12 @@ function ExpenseDetail() {
       </div>
       <EditExpenseButton expense={expense} />
       {!expense.settled && (
-        <button className="settle-btn" onClick={handleSettleClick}>
+        <button className="settle-btn btn" onClick={handleSettleClick}>
           settle expense
         </button>
       )}
       {expense.settled && (
-        <button className="settle-btn" onClick={handleUnsettleClick}>
+        <button className="settle-btn btn" onClick={handleUnsettleClick}>
           unsettle expense
         </button>
       )}

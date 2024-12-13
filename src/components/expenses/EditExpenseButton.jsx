@@ -8,7 +8,7 @@ function EditExpenseButton({ expense }) {
 
   return (
     <>
-      <button className="edit-btn" onClick={toggle}>
+      <button className="edit-btn btn" onClick={toggle}>
         Edit Expense
       </button>
       {isShowing && (

@@ -85,6 +85,11 @@ header p {
   box-shadow: none;
 }
 
+.delete-btn:hover,
+.delete-btn:active {
+  background-color: var(--colorGreen);
+}
+
 button.add-expense {
   color: var(--colorWhite);
   background-color: var(--colorPurple);

@@ -57,7 +57,6 @@ button,
 .btn {
   background-color: var(--colorWhite);
   color: var(--colorBlack);
-  border: 1px solid black;
   border-radius: 5px;
   padding: 0.5em 1em;
   text-transform: uppercase;

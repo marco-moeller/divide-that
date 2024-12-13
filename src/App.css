@@ -80,7 +80,6 @@ header p {
 .settled-expenses button:active {
   background-color: var(--colorPurple);
   color: var(--colorWhite);
-  border: 1px solid transparent;
   box-shadow: none;
 }
 
@@ -150,6 +149,12 @@ button.add-expense {
 button:disabled {
   background-color: var(--colorDark);
   color: var(--colorBlack);
+}
+
+button:disabled:hover {
+  background-color: var(--colorDark);
+  color: var(--colorBlack);
+  cursor: auto;
 }
 
 /* -- LAYOUT -- */

@@ -11,6 +11,7 @@ function UserSearch() {
   const [allUsers, setAllUsers] = useState(null);
   const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
+  const [isHidden, setIsHidden] = useState(false);
 
   const sendFriendRequest = async () => {
     if (status === "submitting") return;
@@ -34,38 +35,72 @@ function UserSearch() {
     }
   };
 
+  const hideDropdown = () => {
+    setIsHidden(true);
+  };
+
+  const showDropdown = () => {
+    setIsHidden(false);
+  };
+
   const renderDropdown = () => {
+    const userExistsAndINotFriendOrSelf = (userFromAllUsers) => {
+      return (
+        isSubstringOf(
+          userFromAllUsers.userName.toLowerCase(),
+          currentSearch.toLowerCase()
+        ) &&
+        userFromAllUsers.userName !== user.userName &&
+        !user.friends.includes(userFromAllUsers.id)
+      );
+    };
+
+    const emailExistsAndINotFriendOrSelf = (userFromAllUsers) => {
+      return (
+        isSubstringOf(
+          userFromAllUsers.email.toLowerCase(),
+          currentSearch.toLowerCase()
+        ) &&
+        userFromAllUsers.userName !== user.userName &&
+        !user.friends.includes(userFromAllUsers.id)
+      );
+    };
+
     if (!allUsers) return;
 
+    if (
+      allUsers?.filter(
+        (userFromAllUsers) =>
+          userExistsAndINotFriendOrSelf(userFromAllUsers) ||
+          emailExistsAndINotFriendOrSelf(userFromAllUsers)
+      ).length === 0
+    )
+      return;
+
     return (
-      <div className="dropdown">
+      <div className="dropdown scrollable">
         {allUsers
           ?.filter(
             (userFromAllUsers) =>
-              isSubstringOf(
-                userFromAllUsers.userName.toLowerCase(),
-                currentSearch.toLowerCase()
-              ) &&
-              userFromAllUsers.userName !== user.userName &&
-              !user.friends.includes(userFromAllUsers.id)
+              userExistsAndINotFriendOrSelf(userFromAllUsers) ||
+              emailExistsAndINotFriendOrSelf(userFromAllUsers)
           )
           .map((userFromAllUsers) => (
-            <div className="search-list" key={nanoid}>
+            <div
+              className="search-list"
+              key={nanoid()}
+              onClick={() => {
+                setSelectedUser(userFromAllUsers);
+                setCurrentSearch(userFromAllUsers.userName);
+                hideDropdown();
+              }}
+            >
               <img
                 src={userFromAllUsers.profileImgUrl}
                 alt=""
                 className="profile-pic-small"
               />
-              <p
-                key={nanoid()}
-                className="dropdown-elem"
-                onClick={() => {
-                  setSelectedUser(userFromAllUsers);
-                  setCurrentSearch(userFromAllUsers.userName);
-                }}
-              >
-                {userFromAllUsers.userName}
-              </p>
+              <p className="dropdown-elem">{userFromAllUsers.userName}</p>
             </div>
           ))}
       </div>
@@ -81,7 +116,7 @@ function UserSearch() {
   };
 
   useEffect(() => {
-    if (currentSearch === "") return;
+    // if (currentSearch === "") return;
 
     if (allUsers && allUsers.length > 0) return;
 
@@ -100,8 +135,9 @@ function UserSearch() {
         placeholder="search by username..."
         value={currentSearch}
         onChange={handleChange}
+        onFocus={showDropdown}
       />
-      {currentSearch && renderDropdown()}
+      {currentSearch && !isHidden && renderDropdown()}
       <button
         className="add-friend-btn"
         disabled={status === "submitting"}

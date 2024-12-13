@@ -504,6 +504,7 @@ select {
 .friends {
   padding-left: 0;
   padding-right: 0;
+  padding-bottom: 250px;
 }
 
 .friend {
@@ -548,11 +549,13 @@ select {
 .friends-list {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 1em;
   margin-bottom: 1em;
 }
 
 .search-users {
+  position: relative;
   margin-top: 2em;
   display: flex;
   flex-direction: column;
@@ -565,13 +568,17 @@ select {
 }
 
 .dropdown {
-  border: 1px solid black;
+  border: 1px solid var(--colorWhite);
+  background-color: var(--colorBlack);
   display: flex;
   flex-direction: column;
   grid-area: 0.25em;
   border-radius: var(--borderRadius);
   margin-top: -0.9em;
   padding: 0.25em 1em;
+  position: absolute;
+  top: 4em;
+  max-height: 200px;
 }
 
 .dropdown-elem {
@@ -600,7 +607,14 @@ select {
 .search-list {
   display: flex;
   align-items: center;
-  gap: 2em;
+  gap: 1em;
+  width: 100%;
+  padding: 0.25em;
+  border-radius: 5px;
+}
+
+.search-list:hover {
+  background-color: var(--colorPurple);
 }
 
 .search-list img {
@@ -842,6 +856,31 @@ nav a:hover,
 /* Microsoft Edge */
 .no-spinners::-ms-clear {
   display: none;
+}
+
+/* -- SCROLLING -- */
+.scrollable {
+  overflow-y: scroll;
+}
+
+/* Custom scrollbar styles */
+.scrollable::-webkit-scrollbar {
+  width: 8px; /* Width of the scrollbar */
+  height: 8px; /* Height of the scrollbar (for horizontal scroll) */
+}
+
+.scrollable::-webkit-scrollbar-track {
+  border-radius: 50%; /* Rounded corners for the track */
+  margin: 1px 0;
+}
+
+.scrollable::-webkit-scrollbar-thumb {
+  background: var(--colorWhite); /* Scrollbar thumb color */
+  border-radius: 10px; /* Rounded corners for the thumb */
+}
+
+.scrollable::-webkit-scrollbar-thumb:hover {
+  background: var(--colorPurple); /* Thumb color on hover */
 }
 
 /* -- MEDIA -- */

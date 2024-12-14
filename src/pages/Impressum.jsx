@@ -14,8 +14,6 @@ function Impressum() {
         <strong>Marco Möller</strong>{" "}
       </p>
 
-      <p> Heilingen 6, 07407 Uhlstädt-Kirchhasel</p>
-
       <p>
         {" "}
         Email:{" "}

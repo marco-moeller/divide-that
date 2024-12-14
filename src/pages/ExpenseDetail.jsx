@@ -15,6 +15,7 @@ import {
 import { getExpenseColor, userHasPaid } from "../utility/expenseDisplay";
 import { usePopup } from "../context/PopupContext";
 import { FaPlus } from "react-icons/fa";
+import { addActivityToUser } from "../API/userAPI";
 
 function ExpenseDetail() {
   const { id } = useParams();
@@ -65,9 +66,23 @@ function ExpenseDetail() {
 
   const handleDelete = () => {
     deleteExpenseFromDatabase(id);
+    handleNewActivity();
     showPopup("Expense Deleted");
 
     navigate(-1);
+  };
+
+  const handleNewActivity = async () => {
+    const newActivity = {
+      title: expense.title,
+      users: [user.id, friend.id],
+      who: user.userName,
+      date: new Date(),
+      type: "delete",
+      expense: expense.id
+    };
+    await addActivityToUser(user, newActivity);
+    await addActivityToUser(friend, newActivity);
   };
 
   useEffect(() => {

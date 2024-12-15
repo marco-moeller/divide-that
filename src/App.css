@@ -322,7 +322,8 @@ div.expense :nth-child(3) {
   position: fixed;
   display: flex;
   flex-direction: column;
-  height: 100vh;
+  height: 100dvh;
+  inset: 0;
   width: 100%;
   z-index: 100;
   top: 0;

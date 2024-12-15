@@ -16,6 +16,10 @@ h1 {
   color: var(--colorWhite);
 }
 
+h1.name {
+  padding-top: 1em;
+}
+
 h2.title,
 .friends h2.title,
 .groups h2.title,
@@ -318,7 +322,7 @@ div.expense :nth-child(3) {
   position: fixed;
   display: flex;
   flex-direction: column;
-  height: 100svh;
+  height: 100vh;
   width: 100%;
   z-index: 100;
   top: 0;

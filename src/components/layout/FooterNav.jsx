@@ -13,10 +13,10 @@ function FooterNav() {
   return (
     <footer className="footer-nav">
       <nav>
-        <NavLink to="/groups">
+        {/* <NavLink to="/groups">
           <MdGroups />
           Groups
-        </NavLink>
+        </NavLink> */}
         <NavLink to="/friends">
           <MdOutlinePersonOutline />
           Friends

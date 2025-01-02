@@ -1,7 +1,6 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import Layout from "./components/layout/Layout";
-import Groups from "./pages/Groups";
 import Activity from "./pages/Activity";
 import Account from "./pages/Account";
 import Friends from "./pages/friends/Friends";
@@ -20,6 +19,10 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import Impressum from "./pages/Impressum";
 import Disclaimer from "./pages/Disclaimer";
+import Group from "./pages/groups/Group";
+import ProtectedGroup from "./components/layout/ProtectedGroup";
+import Groups from "./pages/groups/Groups";
+import ExpenseDetailViewer from "./pages/ExpenseDetailViewer";
 
 function App() {
   return (
@@ -39,9 +42,15 @@ function App() {
                   ></Route>
                 </Route>
                 <Route path="groups" element={<Groups />}></Route>
+                <Route element={<ProtectedGroup />}>
+                  <Route path="group/:id" element={<Group />}></Route>
+                </Route>
                 <Route path="activity" element={<Activity />}></Route>
                 <Route path="account" element={<Account />}></Route>
-                <Route path="expense/:id" element={<ExpenseDetail />}></Route>
+                <Route
+                  path="expense/:id"
+                  element={<ExpenseDetailViewer />}
+                ></Route>
               </Route>
               <Route path="login" element={<Login />}></Route>
               <Route path="register" element={<Register />}></Route>

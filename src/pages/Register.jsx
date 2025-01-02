@@ -56,12 +56,7 @@ function Register() {
       await registerNewUser(
         {
           email: registerFormData.email,
-          userName: registerFormData.userName,
-          friends: [],
-          defaultCurrency: "USD",
-          friendRequests: [],
-          activities: [],
-          profileImage: ""
+          userName: registerFormData.userName
         },
         registerFormData.password
       );

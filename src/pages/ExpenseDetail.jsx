@@ -22,7 +22,7 @@ function ExpenseDetail() {
 
   const navigate = useNavigate();
 
-  const { expense, refreshExpense } = useExpense(id);
+  const { expense } = useExpense(id);
 
   const { user, profileImgUrl: userProfileUrl } = useAuth();
 
@@ -34,12 +34,10 @@ function ExpenseDetail() {
 
   const handleSettleClick = async () => {
     await addExpenseToDatabase({ ...expense, settled: true });
-    window.dispatchEvent(new Event("expenseUpdate"));
   };
 
   const handleUnsettleClick = async () => {
     await addExpenseToDatabase({ ...expense, settled: false });
-    window.dispatchEvent(new Event("expenseUpdate"));
   };
 
   const getLentOrBorrowed = () => {
@@ -84,16 +82,6 @@ function ExpenseDetail() {
     await addActivityToUser(user, newActivity);
     await addActivityToUser(friend, newActivity);
   };
-
-  useEffect(() => {
-    const handleExpenseUpdate = async () => {
-      await refreshExpense();
-    };
-
-    window.addEventListener("expenseUpdate", handleExpenseUpdate);
-    return () =>
-      window.removeEventListener("expenseUpdate", handleExpenseUpdate);
-  }, []);
 
   if (!expense || !friend || !user) return <></>;
 

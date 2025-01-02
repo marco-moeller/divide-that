@@ -1,5 +1,5 @@
 import { useAuth } from "../context/AuthContext";
-import { getCurrencySymbolFromIcon } from "../utility/money";
+import { convertCurrency, getCurrencySymbolFromIcon } from "../utility/money";
 import useCurrencyRates from "./useCurrencyRates";
 import useExpensesList from "./useExpensesList";
 import useTotalDebt from "./useTotalDebt";
@@ -8,7 +8,7 @@ function useTotalDebtInDefaultCurrency(friendID) {
   const expensesList = useExpensesList(friendID);
   const totalDebt = useTotalDebt(friendID, expensesList);
 
-  const exchangeRates = useCurrencyRates();
+  const { conversionRates } = useCurrencyRates();
   const { user } = useAuth();
 
   const getTotalDebtInDefaultCurrency = () => {
@@ -19,6 +19,7 @@ function useTotalDebtInDefaultCurrency(friendID) {
       (total, current) =>
         total +
         convertCurrency(
+          conversionRates,
           totalDebt[current],
           getCurrencySymbolFromIcon(current),
           user.defaultCurrency
@@ -26,26 +27,6 @@ function useTotalDebtInDefaultCurrency(friendID) {
       0
     );
   };
-
-  function convertCurrency(amount, fromCurrency, toCurrency) {
-    if (!exchangeRates) return;
-
-    const fromRate = exchangeRates.find(
-      (rate) => rate.name === fromCurrency
-    )?.amount;
-    const toRate = exchangeRates.find(
-      (rate) => rate.name === toCurrency
-    )?.amount;
-
-    if (fromRate && toRate) {
-      const amountInTarget = amount / fromRate;
-      const convertedAmount = amountInTarget * toRate;
-      return convertedAmount;
-    } else {
-      console.error("Invalid currency");
-      return null;
-    }
-  }
 
   return getTotalDebtInDefaultCurrency()?.toFixed(2);
 }

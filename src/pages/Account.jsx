@@ -2,7 +2,6 @@ import { IoMdExit } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import { HiOutlineCog8Tooth } from "react-icons/hi2";
-import { MdOutlinePhotoCamera } from "react-icons/md";
 import Modal from "../components/modals/Modal";
 import ProfileImageUpload from "../components/account/ProfileImageUpload";
 import useModal from "../hooks/useModal";

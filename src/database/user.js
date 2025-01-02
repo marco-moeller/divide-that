@@ -5,7 +5,6 @@ import { deleteDoc, doc, getDoc, getDocs, setDoc } from "firebase/firestore";
 export const addUserToDatabase = async (user) => {
   try {
     await setDoc(doc(usersRef, user.id), user);
-    window.dispatchEvent(new Event("userUpdate"));
   } catch (error) {
     console.log(error);
   }

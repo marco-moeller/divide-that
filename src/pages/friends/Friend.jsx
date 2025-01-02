@@ -56,11 +56,9 @@ function Friend() {
       <DebtInfo friend={friend} expensesList={expensesList} />
       <main className="friend-main">
         <section className="control-btns">
-          <button className="bg-purple" onClick={handleSettleUp}>
+          <button className="bg-purple purple-bnt" onClick={handleSettleUp}>
             settle up
           </button>
-          {/* <button>remind....</button>
-          <button>charts</button> */}
           <NavLink to={"./settledExpenses"} className="btn">
             History
           </NavLink>

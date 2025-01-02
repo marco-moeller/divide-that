@@ -23,7 +23,11 @@ function Hero({ friend, profileImgUrl }) {
       </header>
       {isShowing && (
         <Modal>
-          <FriendSettingsModal toggleModal={toggle} friendID={friend.id} />
+          <FriendSettingsModal
+            toggleModal={toggle}
+            friend={friend}
+            profileImgUrl={profileImgUrl}
+          />
         </Modal>
       )}
     </>

@@ -73,6 +73,10 @@ header p {
   font-size: 1rem;
 }
 
+p.hide-arrows {
+  width: min-content;
+}
+
 /* -- BTN/LINK -- */
 .control-btns button,
 .btn {
@@ -90,7 +94,11 @@ header p {
 }
 
 .delete-btn:hover,
-.delete-btn:active {
+.delete-btn:active,
+.control-btns .purple-btn:hover,
+.control-btns .purple-btn:active,
+button.add-expense:active,
+button.add-expense:hover {
   background-color: var(--colorGreen);
 }
 
@@ -129,26 +137,25 @@ button.add-expense {
   margin-top: auto;
 }
 
-.accept-req-btn {
-  margin: 0 auto;
-}
-
 .back-btn {
   margin-right: auto;
 }
 
-.friend-settings {
+.friend-settings,
+.group-settings {
   color: var(--colorWhite);
 }
 
-.friend-settings-option {
+.friend-settings-option,
+.group-settings-option {
   cursor: pointer;
   margin-top: 2em;
   display: grid;
   grid-template-columns: auto 1fr;
 }
 
-.friend-settings-option svg {
+.friend-settings-option svg,
+.group-settings-option svg {
   margin-right: 2em;
 }
 
@@ -162,10 +169,16 @@ button:disabled {
   color: var(--colorBlack);
 }
 
-button:disabled:hover {
-  background-color: var(--colorDark);
-  color: var(--colorBlack);
-  cursor: auto;
+button:disabled:hover,
+button:disabled:active {
+  background-color: var(--colorDark) !important;
+  color: var(--colorBlack) !important;
+  cursor: auto !important;
+}
+
+.group-settings button {
+  margin: auto;
+  margin-top: 1em;
 }
 
 /* -- LAYOUT -- */
@@ -173,6 +186,129 @@ button:disabled:hover {
 svg {
   height: var(--svgDimension);
   width: var(--svgDimension);
+}
+
+/* -- GROUPS ----------------------------------------------------------------------------------------------- GROUPS -- */
+
+.groups-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+  margin-bottom: 1em;
+}
+
+.groups-list p {
+  text-align: center;
+}
+
+.group-list-component,
+.group-list-component p.group-name {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  color: var(--colorWhite);
+  padding: 0.5em;
+  font-weight: 700;
+  font-size: 1.25rem;
+  letter-spacing: 0.25rem;
+}
+
+.total-group-debt {
+  margin-top: -1.25em;
+}
+
+.img-stack {
+  display: flex;
+  position: relative;
+  justify-content: center;
+  width: fit-content;
+  margin-left: -13%;
+}
+
+.group-list-component .img-stack img {
+  object-fit: cover;
+  position: relative;
+  margin: 0;
+  margin-right: -13%;
+}
+
+.image-stack img:nth-child(n + 6) {
+  display: none;
+}
+
+.add-group-btn {
+  color: var(--colorPurple);
+  background-color: var(--colorBlack);
+  border: 8px solid var(--colorPurple);
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  padding: 1.75em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 4em;
+}
+
+.add-group-btn svg {
+  height: 75px;
+  width: 75px;
+}
+
+.members {
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  white-space: nowrap;
+  padding-top: 0.25em;
+}
+
+.members > * {
+  flex: 1 0 auto;
+}
+
+.member {
+  padding: 0.25em 0.5em;
+}
+
+/* .selected {
+  background-color: var(--colorPurple);
+  border-radius: 10px;
+} */
+
+.selected img {
+  outline: 5px solid var(--colorPurple);
+}
+
+.selected p {
+  color: var(--colorPurple);
+  font-weight: bold;
+}
+
+.group-split {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+}
+
+.group-split div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.individual-settle-wrapper {
+  display: grid;
+  grid-template-columns: auto min-content;
+  gap: 1em;
+  align-items: center;
+}
+
+.group-settings label {
+  text-align: center;
 }
 
 /* -- HERO --  */
@@ -199,12 +335,7 @@ svg {
   color: var(--colorWhite);
 }
 
-header .profile-pic {
-  border-radius: 50%;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-  height: 120px;
-  margin: 0 auto;
+header > .profile-pic {
   transform: translateY(30%);
   border: 5px solid var(--colorBlack);
 }
@@ -218,7 +349,9 @@ header .profile-pic {
 
 .total-debt-info {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: max-content min-content;
+  margin: auto;
+  width: min-content;
 }
 
 .hero-content .name {
@@ -322,7 +455,7 @@ div.expense :nth-child(3) {
   position: fixed;
   display: flex;
   flex-direction: column;
-  height: 100dvh;
+  max-height: 120dvh;
   inset: 0;
   width: 100%;
   z-index: 100;
@@ -331,7 +464,7 @@ div.expense :nth-child(3) {
   right: 0;
   bottom: 0;
   background-color: var(--colorBlack);
-  border: 1px solid black;
+  overflow-y: scroll;
 }
 
 .modal > * {
@@ -380,21 +513,20 @@ div.expense :nth-child(3) {
 .modal form {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1.5em;
+  gap: 0.75em;
   padding: 1em 5em;
-  margin-top: 2em;
 }
 
 .modal form input,
-.account-settings input {
+.account-settings input,
+.group-settings input {
   background-color: var(--colorDark);
   color: var(--colorWhite);
   width: 100%;
   text-align: left;
-  outline: 1px solid var(--colorWhite);
   border-radius: var(--borderRadius);
-  font-size: 2rem;
-  padding: 0.5em 0.25em;
+  font-size: 1.5rem;
+  padding: 0.25em 2.75em 0.25em 0.5em;
 }
 
 #amount,
@@ -486,6 +618,8 @@ select {
 .sucker {
   display: flex;
   gap: 1em;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .split {
@@ -515,6 +649,7 @@ select {
   top: 50%;
   right: 0.5em;
   transform: translateY(-50%);
+  font-weight: 400;
 }
 
 .percent {
@@ -536,7 +671,6 @@ select {
   justify-content: space-between;
   color: var(--colorWhite);
   background: var(--colorBlack);
-  border-radius: 10px;
   padding: 0.5em;
 }
 
@@ -550,14 +684,21 @@ select {
   text-align: center;
 }
 
+.profile-pic {
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+  height: 120px;
+  margin: 0 auto;
+}
+
 .profile-pic-small {
   border-radius: 50%;
   aspect-ratio: 1/1;
   object-fit: cover;
   height: 100px;
+  width: 100px;
   display: inline-block;
-  margin: 0 0.25em;
-  cursor: pointer;
 }
 
 .profile-pic-tiny {
@@ -617,27 +758,33 @@ select {
   top: 6.5em;
   max-height: 200px;
   min-height: 50px;
+  z-index: 1;
 }
 
 .dropdown-elem {
   cursor: pointer;
 }
 
-.friend-request {
+.friend-request,
+.group-request {
   margin: 1em 0;
 }
 
-.friend-request-info {
+.friend-request-info,
+.group-request-info {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
-.friend-request-info p {
+.friend-request-info p,
+.group-request-info p {
   margin-left: 0.5em;
 }
 
 .btns {
-  display: grid;
-  grid-template-columns: min-content min-content auto;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   gap: 1em;
   margin-top: 1em;
 }
@@ -744,7 +891,8 @@ select {
 
 .account-settings,
 .account-info,
-.friend-settings {
+.friend-settings,
+.group-settings {
   padding: 1em 3em;
   align-items: unset !important;
   gap: 1em;
@@ -756,10 +904,11 @@ select {
 
 label {
   font-size: 0.8rem;
-  margin-bottom: -1.25em;
+  margin-bottom: -1em;
 }
 
-.account-settings h2 {
+.account-settings h2,
+.group-settings h2 {
   display: flex;
   gap: 0.25em;
   align-items: center;
@@ -871,6 +1020,14 @@ nav a:hover,
   font-weight: bold;
 }
 
+.error {
+  color: var(--colorPurple);
+  font-weight: bold;
+  text-align: center;
+  font-size: 0.9rem;
+  padding: 0.25em;
+}
+
 button.red {
   color: var(--colorPurple);
 }
@@ -940,8 +1097,12 @@ button.red {
 }
 
 /* -- SCROLLING -- */
-.scrollable {
+.scrollable-y {
   overflow-y: scroll;
+}
+
+.scrollable-x {
+  overflow-x: scroll;
 }
 
 /* Custom scrollbar styles */

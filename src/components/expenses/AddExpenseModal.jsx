@@ -4,12 +4,13 @@ import "react-calendar/dist/Calendar.css";
 import { nanoid } from "nanoid";
 import { useAuth } from "../../context/AuthContext";
 import { addExpenseToDatabase } from "../../database/expenses";
-import { addActivityToUser } from "../../API/userAPI";
+import { addActivityToUser, addExpenseToUser } from "../../API/userAPI";
 import useFriend from "../../hooks/useFriend";
 import { useParams } from "react-router-dom";
 import { getCurrencyIconFromSymbol } from "../../utility/money";
 import ExpenseForm from "./ExpenseForm";
 import { usePopup } from "../../context/PopupContext";
+import { addUserToDatabase } from "../../database/user";
 
 function AddExpenseModal({ toggleModal }) {
   const { user, profileImgUrl: userProfileUrl } = useAuth();
@@ -49,12 +50,16 @@ function AddExpenseModal({ toggleModal }) {
       currency: expense.currency,
       split: expense.split,
       id: expense.id,
-      users: [user.id, friend.id],
       sucker: expense.sucker,
+      group: "",
+      users: [user.id, friend.id],
       settled: false,
-      creationTime: new Date()
+      creationTime: new Date(),
+      creator: user.id,
+      paidBy: []
     };
     await addExpenseToDatabase(newExpense);
+    await addExpenseToUser(user, expense.id);
   };
 
   const handleNewActivity = async () => {

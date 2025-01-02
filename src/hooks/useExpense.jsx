@@ -1,22 +1,27 @@
 import { useEffect, useState } from "react";
-import { getExpenseFromDatabase } from "../database/expenses";
+import { doc, onSnapshot } from "firebase/firestore";
+import { database } from "../database/firebase";
 
 function useExpense(expenseID) {
   const [expense, setExpense] = useState(null);
 
-  const refreshExpense = async () => {
-    setExpense(await getExpenseFromDatabase(expenseID));
-  };
-
   useEffect(() => {
-    const getExpense = async () => {
-      setExpense(await getExpenseFromDatabase(expenseID));
-    };
+    if (!expenseID) {
+      return;
+    }
 
-    getExpense();
-  }, []);
+    const expenseRef = doc(database, "expenses", expenseID);
 
-  return { expense, refreshExpense };
+    const unsubscribe = onSnapshot(expenseRef, (docSnapshot) => {
+      if (docSnapshot.exists()) {
+        setExpense(docSnapshot.data());
+      }
+    });
+
+    return unsubscribe;
+  }, [expenseID]);
+
+  return { expense };
 }
 
 export default useExpense;

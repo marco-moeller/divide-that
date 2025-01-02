@@ -1,13 +1,12 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { nanoid } from "nanoid";
-import { addFriendRequestToFriend } from "../../API/userAPI";
+import { addGroupRequestToUser } from "../../API/userAPI";
 import { getAllUsersFromDatabase } from "../../database/user";
 import { usePopup } from "../../context/PopupContext";
-import { FaLevelDownAlt } from "react-icons/fa";
 import { IoMdArrowRoundDown } from "react-icons/io";
 
-function UserSearch() {
+function GroupUserSearch({ group }) {
   const { user } = useAuth();
   const [currentSearch, setCurrentSearch] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
@@ -24,13 +23,13 @@ function UserSearch() {
     try {
       setStatus("submitting");
       if (!selectedUser) throw new Error("No user selected.");
-      if (selectedUser.friendRequests.includes(user.id))
+      if (selectedUser.groupRequests.includes(group.id))
         throw new Error(
-          `You already invited ${selectedUser.userName} to be your friend.`
+          `${selectedUser.userName} has already been invited to this group.`
         );
 
-      await addFriendRequestToFriend(selectedUser, user);
-      showPopup("Friend Request Sent");
+      await addGroupRequestToUser(selectedUser, group.id);
+      showPopup("Group Invite Sent");
       setSelectedUser(null);
       setCurrentSearch("");
       setError(null);
@@ -51,30 +50,30 @@ function UserSearch() {
   };
 
   const renderDropdown = () => {
-    const userExistsAndINotFriendOrSelf = (userFromAllUsers) => {
+    const userExistsAndINotInGroupOrSelf = (userFromAllUsers) => {
       return (
         isSubstringOf(
           userFromAllUsers.userName.toLowerCase(),
           currentSearch.toLowerCase()
         ) &&
         userFromAllUsers.userName !== user.userName &&
-        !user.friends.includes(userFromAllUsers.id)
+        !group.users.includes(userFromAllUsers.id)
       );
     };
 
-    const emailExistsAndINotFriendOrSelf = (userFromAllUsers) => {
+    const emailExistsAndINotInGroupOrSelf = (userFromAllUsers) => {
       return (
         isSubstringOf(
           userFromAllUsers.email.toLowerCase(),
           currentSearch.toLowerCase()
         ) &&
         userFromAllUsers.userName !== user.userName &&
-        !user.friends.includes(userFromAllUsers.id)
+        !group.users.includes(userFromAllUsers.id)
       );
     };
 
-    const hasRequestFromUserAlready = (userFromAllUsers) => {
-      return userFromAllUsers.friendRequests.includes(user.id);
+    const hasRequestFromThisGroupAlready = (userFromAllUsers) => {
+      return userFromAllUsers.groupRequests.includes(group.id);
     };
 
     if (!allUsers) return;
@@ -82,9 +81,9 @@ function UserSearch() {
     if (
       allUsers?.filter(
         (userFromAllUsers) =>
-          (userExistsAndINotFriendOrSelf(userFromAllUsers) ||
-            emailExistsAndINotFriendOrSelf(userFromAllUsers)) &&
-          !hasRequestFromUserAlready(userFromAllUsers)
+          (userExistsAndINotInGroupOrSelf(userFromAllUsers) ||
+            emailExistsAndINotInGroupOrSelf(userFromAllUsers)) &&
+          !hasRequestFromThisGroupAlready(userFromAllUsers)
       ).length === 0
     )
       return;
@@ -94,9 +93,9 @@ function UserSearch() {
         {allUsers
           ?.filter(
             (userFromAllUsers) =>
-              (userExistsAndINotFriendOrSelf(userFromAllUsers) ||
-                emailExistsAndINotFriendOrSelf(userFromAllUsers)) &&
-              !hasRequestFromUserAlready(userFromAllUsers)
+              (userExistsAndINotInGroupOrSelf(userFromAllUsers) ||
+                emailExistsAndINotInGroupOrSelf(userFromAllUsers)) &&
+              !hasRequestFromThisGroupAlready(userFromAllUsers)
           )
           .map((userFromAllUsers) => (
             <div
@@ -143,8 +142,8 @@ function UserSearch() {
   return (
     <div className="search-users">
       <p className="find-your-friends-below">
-        Find your <span className="red">&nbsp;friends&nbsp; </span> below{" "}
-        <IoMdArrowRoundDown />
+        Invite people to this <span className="red">&nbsp;group&nbsp; </span>{" "}
+        below <IoMdArrowRoundDown />
       </p>
       <input
         className="search"
@@ -160,11 +159,11 @@ function UserSearch() {
         disabled={status === "submitting" || !selectedUser}
         onClick={sendFriendRequest}
       >
-        send friend request
+        send group invite
       </button>
       <p className="red">{error?.message}</p>
     </div>
   );
 }
 
-export default UserSearch;
+export default GroupUserSearch;

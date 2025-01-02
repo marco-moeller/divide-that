@@ -16,7 +16,6 @@ export const UploadProfileImage = async (file, user) => {
       const oldStoragePath = "profileImages/" + user.profileImage;
       await deleteImageFromDatabase(oldStoragePath);
     }
-    window.dispatchEvent(new Event("userUpdate"));
   } catch (error) {
     console.log(error);
   }

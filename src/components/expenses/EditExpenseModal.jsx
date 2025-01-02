@@ -32,7 +32,6 @@ function EditExpenseModal({ toggleModal, oldExpense }) {
     try {
       await addExpenseToDatabase(newExpense);
       await handleNewActivity();
-      window.dispatchEvent(new Event("expenseUpdate"));
       showPopup("Expense Updated");
     } catch (error) {
       console.log(error);

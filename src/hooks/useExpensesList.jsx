@@ -20,6 +20,7 @@ function useExpensesList(friendID) {
           .filter(
             (expense) =>
               !expense.settled &&
+              (!expense?.group || expense?.group === "") &&
               expense.users.includes(user.id) &&
               expense.users.includes(friendID)
           )

@@ -12,7 +12,7 @@ function useCurrencyRates() {
     getRates();
   }, []);
 
-  return conversionRates;
+  return { conversionRates };
 }
 
 export default useCurrencyRates;

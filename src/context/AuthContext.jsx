@@ -2,7 +2,8 @@ import { createContext, useContext, useEffect, useState } from "react";
 import { getUserFromDatabase } from "../database/user";
 import { getProfileImage } from "../API/profileImageAPI";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "../database/firebase";
+import { auth, database } from "../database/firebase";
+import { doc, onSnapshot } from "firebase/firestore";
 
 export const AuthContext = createContext();
 
@@ -16,44 +17,53 @@ export function AuthProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
-  const initializeUser = async (user) => {
-    if (user) {
-      const userFromDatabase = await getUserFromDatabase(user.uid);
-      setUser({ ...userFromDatabase });
-      setIsLoggedIn(true);
-    } else {
-      setUser(null);
-      setIsLoggedIn(false);
-    }
-    setIsLoading(false);
-  };
-
   useEffect(() => {
+    let unsubscribeSnapshot = null;
+
+    const initializeUser = async (user) => {
+      if (user) {
+        const userDocRef = doc(database, "users", user.uid);
+        unsubscribeSnapshot = onSnapshot(userDocRef, (doc) => {
+          if (doc.exists()) {
+            setUser({ ...doc.data() });
+          }
+        });
+        setIsLoggedIn(true);
+      } else {
+        setUser(null);
+        setIsLoggedIn(false);
+      }
+      setIsLoading(false);
+    };
+
     const unsubscribe = onAuthStateChanged(auth, (user) =>
       initializeUser(user)
     );
-    return unsubscribe;
+
+    return () => {
+      unsubscribe();
+      unsubscribeSnapshot();
+    };
   }, []);
 
   useEffect(() => {
-    if (!user) {
-      return;
-    }
     const getImgUrl = async () => {
       const url = await getProfileImage(user.profileImage);
       setProfileImgUrl(url);
     };
-    getImgUrl();
+    if (user) {
+      getImgUrl();
+    }
   }, [user]);
 
-  useEffect(() => {
-    const handleUserUpdate = async () => {
-      initializeUser(auth.currentUser);
-    };
+  // useEffect(() => {
+  //   const handleUserUpdate = async () => {
+  //     initializeUser(auth.currentUser);
+  //   };
 
-    window.addEventListener("userUpdate", handleUserUpdate);
-    return () => window.removeEventListener("userUpdate", handleUserUpdate);
-  }, []);
+  //   window.addEventListener("userUpdate", handleUserUpdate);
+  //   return () => window.removeEventListener("userUpdate", handleUserUpdate);
+  // }, []);
 
   const value = { user, isLoggedIn, isLoading, profileImgUrl };
 

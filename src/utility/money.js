@@ -24,3 +24,29 @@ export const getCurrencyName = (iconOrSymbol) => {
   );
   return currency ? currency.name : null;
 };
+
+export const cutAfterTwoDecimals = (number) => Math.trunc(number * 100) / 100;
+
+export const convertCurrency = (
+  exchangeRates,
+  amount,
+  fromCurrency,
+  toCurrency
+) => {
+  if (!exchangeRates) return;
+
+  const fromRate = exchangeRates.find(
+    (rate) => rate.name === fromCurrency
+  )?.amount;
+  const toRate = exchangeRates.find((rate) => rate.name === toCurrency)?.amount;
+
+  if (fromRate && toRate) {
+    const amountInTarget = amount / fromRate;
+    const convertedAmount = amountInTarget * toRate;
+
+    return convertedAmount;
+  } else {
+    console.error("Invalid currency");
+    return null;
+  }
+};

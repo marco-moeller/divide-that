@@ -5,6 +5,7 @@ import {
   updateUserEmail,
   updateUserPassword
 } from "../database/auth";
+import { getExpensesFromDatabase } from "../database/expenses";
 import { deleteImageFromDatabase } from "../database/profileImages";
 import { addUserToDatabase, deleteUserFromDatabase } from "../database/user";
 
@@ -16,7 +17,15 @@ export const registerNewUser = async (userData, password) => {
     );
     await addUserToDatabase({
       ...userData,
-      id: user.uid
+      id: user.uid,
+      groups: [],
+      defaultCurrency: "USD",
+      friends: [],
+      friendRequests: [],
+      groupInvites: [],
+      activities: [],
+      profileImage: "",
+      expenses: []
     });
   } catch (error) {
     console.log(error);
@@ -37,7 +46,6 @@ export const addFriendRequestToFriend = async (friend, user) => {
     ...friend,
     friendRequests: [...friend.friendRequests, user.id]
   });
-  window.dispatchEvent(new Event("userUpdate"));
 };
 
 export const removeFriendRequestFromUser = async (user, friendID) => {
@@ -48,7 +56,26 @@ export const removeFriendRequestFromUser = async (user, friendID) => {
     )
   };
   await addUserToDatabase(updatedUser);
-  window.dispatchEvent(new Event("userUpdate"));
+  return updatedUser;
+};
+
+export const addGroupRequestToUser = async (user, groupID) => {
+  if (user?.groupRequests?.includes(groupID)) {
+    return;
+  }
+
+  await addUserToDatabase({
+    ...user,
+    groupRequests: [...user.groupRequests, groupID]
+  });
+};
+
+export const removeGroupRequestFromUser = async (user, groupID) => {
+  const updatedUser = {
+    ...user,
+    groupRequests: user.groupRequests.filter((request) => request !== groupID)
+  };
+  await addUserToDatabase(updatedUser);
   return updatedUser;
 };
 
@@ -60,7 +87,6 @@ export const addFriendToUser = async (user, friendID) => {
     ...user,
     friends: [...user.friends, friendID]
   });
-  window.dispatchEvent(new Event("userUpdate"));
 };
 
 export const removeFriendFromUser = async (user, friendID) => {
@@ -68,8 +94,6 @@ export const removeFriendFromUser = async (user, friendID) => {
     ...user,
     friends: user.friends.filter((friend) => friend !== friendID)
   });
-
-  window.dispatchEvent(new Event("userUpdate"));
 };
 
 export const addActivityToUser = async (user, activity) => {
@@ -77,6 +101,17 @@ export const addActivityToUser = async (user, activity) => {
     ...user,
     activities: [...user.activities, activity]
   });
+};
+
+export const addExpenseToUser = async (user, expenseID) => {
+  await addUserToDatabase({
+    ...user,
+    expenses: [...user.expenses, expenseID]
+  });
+};
+
+export const addGroupToUser = async (user, groupID) => {
+  await addUserToDatabase({ ...user, groups: [...user.groups, groupID] });
 };
 
 export const updateUserData = async (user, userData) => {
@@ -104,4 +139,21 @@ export const deleteUserAccount = async (userID, profileImage) => {
   } catch (error) {
     console.log(error);
   }
+};
+
+export const getAllUserExpensesIDsAndAddThemToTheUser = async (user) => {
+  const expensesList = await getExpensesFromDatabase();
+
+  console.log(
+    expensesList
+      .filter((expense) => expense.users.includes(user.id))
+      .map((expense) => expense.id)
+  );
+
+  addUserToDatabase({
+    ...user,
+    expenses: expensesList
+      .filter((expense) => expense.users.includes(user.id))
+      .map((expense) => expense.id)
+  });
 };

@@ -4,24 +4,20 @@ import ModalHeader from "../modals/ModalHeader";
 import { FaUserAltSlash } from "react-icons/fa";
 import { MdBlock } from "react-icons/md";
 import { removeFriendFromUser } from "../../API/userAPI";
-import useFriend from "../../hooks/useFriend";
 import { MdOutlineReport } from "react-icons/md";
 import FriendProfilePicture from "./FriendProfilePicture";
 
-function FriendSettingsModal({ toggleModal, friendID }) {
+function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
   const { user } = useAuth();
-  const { friend, profileImgUrl } = useFriend(friendID);
 
   const navigate = useNavigate();
 
   const handleRemoveFriendClick = async () => {
-    await removeFriendFromUser(user, friendID);
+    await removeFriendFromUser(user, friend.id);
     await removeFriendFromUser(friend, user.id);
     toggleModal();
     navigate("/");
   };
-
-  if (!friend) return <></>;
 
   return (
     <>

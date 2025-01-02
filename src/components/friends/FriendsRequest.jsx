@@ -21,14 +21,14 @@ function FriendRequest({ request }) {
     <div className="friend-request">
       {" "}
       <div className="friend-request-info">
-        <img src={profileImgUrl} alt="" className="profile-pic-small" />
+        <img src={profileImgUrl} alt="" className="profile-pic-tiny" />
         <p>{friend?.userName} wants to be your friend.</p>
       </div>
       <div className="btns">
-        <button className="accept-req-btn" onClick={handleAcceptClick}>
+        <button className="accept-req-btn btn" onClick={handleAcceptClick}>
           accept
         </button>
-        <button className="accept-req-btn" onClick={handleRejectClick}>
+        <button className="accept-req-btn btn" onClick={handleRejectClick}>
           reject
         </button>{" "}
       </div>

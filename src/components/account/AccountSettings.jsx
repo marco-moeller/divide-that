@@ -83,7 +83,7 @@ function AccountSettings({ toggleModal }) {
       <div className="account-settings fd-column flex">
         <label htmlFor="user-name">Username</label>
         {!isShowingUserName && (
-          <h2 className="user-name" name="user-name">
+          <h2 name="user-name">
             {formData.userName}
             <MdOutlineModeEdit onClick={toggleUserName} />
           </h2>
@@ -187,7 +187,7 @@ function AccountSettings({ toggleModal }) {
             Confirm Delete Account
           </button>
         )}
-        <p className="red">{error?.message}</p>
+        <p className="error">{error?.message}</p>
       </div>
     </>
   );

@@ -97,13 +97,12 @@ function Group() {
         <section className="members scrollable-x scrollable">
           {[user.id, ...group.users.filter((member) => member !== user.id)].map(
             (userID) => (
-              <div className="" key={userID}>
-                <GroupMember
-                  userID={userID}
-                  getSelectedMemberClass={getSelectedMemberClass}
-                  setSelectedMember={setSelectedMember}
-                />
-              </div>
+              <GroupMember
+                key={userID}
+                userID={userID}
+                getSelectedMemberClass={getSelectedMemberClass}
+                setSelectedMember={setSelectedMember}
+              />
             )
           )}
         </section>

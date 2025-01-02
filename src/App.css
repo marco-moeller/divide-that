@@ -14,6 +14,7 @@
 h1 {
   font-size: 2rem;
   color: var(--colorWhite);
+  text-align: center;
 }
 
 h1.name {
@@ -259,8 +260,8 @@ svg {
 .members {
   max-width: 100%;
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-around;
   text-align: center;
   white-space: nowrap;
   padding-top: 0.25em;

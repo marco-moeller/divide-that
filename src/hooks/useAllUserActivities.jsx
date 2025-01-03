@@ -6,6 +6,7 @@ function useAllUserActivities(activityIDsArray) {
 
   useEffect(() => {
     if (!activityIDsArray || activityIDsArray.length === 0) {
+      setActivities([]);
       return;
     }
 

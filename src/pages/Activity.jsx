@@ -7,7 +7,10 @@ function Activity() {
   const { user } = useAuth();
   const { activities } = useAllUserActivities(user?.activities);
 
-  if (!user || !activities) {
+  console.log(user.activities);
+  console.log(activities);
+
+  if (!user || activities === undefined) {
     return;
   }
 

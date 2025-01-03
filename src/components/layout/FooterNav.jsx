@@ -23,7 +23,7 @@ function FooterNav() {
         </NavLink>
         <NavLink to="/activity">
           <LuActivitySquare />
-          Activity
+          Activities
         </NavLink>
         {isLoggedIn && (
           <NavLink to="/account">

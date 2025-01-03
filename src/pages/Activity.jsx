@@ -16,7 +16,7 @@ function Activity() {
 
   return (
     <main className="activities">
-      <h2 className="title">Activity</h2>
+      <h2 className="title">Your Activities</h2>
       <div className="activities-list">
         {activities
           .sort((a, b) => b.date - a.date)

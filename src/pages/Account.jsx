@@ -32,7 +32,7 @@ function Account() {
 
   return (
     <main className="account">
-      <h2 className="title">Account</h2>
+      <h2 className="title">Your Account</h2>
       <div className="account-info">
         <div className="account-image">
           {isShowing && (

@@ -96,13 +96,6 @@ export const removeFriendFromUser = async (user, friendID) => {
   });
 };
 
-export const addActivityToUser = async (user, activity) => {
-  await addUserToDatabase({
-    ...user,
-    activities: [...user.activities, activity]
-  });
-};
-
 export const addExpenseToUser = async (user, expenseID) => {
   await addUserToDatabase({
     ...user,

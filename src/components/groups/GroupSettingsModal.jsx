@@ -14,12 +14,16 @@ import { useNavigate } from "react-router-dom";
 import useError from "../error/useError";
 import ErrorComponent from "../error/ErrorComponent";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
+import { activityTypes, getNewActivity } from "../../utility/interfaces";
+import useGroupMembers from "../../hooks/useGroupMembers";
+import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 
 function GroupSettingsModal({ toggle, group }) {
   const { user } = useAuth();
   const navigate = useNavigate();
   const { error, setError } = useError();
 
+  const { members } = useGroupMembers(group?.users);
   const [groupName, setGroupName] = useState(group.name);
 
   const { isShowing, toggle: toggleDeleteConfirmButton } =
@@ -31,6 +35,7 @@ function GroupSettingsModal({ toggle, group }) {
   const handleDeleteClick = async () => {
     try {
       await deleteGroupFromDatabase(group.id);
+      await handleNewDeleteActivity();
 
       const groupMembers = await getAllGroupUsers(group.users);
       groupMembers.forEach(
@@ -59,6 +64,25 @@ function GroupSettingsModal({ toggle, group }) {
   const handleSubmit = async () => {
     toggle();
     await addGroupToDatabase({ ...group, name: groupName });
+    await handleNewActivity();
+  };
+
+  const handleNewActivity = async () => {
+    const newActivity = getNewActivity({
+      users: [...members],
+      type: activityTypes.updatedGroup,
+      groupName: group.name
+    });
+    addNewActivityToDatabase(newActivity);
+  };
+
+  const handleNewDeleteActivity = async () => {
+    const newActivity = getNewActivity({
+      users: [...members],
+      type: activityTypes.deletedGroup,
+      groupName: group.name
+    });
+    addNewActivityToDatabase(newActivity);
   };
 
   useEffect(() => {
@@ -67,7 +91,7 @@ function GroupSettingsModal({ toggle, group }) {
     }
   }, [user, group]);
 
-  if (!user) {
+  if (!user || !members) {
     return;
   }
 

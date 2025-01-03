@@ -6,6 +6,9 @@ import ModalHeader from "../../modals/ModalHeader";
 import GroupExpenseForm from "./GroupExpenseForm";
 import { usePopup } from "../../../context/PopupContext";
 import { addExpenseToDatabase } from "../../../database/expenses";
+import useGroupMembers from "../../../hooks/useGroupMembers";
+import { activityTypes, getNewActivity } from "../../../utility/interfaces";
+import { addNewActivityToDatabase } from "../../../API/activitiesAPI";
 
 function EditGroupExpenseModal({ toggleModal, oldExpense, group }) {
   const { error, setError } = useError();
@@ -15,6 +18,7 @@ function EditGroupExpenseModal({ toggleModal, oldExpense, group }) {
     date: oldExpense.date.toDate()
   });
 
+  const { members } = useGroupMembers(group?.users);
   const { showPopup } = usePopup();
 
   const handleSubmit = async (event) => {
@@ -24,6 +28,7 @@ function EditGroupExpenseModal({ toggleModal, oldExpense, group }) {
         ...expense
       };
       await addExpenseToDatabase(newExpense);
+      await handleNewActivity();
       showPopup("Expense Updated");
       toggleModal();
       setError("");
@@ -32,7 +37,17 @@ function EditGroupExpenseModal({ toggleModal, oldExpense, group }) {
     }
   };
 
-  if (!group || !user) return;
+  const handleNewActivity = async () => {
+    const newActivity = getNewActivity({
+      users: [...members],
+      type: activityTypes.updatedGroupExpense,
+      expenseName: expense.title,
+      groupName: group.name
+    });
+    addNewActivityToDatabase(newActivity);
+  };
+
+  if (!group || !user || !members) return;
 
   return (
     <>
@@ -45,6 +60,7 @@ function EditGroupExpenseModal({ toggleModal, oldExpense, group }) {
         setExpense={setExpense}
         group={group}
         user={user}
+        members={members}
       />
     </>
   );

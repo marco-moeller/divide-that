@@ -5,9 +5,14 @@ import { addGroupRequestToUser } from "../../API/userAPI";
 import { getAllUsersFromDatabase } from "../../database/user";
 import { usePopup } from "../../context/PopupContext";
 import { IoMdArrowRoundDown } from "react-icons/io";
+import useGroupMembers from "../../hooks/useGroupMembers";
+import { activityTypes, getNewActivity } from "../../utility/interfaces";
+import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 
 function GroupUserSearch({ group }) {
   const { user } = useAuth();
+  const { members } = useGroupMembers(group.users);
+
   const [currentSearch, setCurrentSearch] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
   const [allUsers, setAllUsers] = useState(null);
@@ -17,7 +22,7 @@ function GroupUserSearch({ group }) {
 
   const { showPopup } = usePopup();
 
-  const sendFriendRequest = async () => {
+  const sendGroupInvite = async () => {
     if (status === "submitting") return;
 
     try {
@@ -29,6 +34,7 @@ function GroupUserSearch({ group }) {
         );
 
       await addGroupRequestToUser(selectedUser, group.id);
+      await handleNewActivity();
       showPopup("Group Invite Sent");
       setSelectedUser(null);
       setCurrentSearch("");
@@ -39,6 +45,15 @@ function GroupUserSearch({ group }) {
     } finally {
       setStatus("idle");
     }
+  };
+
+  const handleNewActivity = async () => {
+    const newActivity = getNewActivity({
+      users: [user, selectedUser],
+      type: activityTypes.sentGroupInvite,
+      groupName: group.name
+    });
+    addNewActivityToDatabase(newActivity);
   };
 
   const hideDropdown = () => {
@@ -155,9 +170,9 @@ function GroupUserSearch({ group }) {
       />
       {currentSearch && !isHidden && renderDropdown()}
       <button
-        className="add-friend-btn btn"
+        className="add-group-member-btn btn"
         disabled={status === "submitting" || !selectedUser}
-        onClick={sendFriendRequest}
+        onClick={sendGroupInvite}
       >
         send group invite
       </button>

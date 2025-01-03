@@ -11,10 +11,15 @@ import { addGroupToDatabase } from "../../../database/groups";
 import useError from "../../error/useError";
 import ErrorComponent from "../../error/ErrorComponent";
 import { usePopup } from "../../../context/PopupContext";
+import { activityTypes, getNewActivity } from "../../../utility/interfaces";
+import { addNewActivityToDatabase } from "../../../API/activitiesAPI";
+import useGroupMembers from "../../../hooks/useGroupMembers";
 
 function AddGroupExpenseModal({ toggleModal }) {
   const { id } = useParams();
   const { group } = useGroup(id);
+  const { members } = useGroupMembers(group?.users);
+
   const { user } = useAuth();
   const [expense, setExpense] = useState({
     date: new Date(),
@@ -42,6 +47,8 @@ function AddGroupExpenseModal({ toggleModal }) {
         throw new Error("Amount must be greater than zero");
 
       await handleNewExpense();
+      await handleNewActivity();
+
       setError(null);
       toggleModal();
       showPopup("expense added");
@@ -73,7 +80,17 @@ function AddGroupExpenseModal({ toggleModal }) {
     });
   };
 
-  if (!group || !user) return;
+  const handleNewActivity = async () => {
+    const newActivity = getNewActivity({
+      users: [...members],
+      type: activityTypes.addedGroupExpense,
+      expenseName: expense.title,
+      groupName: group.name
+    });
+    addNewActivityToDatabase(newActivity);
+  };
+
+  if (!group || !user || !members) return;
 
   return (
     <>
@@ -86,6 +103,7 @@ function AddGroupExpenseModal({ toggleModal }) {
         setExpense={setExpense}
         group={group}
         user={user}
+        members={members}
       />
     </>
   );

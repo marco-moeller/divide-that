@@ -4,9 +4,10 @@ import "react-calendar/dist/Calendar.css";
 import { useAuth } from "../../context/AuthContext";
 import useFriend from "../../hooks/useFriend";
 import { addExpenseToDatabase } from "../../database/expenses";
-import { addActivityToUser } from "../../API/userAPI";
 import ExpenseForm from "./ExpenseForm";
 import { usePopup } from "../../context/PopupContext";
+import { activityTypes, getNewActivity } from "../../utility/interfaces";
+import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 
 function EditExpenseModal({ toggleModal, oldExpense }) {
   const [expense, setExpense] = useState({
@@ -39,16 +40,12 @@ function EditExpenseModal({ toggleModal, oldExpense }) {
   };
 
   const handleNewActivity = async () => {
-    const newActivity = {
-      title: expense.title,
-      users: [user.id, friend.id],
-      who: user.userName,
-      date: new Date(),
-      type: "update",
-      expense: expense.id
-    };
-    await addActivityToUser(user, newActivity);
-    await addActivityToUser(friend, newActivity);
+    const newActivity = getNewActivity({
+      users: [user, friend],
+      type: activityTypes.updatedExpense,
+      expenseName: expense.title
+    });
+    addNewActivityToDatabase(newActivity);
   };
 
   if (!friend || !user) return <></>;

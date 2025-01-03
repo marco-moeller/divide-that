@@ -4,7 +4,6 @@ import { nanoid } from "nanoid";
 import { addFriendRequestToFriend } from "../../API/userAPI";
 import { getAllUsersFromDatabase } from "../../database/user";
 import { usePopup } from "../../context/PopupContext";
-import { FaLevelDownAlt } from "react-icons/fa";
 import { IoMdArrowRoundDown } from "react-icons/io";
 
 function UserSearch() {
@@ -30,6 +29,7 @@ function UserSearch() {
         );
 
       await addFriendRequestToFriend(selectedUser, user);
+
       showPopup("Friend Request Sent");
       setSelectedUser(null);
       setCurrentSearch("");

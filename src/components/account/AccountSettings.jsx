@@ -12,6 +12,8 @@ import {
   getCurrencyName,
   getCurrencySymbolFromIcon
 } from "../../utility/money";
+import { activityTypes, getNewActivity } from "../../utility/interfaces";
+import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 
 function AccountSettings({ toggleModal }) {
   const { user } = useAuth();
@@ -43,7 +45,7 @@ function AccountSettings({ toggleModal }) {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (status !== "idle") {
       return;
     }
@@ -52,18 +54,27 @@ function AccountSettings({ toggleModal }) {
         throw new Error("Passwords don't match!");
       }
       setStatus("submitting");
-      updateUserData(user, {
+      await updateUserData(user, {
         ...formData,
         defaultCurrency:
           getCurrencySymbolFromIcon(formData.defaultCurrency) ||
           formData.defaultCurrency
       });
+      await handleNewActivity();
       toggleModal();
     } catch (error) {
       setError(error);
     } finally {
       setStatus("idle");
     }
+  };
+
+  const handleNewActivity = async () => {
+    const newActivity = getNewActivity({
+      users: [user],
+      type: activityTypes.updatedAccount
+    });
+    addNewActivityToDatabase(newActivity);
   };
 
   const handleDeleteAccount = async () => {

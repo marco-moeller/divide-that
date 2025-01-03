@@ -3,7 +3,10 @@ import { database, groupsRef } from "./firebase";
 
 export const addGroupToDatabase = async (group) => {
   try {
-    await setDoc(doc(groupsRef, group.id), group);
+    await setDoc(doc(groupsRef, group.id), {
+      ...group,
+      lastUpdate: JSON.stringify(new Date())
+    });
   } catch (error) {
     console.log(error);
   }

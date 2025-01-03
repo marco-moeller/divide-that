@@ -8,16 +8,14 @@ import {
 } from "../../../utility/money";
 import { currencies } from "../../../data/data";
 import GroupListComponent from "../GroupListComponent";
-import useGroupMembers from "../../../hooks/useGroupMembers";
+
 import { nanoid } from "nanoid";
 
 const PRECISION = 1e20;
 
-function GroupExpenseForm({ expense, setExpense, group, user }) {
+function GroupExpenseForm({ expense, setExpense, group, user, members }) {
   const [showCalendar, setShowCalendar] = useState(false);
   const [splitType, setSplitType] = useState("even");
-
-  const { members } = useGroupMembers(group?.users);
 
   const toggleCalendar = (event) => {
     event.preventDefault();
@@ -97,7 +95,7 @@ function GroupExpenseForm({ expense, setExpense, group, user }) {
     setSplitType("even");
     setExpense((prevState) => ({
       ...prevState,
-      split: members.reduce((acc, member) => {
+      split: members?.reduce((acc, member) => {
         acc[member.id] = evenSplitPercentage;
         return acc;
       }, {})

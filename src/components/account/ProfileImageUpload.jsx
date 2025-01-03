@@ -4,6 +4,8 @@ import { useAuth } from "../../context/AuthContext";
 import { UploadProfileImage } from "../../API/profileImageAPI";
 import Cropper from "react-easy-crop";
 import { getCroppedImg } from "../../utility/imageCropping";
+import { activityTypes, getNewActivity } from "../../utility/interfaces";
+import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 
 function ProfileImageUpload({ toggleModal }) {
   const [file, setFile] = useState(null);
@@ -16,12 +18,25 @@ function ProfileImageUpload({ toggleModal }) {
 
   const handleSubmit = async () => {
     if (!file) return;
+    try {
+      const croppedImg = await handleCrop();
+      const croppedFile = await urlToFile(croppedImg);
 
-    const croppedImg = await handleCrop();
-    const croppedFile = await urlToFile(croppedImg);
+      await UploadProfileImage(croppedFile, user);
+      await handleNewActivity();
 
-    await UploadProfileImage(croppedFile, user);
-    toggleModal();
+      toggleModal();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleNewActivity = async () => {
+    const newActivity = getNewActivity({
+      users: [user],
+      type: activityTypes.updatedProfilePicture
+    });
+    addNewActivityToDatabase(newActivity);
   };
 
   const handleChange = (event) => {

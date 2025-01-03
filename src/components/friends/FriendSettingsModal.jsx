@@ -13,10 +13,14 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
   const navigate = useNavigate();
 
   const handleRemoveFriendClick = async () => {
-    await removeFriendFromUser(user, friend.id);
-    await removeFriendFromUser(friend, user.id);
-    toggleModal();
-    navigate("/");
+    try {
+      await removeFriendFromUser(user, friend.id);
+      await removeFriendFromUser(friend, user.id);
+      toggleModal();
+      navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (

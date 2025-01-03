@@ -4,13 +4,14 @@ import "react-calendar/dist/Calendar.css";
 import { nanoid } from "nanoid";
 import { useAuth } from "../../context/AuthContext";
 import { addExpenseToDatabase } from "../../database/expenses";
-import { addActivityToUser, addExpenseToUser } from "../../API/userAPI";
+import { addExpenseToUser } from "../../API/userAPI";
 import useFriend from "../../hooks/useFriend";
 import { useParams } from "react-router-dom";
 import { getCurrencyIconFromSymbol } from "../../utility/money";
 import ExpenseForm from "./ExpenseForm";
 import { usePopup } from "../../context/PopupContext";
-import { addUserToDatabase } from "../../database/user";
+import { activityTypes, getNewActivity } from "../../utility/interfaces";
+import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 
 function AddExpenseModal({ toggleModal }) {
   const { user, profileImgUrl: userProfileUrl } = useAuth();
@@ -63,16 +64,12 @@ function AddExpenseModal({ toggleModal }) {
   };
 
   const handleNewActivity = async () => {
-    const newActivity = {
-      title: expense.title,
-      users: [user.id, friend.id],
-      who: user.userName,
-      date: new Date(),
-      type: "add",
-      expense: expense.id
-    };
-    await addActivityToUser(user, newActivity);
-    await addActivityToUser(friend, newActivity);
+    const newActivity = getNewActivity({
+      users: [user, friend],
+      type: activityTypes.addedExpense,
+      expenseName: expense.title
+    });
+    addNewActivityToDatabase(newActivity);
   };
 
   if (!friend || !user) return <></>;

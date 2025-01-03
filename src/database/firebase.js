@@ -22,7 +22,7 @@ export const expensesRef = collection(database, "expenses");
 export const usersRef = collection(database, "users");
 export const conversionRatesRef = collection(database, "conversionRates");
 export const groupsRef = collection(database, "groups");
-export const groupExpensesRef = collection(database, "group-expenses");
+export const activitiesRef = collection(database, "activities");
 
 /* -- STORAGE -- */
 export const imageDB = getStorage(app);

@@ -16,8 +16,7 @@ export const addUserToGroup = async (user, group) => {
   try {
     await addGroupToDatabase({
       ...group,
-      users: [...group.users, user.id],
-      lastUpdate: JSON.stringify(new Date())
+      users: [...group.users, user.id]
     });
 
     await addUserToDatabase({
@@ -36,8 +35,7 @@ export const removeUserFromGroup = async (group, user) => {
   try {
     await addGroupToDatabase({
       ...group,
-      users: group.user.filter((userID) => userID !== user.id),
-      lastUpdate: JSON.stringify(new Date())
+      users: group.user.filter((userID) => userID !== user.id)
     });
     await addUserToDatabase({
       ...user,

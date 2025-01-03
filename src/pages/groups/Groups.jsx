@@ -1,19 +1,38 @@
 import { FaPlus } from "react-icons/fa";
-import { getNewGroup } from "../../utility/interfaces";
+import {
+  activityTypes,
+  getNewActivity,
+  getNewGroup
+} from "../../utility/interfaces";
 import { useAuth } from "../../context/AuthContext";
 import { addNewGroupToDatabase } from "../../API/groupsAPI";
 import GroupListComponent from "../../components/groups/GroupListComponent";
 import { nanoid } from "nanoid";
 import GroupRequest from "../../components/groups/GroupRequest";
 import GroupTotalDebtComponent from "../../components/groups/GroupTotalDebtComponent";
+import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 
 function Groups() {
   const { user } = useAuth();
 
   const handleAddNewGroup = async () => {
-    const newGroup = getNewGroup(user.id);
+    try {
+      const newGroup = getNewGroup(user.id);
 
-    await addNewGroupToDatabase(newGroup, user);
+      await addNewGroupToDatabase(newGroup, user);
+      await handleNewActivity(newGroup.name);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleNewActivity = async (groupName) => {
+    const newActivity = getNewActivity({
+      users: [user],
+      type: activityTypes.createdGroup,
+      groupName: groupName
+    });
+    addNewActivityToDatabase(newActivity);
   };
 
   if (!user) return <main></main>;

@@ -10,13 +10,14 @@ import {
 } from "../database/expenses";
 import { getExpenseColor } from "../utility/expenseDisplay";
 import { usePopup } from "../context/PopupContext";
-import { addActivityToUser } from "../API/userAPI";
 import useGroup from "../hooks/useGroup";
 import GroupListComponent from "../components/groups/GroupListComponent";
 import useGroupMembers from "../hooks/useGroupMembers";
 import { deleteExpenseFromGroup } from "../API/groupsAPI";
 import EditGroupExpenseButton from "../components/groups/expenses/EditGroupExpenseButton";
 import React from "react";
+import { activityTypes, getNewActivity } from "../utility/interfaces";
+import { addNewActivityToDatabase } from "../API/activitiesAPI";
 
 function GroupExpenseDetail() {
   const { id } = useParams();
@@ -118,7 +119,7 @@ function GroupExpenseDetail() {
     try {
       deleteExpenseFromDatabase(id);
       deleteExpenseFromGroup(group, id);
-      // handleNewActivity();
+      handleNewActivity();
       showPopup("Expense Deleted");
 
       navigate(-1);
@@ -127,18 +128,15 @@ function GroupExpenseDetail() {
     }
   };
 
-  // const handleNewActivity = async () => {
-  //   const newActivity = {
-  //     title: expense.title,
-  //     users: [user.id, friend.id],
-  //     who: user.userName,
-  //     date: new Date(),
-  //     type: "delete",
-  //     expense: expense.id
-  //   };
-  //   await addActivityToUser(user, newActivity);
-  //   await addActivityToUser(friend, newActivity);
-  // };
+  const handleNewActivity = async () => {
+    const newActivity = getNewActivity({
+      users: [...members],
+      type: activityTypes.deletedGroupExpense,
+      expenseName: expense.title,
+      groupName: group.name
+    });
+    addNewActivityToDatabase(newActivity);
+  };
 
   if (!expense || !group || !user) return <></>;
 

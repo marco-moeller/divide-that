@@ -6,7 +6,6 @@ import { convertToMonthDayYear } from "../utility/date";
 import { addZeros } from "../utility/money";
 import { useAuth } from "../context/AuthContext";
 import useFriend from "../hooks/useFriend";
-import { useEffect } from "react";
 import FriendProfilePicture from "../components/friends/FriendProfilePicture";
 import {
   addExpenseToDatabase,
@@ -15,7 +14,8 @@ import {
 import { getExpenseColor, userHasPaid } from "../utility/expenseDisplay";
 import { usePopup } from "../context/PopupContext";
 import { FaPlus } from "react-icons/fa";
-import { addActivityToUser } from "../API/userAPI";
+import { activityTypes, getNewActivity } from "../utility/interfaces";
+import { addNewActivityToDatabase } from "../API/activitiesAPI";
 
 function ExpenseDetail() {
   const { id } = useParams();
@@ -71,16 +71,12 @@ function ExpenseDetail() {
   };
 
   const handleNewActivity = async () => {
-    const newActivity = {
-      title: expense.title,
-      users: [user.id, friend.id],
-      who: user.userName,
-      date: new Date(),
-      type: "delete",
-      expense: expense.id
-    };
-    await addActivityToUser(user, newActivity);
-    await addActivityToUser(friend, newActivity);
+    const newActivity = getNewActivity({
+      users: [user, friend],
+      type: activityTypes.deletedExpense,
+      expenseName: expense.title
+    });
+    addNewActivityToDatabase(newActivity);
   };
 
   if (!expense || !friend || !user) return <></>;

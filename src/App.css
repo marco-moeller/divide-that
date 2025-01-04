@@ -1080,6 +1080,10 @@ button.red {
   cursor: pointer;
 }
 
+.no-pointer {
+  cursor: default;
+}
+
 /* Firefox */
 .no-spinners {
   -moz-appearance: textfield;

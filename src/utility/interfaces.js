@@ -134,9 +134,9 @@ export const getNewGroup = (userID) => {
 };
 
 export const activityTemplates = {
-  addedExpense: "{userName1} added {expenseName}",
-  deletedExpense: "{userName1} deleted {expenseName}",
-  updatedExpense: "{userName1} updated {expenseName}",
+  addedExpense: "{userName1} added {expenseName} (with {userName2})",
+  deletedExpense: "{userName1} deleted {expenseName} (with {userName2})",
+  updatedExpense: "{userName1} updated {expenseName} (with {userName2})",
   createdGroup: "{userName1} created {groupName}",
   deletedGroup: "{userName1} deleted {groupName}",
   updatedGroup: "{userName1} updated {groupName}",
@@ -144,13 +144,14 @@ export const activityTemplates = {
   deletedGroupExpense: "{userName1} deleted {expenseName} from {groupName}",
   updatedGroupExpense: "{userName1} updated {expenseName} in {groupName}",
   sentGroupInvite: "{userName1} invited {userName2} to {groupName}",
+  updatedAccount: "You updated your account",
+  updatedProfilePicture: "You updated your profile picture",
+
   sentFriendRequest: "You invited {userName1} to be your friend",
   receivedFriendRequest: "{userName1} invited you to be their friend",
-  updatedAccount: "You updated your account",
   removedFriend: "You removed {userName1} from your friends",
   blockedUser: "You blocked {userName1}",
-  reportedUser: "You reported {userName1}",
-  updatedProfilePicture: "You updated your profile picture"
+  reportedUser: "You reported {userName1}"
 };
 
 export const activityTypes = {
@@ -176,14 +177,14 @@ export const activityTypes = {
   reportedUser: "reportedUser"
 };
 
-export const formatActivity = (activity, currentUserName) => {
+export const formatActivity = (activity, currentUserID) => {
   const template = activityTemplates[activity.type];
 
   const replacements = {
     userName1:
-      activity.userNames[0] === currentUserName ? "You" : activity.userNames[0],
+      activity.users[0] === currentUserID ? "You" : activity.userNames[0],
     userName2:
-      activity.userNames[1] === currentUserName ? "you" : activity.userNames[1],
+      activity.users[1] === currentUserID ? "you" : activity.userNames[1],
     expenseName: activity?.expenseName || "",
     groupName: activity?.groupName || ""
   };
@@ -200,7 +201,9 @@ export const getNewActivity = (activity) => {
     id: nanoid(),
     who: activity.users[0].id,
     groupName: activity?.groupName || null,
-    expenseName: activity?.expenseName || null
+    expenseName: activity?.expenseName || null,
+    groupID: activity?.groupID || null,
+    expenseID: activity?.expenseID || null
   };
 
   return newActivity;

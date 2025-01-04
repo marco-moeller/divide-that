@@ -51,7 +51,8 @@ function GroupUserSearch({ group }) {
     const newActivity = getNewActivity({
       users: [user, selectedUser],
       type: activityTypes.sentGroupInvite,
-      groupName: group.name
+      groupName: group.name,
+      groupID: group.id
     });
     addNewActivityToDatabase(newActivity);
   };

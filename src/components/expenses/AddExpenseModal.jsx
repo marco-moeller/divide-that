@@ -67,7 +67,8 @@ function AddExpenseModal({ toggleModal }) {
     const newActivity = getNewActivity({
       users: [user, friend],
       type: activityTypes.addedExpense,
-      expenseName: expense.title
+      expenseName: expense.title,
+      expenseID: expense.id
     });
     addNewActivityToDatabase(newActivity);
   };

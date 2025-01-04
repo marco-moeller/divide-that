@@ -71,7 +71,8 @@ function GroupSettingsModal({ toggle, group }) {
     const newActivity = getNewActivity({
       users: [...members],
       type: activityTypes.updatedGroup,
-      groupName: group.name
+      groupName: group.name,
+      groupID: group.id
     });
     addNewActivityToDatabase(newActivity);
   };

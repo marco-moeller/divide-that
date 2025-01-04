@@ -10,10 +10,16 @@ function ActivityComponent({ activity }) {
     return <></>;
   }
 
+  const getActivityLink = () => {
+    if (activity?.expenseID) return `../expense/${activity?.expenseID}`;
+    if (activity?.groupID) return `../group/${activity?.groupID}`;
+    else return "";
+  };
+
   return (
-    <NavLink to={`../expense/${activity?.expense}`}>
+    <NavLink to={getActivityLink()}>
       <div className="activity">
-        <h3>{formatActivity(activity, user.userName)}</h3>
+        <h3>{formatActivity(activity, user.id)}</h3>
         <h3 className="date">
           {convertToMonthDayTime(new Date(JSON.parse(activity.date)))}
         </h3>

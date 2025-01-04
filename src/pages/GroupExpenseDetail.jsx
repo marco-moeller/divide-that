@@ -99,7 +99,7 @@ function GroupExpenseDetail() {
 
   const getCreator = () => {
     return expense.creator === user.id
-      ? "You"
+      ? "you"
       : getUsernameById(expense.creator, members);
   };
 

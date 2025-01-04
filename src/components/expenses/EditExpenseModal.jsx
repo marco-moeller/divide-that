@@ -43,7 +43,8 @@ function EditExpenseModal({ toggleModal, oldExpense }) {
     const newActivity = getNewActivity({
       users: [user, friend],
       type: activityTypes.updatedExpense,
-      expenseName: expense.title
+      expenseName: expense.title,
+      expenseID: expense.id
     });
     addNewActivityToDatabase(newActivity);
   };

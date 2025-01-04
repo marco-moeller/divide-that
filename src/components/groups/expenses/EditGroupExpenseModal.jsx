@@ -42,7 +42,8 @@ function EditGroupExpenseModal({ toggleModal, oldExpense, group }) {
       users: [...members],
       type: activityTypes.updatedGroupExpense,
       expenseName: expense.title,
-      groupName: group.name
+      groupName: group.name,
+      expenseID: expense.id
     });
     addNewActivityToDatabase(newActivity);
   };

@@ -85,7 +85,8 @@ function AddGroupExpenseModal({ toggleModal }) {
       users: [...members],
       type: activityTypes.addedGroupExpense,
       expenseName: expense.title,
-      groupName: group.name
+      groupName: group.name,
+      expenseID: expense.id
     });
     addNewActivityToDatabase(newActivity);
   };

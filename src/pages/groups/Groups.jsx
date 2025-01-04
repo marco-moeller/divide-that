@@ -20,17 +20,18 @@ function Groups() {
       const newGroup = getNewGroup(user.id);
 
       await addNewGroupToDatabase(newGroup, user);
-      await handleNewActivity(newGroup.name);
+      await handleNewActivity(newGroup);
     } catch (error) {
       console.log(error);
     }
   };
 
-  const handleNewActivity = async (groupName) => {
+  const handleNewActivity = async (newGroup) => {
     const newActivity = getNewActivity({
       users: [user],
       type: activityTypes.createdGroup,
-      groupName: groupName
+      groupName: newGroup.name,
+      groupID: newGroup.id
     });
     addNewActivityToDatabase(newActivity);
   };

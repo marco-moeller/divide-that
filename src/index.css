@@ -100,6 +100,13 @@ main {
   flex-grow: 1;
 }
 
+/* -- ADS --------------------------------------------------------------------------------------*/
+
+iframe {
+  margin-top: calc(100dvh - 190px - 50px);
+  margin-right: calc(50dvw - 210px);
+}
+
 /* -- UTILITY -- */
 
 /* -- MEDIA -- */

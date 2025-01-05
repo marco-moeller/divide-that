@@ -110,8 +110,10 @@ button.add-expense {
   padding: 1em 1.5em;
   position: fixed;
   z-index: 10;
-  bottom: 6em;
-  right: 1em;
+  bottom: 20em;
+  left: 50%;
+  transform: translate(-50%, 0);
+  width: max-content;
   display: flex;
   align-items: center;
   gap: 0.5em;
@@ -362,7 +364,7 @@ header > .profile-pic {
 /* -- MAIN -- */
 
 main {
-  padding: 1em 1em 5em;
+  padding: 1em 1em 20em;
   position: relative;
   background-color: var(--colorBlack);
   color: var(--colorWhite);
@@ -405,11 +407,6 @@ div.expense :nth-child(3) {
 
 .title-container {
   margin-right: auto;
-}
-
-.friend-main {
-  padding-bottom: 10em;
-  position: relative;
 }
 
 /* -- EXPENSE -- */
@@ -662,7 +659,6 @@ select {
 .friends {
   padding-left: 0;
   padding-right: 0;
-  padding-bottom: 250px;
 }
 
 .friend {

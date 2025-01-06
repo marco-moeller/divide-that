@@ -23,6 +23,7 @@ import Group from "./pages/groups/Group";
 import ProtectedGroup from "./components/layout/ProtectedGroup";
 import Groups from "./pages/groups/Groups";
 import ExpenseDetailViewer from "./pages/ExpenseDetailViewer";
+import Home from "./pages/Home";
 
 function App() {
   return (
@@ -52,6 +53,7 @@ function App() {
                   element={<ExpenseDetailViewer />}
                 ></Route>
               </Route>
+              <Route path="home" element={<Home />}></Route>
               <Route path="login" element={<Login />}></Route>
               <Route path="register" element={<Register />}></Route>
               <Route path="about" element={<About />}></Route>

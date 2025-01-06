@@ -31,8 +31,6 @@ h2.title,
 .expense-detail h2.title {
   font-size: 2rem;
   text-align: center;
-  text-decoration: underline;
-  margin-bottom: 0.75em;
   text-transform: capitalize;
   color: var(--colorWhite);
   background-color: var(--colorBlack);
@@ -189,6 +187,28 @@ button:disabled:active {
 svg {
   height: var(--svgDimension);
   width: var(--svgDimension);
+}
+
+/* -- HOME -------------------------------------------------------------------------------------------------------- HOME -- */
+
+.home {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.home .subtitle {
+  margin-top: -2em;
+  margin-bottom: 2em;
+}
+
+.home h3 {
+  text-decoration: underline;
+}
+
+.login-link {
+  margin-top: auto;
 }
 
 /* -- GROUPS ----------------------------------------------------------------------------------------------- GROUPS -- */

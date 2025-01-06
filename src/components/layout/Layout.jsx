@@ -9,7 +9,7 @@ function Layout() {
       <Outlet />
       <FooterNav />
       <Popup />
-      <MonetagAd />
+      {/* <MonetagAd /> */}
     </>
   );
 }

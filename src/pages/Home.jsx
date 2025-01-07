@@ -6,7 +6,7 @@ function Home() {
     <main className="home">
       {" "}
       <section>
-        <img src="icon-192.png" alt="logo" className="home-logo" />
+        <img src="icon-144.png" alt="logo" className="home-logo" />
         <h1 className="title">Divide That!</h1>{" "}
         <p className="subtitle">
           Split expenses easily with friends, family, and groups!

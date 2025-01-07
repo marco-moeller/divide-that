@@ -3,6 +3,7 @@ import { NavLink, Navigate, useNavigate } from "react-router-dom";
 import { doPasswordReset, loginUser } from "../database/auth";
 import { useAuth } from "../context/AuthContext";
 import { usePopup } from "../context/PopupContext";
+import BackButton from "../components/layout/BackButton";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -68,6 +69,7 @@ function Login() {
   return (
     <main className="login">
       {" "}
+      <BackButton />
       <h1>Sign in to your account</h1>
       <form onSubmit={handleSubmit} className="login-form">
         <input

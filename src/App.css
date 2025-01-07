@@ -108,7 +108,7 @@ button.add-expense {
   padding: 1em 1.5em;
   position: fixed;
   z-index: 10;
-  bottom: 20em;
+  bottom: 5em;
   left: 50%;
   transform: translate(-50%, 0);
   width: max-content;
@@ -140,6 +140,10 @@ button.add-expense {
 
 .back-btn {
   margin-right: auto;
+}
+
+.about svg {
+  align-self: start;
 }
 
 .friend-settings,
@@ -198,8 +202,28 @@ svg {
   gap: 1em;
 }
 
+.home-logo {
+  border-radius: var(--borderRadius);
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 3em;
+}
+
+.slide {
+  border: 1px solid var(--colorPurple);
+  max-width: 100%;
+  height: 400px;
+  border-radius: 10px;
+}
+
+.home h1 {
+  color: var(--colorPurple);
+  font-size: 3rem;
+}
+
 .home .subtitle {
-  margin-top: -2em;
+  margin-top: -0.75em;
+  font-size: 0.9rem;
   margin-bottom: 2em;
 }
 
@@ -209,6 +233,67 @@ svg {
 
 .login-link {
   margin-top: auto;
+}
+
+/* -- CAROUSEL ---------------------------------------------------------------------------------------------- CAROUSEL */
+.embla {
+  width: 120%;
+  align-self: center;
+}
+
+.embla__viewport {
+  overflow: hidden;
+}
+
+.embla__container {
+  display: flex;
+  touch-action: pan-y pinch-zoom;
+  margin-left: 0.5em;
+}
+
+.embla__slide {
+  transform: translate3d(0, 0, 0);
+  flex: 0 0 auto;
+  min-width: 0;
+  padding-left: 0.5em;
+}
+
+.embla__dots {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  margin-right: calc((2.6rem - 1.4rem) / 2 * -1);
+}
+.embla__dot {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: transparent;
+  touch-action: manipulation;
+  display: inline-flex;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  width: 2.6rem;
+  height: 2.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+}
+.embla__dot:after {
+  box-shadow: inset 0 0 0 0.2rem var(--colorDark);
+  width: 1.4rem;
+  height: 1.4rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  content: "";
+}
+.embla__dot--selected:after {
+  box-shadow: inset 0 0 0 0.2rem var(--colorPurple);
 }
 
 /* -- GROUPS ----------------------------------------------------------------------------------------------- GROUPS -- */
@@ -384,7 +469,7 @@ header > .profile-pic {
 /* -- MAIN -- */
 
 main {
-  padding: 1em 1em 20em;
+  padding: 1em 1em 10em;
   position: relative;
   background-color: var(--colorBlack);
   color: var(--colorWhite);
@@ -482,7 +567,6 @@ div.expense :nth-child(3) {
   right: 0;
   bottom: 0;
   background-color: var(--colorBlack);
-  overflow-y: scroll;
 }
 
 .modal > * {

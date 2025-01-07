@@ -25,7 +25,7 @@ function Account() {
 
   const handleLogout = async () => {
     await logoutUser();
-    navigate("/");
+    navigate("/home");
   };
 
   if (!user) return <main></main>;

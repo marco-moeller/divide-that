@@ -2,6 +2,7 @@ import { useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { getAllUsersFromDatabase } from "../database/user";
 import { registerNewUser } from "../API/userAPI";
+import BackButton from "../components/layout/BackButton";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -79,6 +80,7 @@ function Register() {
   return (
     <main className="register">
       {" "}
+      <BackButton />
       <h1>Register a new Account</h1>
       <form onSubmit={handleSubmit} className="register-form">
         <input

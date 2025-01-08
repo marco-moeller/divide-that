@@ -963,6 +963,22 @@ select {
   border-radius: 50%;
 }
 
+.mobile-camera-svg {
+  position: absolute;
+  bottom: 2em;
+  right: 2em;
+  left: auto;
+  top: auto;
+}
+.mobile-camera-svg svg {
+  position: relative;
+  height: 70px;
+  width: 70px;
+  padding: 0;
+  border-radius: 0;
+  background-color: transparent;
+}
+
 .account .profile-pic {
   border-radius: 50%;
   aspect-ratio: 1/1;

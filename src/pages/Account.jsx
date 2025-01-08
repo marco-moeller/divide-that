@@ -28,6 +28,10 @@ function Account() {
     navigate("/home");
   };
 
+  const isMobile = () => {
+    return /Mobi|Android/i.test(navigator.userAgent);
+  };
+
   if (!user) return <main></main>;
 
   return (
@@ -35,11 +39,19 @@ function Account() {
       <h2 className="title">Your Account</h2>
       <div className="account-info">
         <div className="account-image">
-          {isShowing && (
+          {isShowing && !isMobile() && (
             <TbCameraPlus
               onClick={toggleProfileImageUpload}
               onMouseLeave={toggle}
             />
+          )}
+          {isMobile() && (
+            <div className="mobile-camera-svg">
+              <TbCameraPlus
+                onClick={toggleProfileImageUpload}
+                onMouseLeave={toggle}
+              />
+            </div>
           )}
           <img
             src={profileImgUrl}

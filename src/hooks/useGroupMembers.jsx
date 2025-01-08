@@ -7,7 +7,12 @@ function useGroupMembers(groupUsers) {
   useEffect(() => {
     const getAllMembers = async () => {
       if (!groupUsers) return;
-      setMembers(await getAllGroupUsers(groupUsers));
+      try {
+        setMembers(await getAllGroupUsers(groupUsers));
+      } catch (error) {
+        console.log(error);
+        setMembers([]);
+      }
     };
     getAllMembers();
   }, [groupUsers]);

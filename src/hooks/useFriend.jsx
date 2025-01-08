@@ -9,7 +9,12 @@ function useFriend(friendID) {
   useEffect(() => {
     const getFriend = async () => {
       if (!friendID) return null;
-      setFriend(await getUserFromDatabase(friendID));
+      try {
+        setFriend(await getUserFromDatabase(friendID));
+      } catch (error) {
+        console.log(error);
+        setFriend(null);
+      }
     };
     getFriend();
   }, [friendID]);
@@ -19,8 +24,13 @@ function useFriend(friendID) {
       return;
     }
     const getImgUrl = async () => {
-      const url = await getProfileImage(friend.profileImage);
-      setProfileImgUrl(url);
+      try {
+        const url = await getProfileImage(friend.profileImage);
+        setProfileImgUrl(url);
+      } catch (error) {
+        console.log(error);
+        setProfileImgUrl(null);
+      }
     };
     getImgUrl();
   }, [friend]);

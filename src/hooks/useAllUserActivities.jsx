@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { getAllUserActivities } from "../API/activitiesAPI";
 
 function useAllUserActivities(activityIDsArray) {
-  const [activities, setActivities] = useState();
+  const [activities, setActivities] = useState([]);
 
   useEffect(() => {
     if (!activityIDsArray || activityIDsArray.length === 0) {
@@ -11,13 +11,19 @@ function useAllUserActivities(activityIDsArray) {
     }
 
     const getAllActivities = async () => {
-      const allUserActivities = await getAllUserActivities(activityIDsArray);
+      try {
+        const allUserActivities = await getAllUserActivities(activityIDsArray);
 
-      setActivities(
-        allUserActivities.sort(
-          (a, b) => new Date(JSON.parse(b.date)) - new Date(JSON.parse(a.date))
-        )
-      );
+        setActivities(
+          allUserActivities.sort(
+            (a, b) =>
+              new Date(JSON.parse(b.date)) - new Date(JSON.parse(a.date))
+          )
+        );
+      } catch (error) {
+        console.log(error);
+        setActivities([]);
+      }
     };
     getAllActivities();
   }, [activityIDsArray]);

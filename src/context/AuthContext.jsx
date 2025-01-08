@@ -48,8 +48,12 @@ export function AuthProvider({ children }) {
 
   useEffect(() => {
     const getImgUrl = async () => {
-      const url = await getProfileImage(user.profileImage);
-      setProfileImgUrl(url);
+      try {
+        const url = await getProfileImage(user.profileImage);
+        setProfileImgUrl(url);
+      } catch (error) {
+        console.log(error);
+      }
     };
     if (user) {
       getImgUrl();

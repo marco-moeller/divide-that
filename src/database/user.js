@@ -24,17 +24,22 @@ export const getUserFromDatabase = async (userID) => {
 };
 
 export const getAllUsersFromDatabase = async () => {
-  let usersList = [];
-  const snapshot = await getDocs(usersRef);
-  snapshot.docs.forEach(async (doc) => usersList.push(doc.data()));
+  try {
+    let usersList = [];
+    const snapshot = await getDocs(usersRef);
+    snapshot.docs.forEach(async (doc) => usersList.push(doc.data()));
 
-  let usersListWithImgurls = [];
-  for (let user of usersList) {
-    const profileImgUrl = await getProfileImage(user.profileImage);
-    usersListWithImgurls.push({ ...user, profileImgUrl: profileImgUrl });
+    let usersListWithImgurls = [];
+    for (let user of usersList) {
+      const profileImgUrl = await getProfileImage(user.profileImage);
+      usersListWithImgurls.push({ ...user, profileImgUrl: profileImgUrl });
+    }
+
+    return usersListWithImgurls;
+  } catch (error) {
+    console.log(error);
+    return null;
   }
-
-  return usersListWithImgurls;
 };
 
 export const deleteUserFromDatabase = async (userID) => {

@@ -72,17 +72,27 @@ function GroupExpenseDetail() {
   };
 
   const settleMember = async (member) => {
-    await addExpenseToDatabase({
-      ...expense,
-      paidBy: [...expense.paidBy, member.id]
-    });
+    try {
+      await addExpenseToDatabase({
+        ...expense,
+        paidBy: [...expense.paidBy, member.id]
+      });
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const unsettleMember = async (member) => {
-    await addExpenseToDatabase({
-      ...expense,
-      paidBy: [...expense.paidBy.filter((payer) => payer !== member.id)]
-    });
+    try {
+      await addExpenseToDatabase({
+        ...expense,
+        paidBy: [...expense.paidBy.filter((payer) => payer !== member.id)]
+      });
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const getUsernameById = (id, users) => {

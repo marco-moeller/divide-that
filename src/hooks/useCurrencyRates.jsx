@@ -6,7 +6,12 @@ function useCurrencyRates() {
 
   useEffect(() => {
     const getRates = async () => {
-      setConversionRates(await getConversionRatesFromDatabase());
+      try {
+        setConversionRates(await getConversionRatesFromDatabase());
+      } catch (error) {
+        console.log(error);
+        setConversionRates(null);
+      }
     };
 
     getRates();

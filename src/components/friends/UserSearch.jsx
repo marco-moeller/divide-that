@@ -135,7 +135,11 @@ function UserSearch() {
     if (allUsers && allUsers.length > 0) return;
 
     const getUsers = async () => {
-      setAllUsers(await getAllUsersFromDatabase());
+      try {
+        setAllUsers(await getAllUsersFromDatabase());
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     getUsers();

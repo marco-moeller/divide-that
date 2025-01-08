@@ -14,8 +14,11 @@ import {
 } from "../../utility/money";
 import { activityTypes, getNewActivity } from "../../utility/interfaces";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
+import useAllUsers from "../../hooks/useAllUsers";
 
 function AccountSettings({ toggleModal }) {
+  const { allUsers } = useAllUsers();
+
   const { user } = useAuth();
   const [formData, setFormData] = useState({
     ...user,
@@ -45,6 +48,14 @@ function AccountSettings({ toggleModal }) {
     setFormData((prevState) => ({ ...prevState, [name]: value }));
   };
 
+  const emailIsAlreadyInUse = () => {
+    const allOtherUsersEmails = allUsers
+      .map((user) => user.email)
+      .filter((email) => email !== user.email);
+
+    return allOtherUsersEmails.includes(formData.email);
+  };
+
   const handleSubmit = async () => {
     if (status !== "idle") {
       return;
@@ -53,6 +64,10 @@ function AccountSettings({ toggleModal }) {
       if (formData.password !== formData.confirmPassword) {
         throw new Error("Passwords don't match!");
       }
+      if (emailIsAlreadyInUse()) {
+        throw new Error("This email is already in use!");
+      }
+
       setStatus("submitting");
       await updateUserData(user, {
         ...formData,
@@ -62,6 +77,7 @@ function AccountSettings({ toggleModal }) {
       });
       await handleNewActivity();
       toggleModal();
+      setError(null);
     } catch (error) {
       setError(error);
     } finally {
@@ -85,6 +101,8 @@ function AccountSettings({ toggleModal }) {
       setError(error);
     }
   };
+
+  if (allUsers.length === 0 || !user) return <></>;
 
   return (
     <>

@@ -17,6 +17,8 @@ import { useAuth } from "../../context/AuthContext";
 import { convertToMonthYear } from "../../utility/date";
 import useTotalGroupDebt from "../../hooks/useTotalGroupDebt";
 import useTotalGroupDebtInDefaultCurrency from "../../hooks/useTotalGroupDebtInDefaultCurrency";
+import ErrorComponent from "../../components/error/ErrorComponent";
+import useError from "../../components/error/useError";
 
 function Group() {
   const { id } = useParams();
@@ -25,6 +27,7 @@ function Group() {
   const { expenses } = useGroupExpenses(group?.expenses);
   const { showPopup } = usePopup();
   const { user } = useAuth();
+  const { error, setError } = useError();
 
   const [selectedMember, setSelectedMember] = useState(null);
   const { totalDebt } = useTotalGroupDebt(selectedMember, expenses);
@@ -59,8 +62,9 @@ function Group() {
 
       const selectedUser = await getUserFromDatabase(selectedMember);
       showPopup(`You settled all expenses with ${selectedUser.userName}`);
+      setError(null);
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   };
 
@@ -124,6 +128,7 @@ function Group() {
             </section>
           </>
         )}
+        <ErrorComponent>{error}</ErrorComponent>
         <GroupUserSearch group={group} />
 
         <section className="expenses">

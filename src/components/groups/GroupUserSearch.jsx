@@ -8,6 +8,7 @@ import { IoMdArrowRoundDown } from "react-icons/io";
 import useGroupMembers from "../../hooks/useGroupMembers";
 import { activityTypes, getNewActivity } from "../../utility/interfaces";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
+import ErrorComponent from "../error/ErrorComponent";
 
 function GroupUserSearch({ group }) {
   const { user } = useAuth();
@@ -35,13 +36,13 @@ function GroupUserSearch({ group }) {
 
       await addGroupRequestToUser(selectedUser, group.id);
       await handleNewActivity();
+      setAllUsers(await getAllUsersFromDatabase());
       showPopup("Group Invite Sent");
       setSelectedUser(null);
       setCurrentSearch("");
       setError(null);
-      setAllUsers(await getAllUsersFromDatabase());
     } catch (error) {
-      setError(error);
+      setError(error.message);
     } finally {
       setStatus("idle");
     }
@@ -177,7 +178,7 @@ function GroupUserSearch({ group }) {
       >
         send group invite
       </button>
-      <p className="red">{error?.message}</p>
+      <ErrorComponent>{error}</ErrorComponent>
     </div>
   );
 }

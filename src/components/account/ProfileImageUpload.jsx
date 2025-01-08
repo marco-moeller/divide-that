@@ -6,6 +6,8 @@ import Cropper from "react-easy-crop";
 import { getCroppedImg } from "../../utility/imageCropping";
 import { activityTypes, getNewActivity } from "../../utility/interfaces";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
+import useError from "../error/useError";
+import ErrorComponent from "../error/ErrorComponent";
 
 function ProfileImageUpload({ toggleModal }) {
   const [file, setFile] = useState(null);
@@ -15,19 +17,26 @@ function ProfileImageUpload({ toggleModal }) {
   const [croppedAreaPixels, setCroppedAreaPixels] = useState(null);
 
   const { user } = useAuth();
+  const { error, setError } = useError();
 
   const handleSubmit = async () => {
     if (!file) return;
     try {
       const croppedImg = await handleCrop();
+
+      if (!croppedImg) throw new Error("Error cropping image");
+
       const croppedFile = await urlToFile(croppedImg);
+
+      if (!croppedFile) throw new Error("Error cropping image");
 
       await UploadProfileImage(croppedFile, user);
       await handleNewActivity();
 
+      setError(null);
       toggleModal();
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   };
 
@@ -43,16 +52,17 @@ function ProfileImageUpload({ toggleModal }) {
     setFile(event.target.files[0]);
   };
 
-  const onCropComplete = (croppedArea, croppedAreaPixels) => {
+  const onCropComplete = (croppedAreaPixels) => {
     setCroppedAreaPixels(croppedAreaPixels);
   };
 
   const handleCrop = async () => {
     try {
       const croppedImg = await getCroppedImg(imageSrc, croppedAreaPixels);
+      setError(null);
       return croppedImg;
     } catch (error) {
-      console.error("Error cropping image:", error);
+      setError("Error cropping image:", error.message);
       return null;
     }
   };
@@ -76,6 +86,7 @@ function ProfileImageUpload({ toggleModal }) {
         Upload your avatar
       </ModalHeader>
       <div className="profile-img-upload">
+        <ErrorComponent>{error}</ErrorComponent>
         <input type="file" accept=".png, .jpg, .jpeg" onChange={handleChange} />
 
         {file && (

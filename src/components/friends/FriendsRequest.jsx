@@ -4,17 +4,30 @@ import {
 } from "../../API/userAPI";
 import { useAuth } from "../../context/AuthContext";
 import useFriend from "../../hooks/useFriend";
+import ErrorComponent from "../error/ErrorComponent";
+import useError from "../error/useError";
 
 function FriendRequest({ request }) {
   const { friend, profileImgUrl } = useFriend(request);
   const { user } = useAuth();
+  const { error, setError } = useError();
 
   const handleAcceptClick = async () => {
-    await acceptFriendRequest(user, friend);
+    try {
+      await acceptFriendRequest(user, friend);
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const handleRejectClick = async () => {
-    await removeFriendRequestFromUser(user, friend.id);
+    try {
+      await removeFriendRequestFromUser(user, friend.id);
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   return (
@@ -24,6 +37,7 @@ function FriendRequest({ request }) {
         <img src={profileImgUrl} alt="" className="profile-pic-tiny" />
         <p>{friend?.userName} wants to be your friend.</p>
       </div>
+      <ErrorComponent>{error}</ErrorComponent>
       <div className="btns">
         <button className="accept-req-btn btn" onClick={handleAcceptClick}>
           accept

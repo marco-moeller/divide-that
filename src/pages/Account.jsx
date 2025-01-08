@@ -10,9 +10,13 @@ import { logoutUser } from "../database/auth";
 import { getCurrencyName } from "../utility/money";
 import useVisibilityToggle from "../hooks/useVisibilityToggle";
 import { TbCameraPlus } from "react-icons/tb";
+import ErrorComponent from "../components/error/ErrorComponent";
+import useError from "../components/error/useError";
 
 function Account() {
   const { user, profileImgUrl } = useAuth();
+  const { error, setError } = useError();
+
   const navigate = useNavigate();
   const {
     isShowing: isShowingProfileImageUpload,
@@ -24,8 +28,13 @@ function Account() {
   const { toggle, isShowing } = useVisibilityToggle();
 
   const handleLogout = async () => {
-    await logoutUser();
-    navigate("/home");
+    try {
+      await logoutUser();
+      setError(null);
+      navigate("/home");
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const isMobile = () => {
@@ -37,6 +46,7 @@ function Account() {
   return (
     <main className="account">
       <h2 className="title">Your Account</h2>
+
       <div className="account-info">
         <div className="account-image">
           {isShowing && !isMobile() && (
@@ -72,6 +82,7 @@ function Account() {
         </h2>
       </div>
       <div className="account-btn-wrapper">
+        <ErrorComponent>{error}</ErrorComponent>
         <button className="btn" onClick={toggleAccountSettings}>
           <HiOutlineCog8Tooth />
           Settings

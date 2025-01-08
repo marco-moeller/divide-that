@@ -5,6 +5,7 @@ import { addFriendRequestToFriend } from "../../API/userAPI";
 import { getAllUsersFromDatabase } from "../../database/user";
 import { usePopup } from "../../context/PopupContext";
 import { IoMdArrowRoundDown } from "react-icons/io";
+import ErrorComponent from "../error/ErrorComponent";
 
 function UserSearch() {
   const { user } = useAuth();
@@ -36,7 +37,7 @@ function UserSearch() {
       setError(null);
       setAllUsers(await getAllUsersFromDatabase());
     } catch (error) {
-      setError(error);
+      setError(error.message);
     } finally {
       setStatus("idle");
     }
@@ -162,7 +163,7 @@ function UserSearch() {
       >
         send friend request
       </button>
-      <p className="red">{error?.message}</p>
+      <ErrorComponent>{error}</ErrorComponent>
     </div>
   );
 }

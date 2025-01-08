@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-function useError() {
-  const [error, setError] = useState(null);
+function useError(message = null) {
+  const [error, setError] = useState(message);
 
   return { error, setError };
 }

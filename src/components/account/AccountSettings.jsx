@@ -15,6 +15,7 @@ import {
 import { activityTypes, getNewActivity } from "../../utility/interfaces";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 import useAllUsers from "../../hooks/useAllUsers";
+import ErrorComponent from "../error/ErrorComponent";
 
 function AccountSettings({ toggleModal }) {
   const { allUsers } = useAllUsers();
@@ -79,7 +80,7 @@ function AccountSettings({ toggleModal }) {
       toggleModal();
       setError(null);
     } catch (error) {
-      setError(error);
+      setError(error.message);
     } finally {
       setStatus("idle");
     }
@@ -96,9 +97,10 @@ function AccountSettings({ toggleModal }) {
   const handleDeleteAccount = async () => {
     try {
       await deleteUserAccount(user.id, user.profileImage);
+      setError(null);
       navigate("/login");
     } catch (error) {
-      setError(error);
+      setError(error.message);
     }
   };
 
@@ -110,6 +112,8 @@ function AccountSettings({ toggleModal }) {
         Account Settings
       </ModalHeader>
       <div className="account-settings fd-column flex">
+        <ErrorComponent>{error}</ErrorComponent>
+
         <label htmlFor="user-name">Username</label>
         {!isShowingUserName && (
           <h2 name="user-name">
@@ -216,7 +220,6 @@ function AccountSettings({ toggleModal }) {
             Confirm Delete Account
           </button>
         )}
-        <p className="error">{error?.message}</p>
       </div>
     </>
   );

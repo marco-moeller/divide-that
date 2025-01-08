@@ -6,9 +6,12 @@ import { MdBlock } from "react-icons/md";
 import { removeFriendFromUser } from "../../API/userAPI";
 import { MdOutlineReport } from "react-icons/md";
 import FriendProfilePicture from "./FriendProfilePicture";
+import ErrorComponent from "../error/ErrorComponent";
+import useError from "../error/useError";
 
 function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
   const { user } = useAuth();
+  const { error, setError } = useError();
 
   const navigate = useNavigate();
 
@@ -17,9 +20,10 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
       await removeFriendFromUser(user, friend.id);
       await removeFriendFromUser(friend, user.id);
       toggleModal();
+      setError(null);
       navigate("/");
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   };
 
@@ -27,6 +31,7 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
     <>
       <ModalHeader toggleModal={toggleModal}>Friend Settings</ModalHeader>
       <section className="friend-settings">
+        <ErrorComponent>{error}</ErrorComponent>
         <div className="flex pb-1em">
           <FriendProfilePicture profileImgUrl={profileImgUrl} />
           <div className="friend-info">

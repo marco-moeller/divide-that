@@ -9,11 +9,14 @@ import AddExpenseButton from "../../components/expenses/AddExpenseButton";
 import { addExpenseToDatabase } from "../../database/expenses";
 import DebtInfo from "../../components/friends/DebtInfo";
 import useFriendExpenses from "../../hooks/useFriendExpenses";
+import ErrorComponent from "../../components/error/ErrorComponent";
+import useError from "../../components/error/useError";
 
 function Friend() {
   const { id } = useParams();
   const { expenses } = useFriendExpenses(id);
   const { friend, profileImgUrl } = useFriend(id);
+  const { error, setError } = useError();
 
   const renderExpenses = () => {
     let currentMonth = null;
@@ -40,9 +43,14 @@ function Friend() {
   };
 
   const handleSettleUp = async () => {
-    expenses.forEach(async (expense) => {
-      await addExpenseToDatabase({ ...expense, settled: true });
-    });
+    try {
+      expenses.forEach(async (expense) => {
+        await addExpenseToDatabase({ ...expense, settled: true });
+      });
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   if (!friend) {
@@ -62,6 +70,8 @@ function Friend() {
             History
           </NavLink>
         </section>
+        <ErrorComponent>{error}</ErrorComponent>
+
         <section className="expenses">
           {!expenses.length && <NoExpenses />}
           {expenses.length > 0 && renderExpenses()}

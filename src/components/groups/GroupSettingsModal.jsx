@@ -50,6 +50,7 @@ function GroupSettingsModal({ toggle, group }) {
         async (expenseID) => await deleteExpenseFromDatabase(expenseID)
       );
       toggle();
+      setError(null);
       navigate("/");
     } catch (error) {
       setError(error.message);
@@ -62,9 +63,14 @@ function GroupSettingsModal({ toggle, group }) {
   };
 
   const handleSubmit = async () => {
-    toggle();
-    await addGroupToDatabase({ ...group, name: groupName });
-    await handleNewActivity();
+    try {
+      toggle();
+      await addGroupToDatabase({ ...group, name: groupName });
+      await handleNewActivity();
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const handleNewActivity = async () => {

@@ -18,6 +18,8 @@ import EditGroupExpenseButton from "../components/groups/expenses/EditGroupExpen
 import React from "react";
 import { activityTypes, getNewActivity } from "../utility/interfaces";
 import { addNewActivityToDatabase } from "../API/activitiesAPI";
+import ErrorComponent from "../components/error/ErrorComponent";
+import useError from "../components/error/useError";
 
 function GroupExpenseDetail() {
   const { id } = useParams();
@@ -30,20 +32,31 @@ function GroupExpenseDetail() {
   const { members } = useGroupMembers(group?.users || []);
   const { user } = useAuth();
 
+  const { error, setError } = useError();
   const { showPopup } = usePopup();
 
   const handleSettleClick = async () => {
-    await addExpenseToDatabase({
-      ...expense,
-      settled: true,
-      paidBy: group.users.filter((user) => user !== expense.sucker)
-    });
-    showPopup("Expense Settled");
+    try {
+      await addExpenseToDatabase({
+        ...expense,
+        settled: true,
+        paidBy: group.users.filter((user) => user !== expense.sucker)
+      });
+      setError(null);
+      showPopup("Expense Settled");
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const handleUnsettleClick = async () => {
-    await addExpenseToDatabase({ ...expense, settled: false, paidBy: [] });
-    showPopup("Expense Unsettled");
+    try {
+      await addExpenseToDatabase({ ...expense, settled: false, paidBy: [] });
+      setError(null);
+      showPopup("Expense Unsettled");
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const userIsSucker = () => {
@@ -120,11 +133,12 @@ function GroupExpenseDetail() {
       deleteExpenseFromDatabase(id);
       deleteExpenseFromGroup(group, id);
       handleNewActivity();
+      setError(null);
       showPopup("Expense Deleted");
 
       navigate(-1);
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   };
 
@@ -230,6 +244,7 @@ function GroupExpenseDetail() {
           </>
         )}
       </div>
+      <ErrorComponent>{error}</ErrorComponent>
       <EditGroupExpenseButton expense={expense} group={group} />
       {!expense.settled && (
         <button

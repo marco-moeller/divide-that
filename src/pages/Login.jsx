@@ -4,6 +4,8 @@ import { doPasswordReset, loginUser } from "../database/auth";
 import { useAuth } from "../context/AuthContext";
 import { usePopup } from "../context/PopupContext";
 import BackButton from "../components/layout/BackButton";
+import ErrorComponent from "../components/error/ErrorComponent";
+import useError from "../components/error/useError";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -17,7 +19,7 @@ function Login() {
     password: ""
   });
   const [status, setStatus] = useState("idle");
-  const [error, setError] = useState("");
+  const { error, setError } = useError();
 
   const navigate = useNavigate();
 
@@ -36,8 +38,9 @@ function Login() {
         }
         navigate("/");
       }
+      setError(null);
     } catch (error) {
-      setError(error);
+      setError(error.message);
     } finally {
       setStatus("idle");
     }
@@ -59,8 +62,9 @@ function Login() {
 
       doPasswordReset(loginFormData.email);
       showPopup("Reset Email sent");
+      setError(null);
     } catch (error) {
-      setError(error);
+      setError(error.message);
     }
   };
 
@@ -91,7 +95,7 @@ function Login() {
         <button disabled={status === "submitting"} className="btn">
           Log in
         </button>
-        <p className="red">{error?.message}</p>
+        <ErrorComponent>{error}</ErrorComponent>
       </form>
       <p>
         {"No Account yet? "}

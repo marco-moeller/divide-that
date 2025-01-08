@@ -11,9 +11,12 @@ import { nanoid } from "nanoid";
 import GroupRequest from "../../components/groups/GroupRequest";
 import GroupTotalDebtComponent from "../../components/groups/GroupTotalDebtComponent";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
+import ErrorComponent from "../../components/error/ErrorComponent";
+import useError from "../../components/error/useError";
 
 function Groups() {
   const { user } = useAuth();
+  const { error, setError } = useError();
 
   const handleAddNewGroup = async () => {
     try {
@@ -21,8 +24,9 @@ function Groups() {
 
       await addNewGroupToDatabase(newGroup, user);
       await handleNewActivity(newGroup);
+      setError(null);
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   };
 
@@ -41,6 +45,7 @@ function Groups() {
   return (
     <main className="groups">
       <h2 className="title">Your Groups</h2>
+      <ErrorComponent>{error}</ErrorComponent>
       <ul className="groups-list">
         {user?.groups.map((groupId) => {
           return (

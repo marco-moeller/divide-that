@@ -3,6 +3,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import { getAllUsersFromDatabase } from "../database/user";
 import { registerNewUser } from "../API/userAPI";
 import BackButton from "../components/layout/BackButton";
+import ErrorComponent from "../components/error/ErrorComponent";
+import useError from "../components/error/useError";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -15,7 +17,7 @@ function Register() {
     checkbox: false
   });
   const [status, setStatus] = useState("idle");
-  const [error, setError] = useState("");
+  const { error, setError } = useError();
 
   const navigate = useNavigate();
 
@@ -64,7 +66,7 @@ function Register() {
       navigate("/");
       setError(null);
     } catch (error) {
-      setError(error);
+      setError(error.message);
     } finally {
       setStatus("idle");
     }
@@ -129,7 +131,7 @@ function Register() {
           onChange={handleChange}
           style={{ display: "none" }}
         ></input>
-        <p className="red">{error?.message}</p>
+        <ErrorComponent>{error}</ErrorComponent>
       </form>
       <p>
         {"Already registered? "}

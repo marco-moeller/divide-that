@@ -16,6 +16,8 @@ import { usePopup } from "../context/PopupContext";
 import { FaPlus } from "react-icons/fa";
 import { activityTypes, getNewActivity } from "../utility/interfaces";
 import { addNewActivityToDatabase } from "../API/activitiesAPI";
+import useError from "../components/error/useError";
+import ErrorComponent from "../components/error/ErrorComponent";
 
 function ExpenseDetail() {
   const { id } = useParams();
@@ -25,6 +27,7 @@ function ExpenseDetail() {
   const { expense } = useExpense(id);
 
   const { user, profileImgUrl: userProfileUrl } = useAuth();
+  const { error, setError } = useError();
 
   const { friend, profileImgUrl } = useFriend(
     expense?.users?.[0] === user?.id ? expense?.users?.[1] : expense?.users?.[0]
@@ -33,11 +36,21 @@ function ExpenseDetail() {
   const { showPopup } = usePopup();
 
   const handleSettleClick = async () => {
-    await addExpenseToDatabase({ ...expense, settled: true });
+    try {
+      await addExpenseToDatabase({ ...expense, settled: true });
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const handleUnsettleClick = async () => {
-    await addExpenseToDatabase({ ...expense, settled: false });
+    try {
+      await addExpenseToDatabase({ ...expense, settled: false });
+      setError(null);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const getLentOrBorrowed = () => {
@@ -63,11 +76,15 @@ function ExpenseDetail() {
   };
 
   const handleDelete = () => {
-    deleteExpenseFromDatabase(id);
-    handleNewActivity();
-    showPopup("Expense Deleted");
-
-    navigate(-1);
+    try {
+      deleteExpenseFromDatabase(id);
+      handleNewActivity();
+      showPopup("Expense Deleted");
+      setError(null);
+      navigate(-1);
+    } catch (error) {
+      setError(error.message);
+    }
   };
 
   const handleNewActivity = async () => {
@@ -140,6 +157,8 @@ function ExpenseDetail() {
           </>
         )}
       </div>
+      <ErrorComponent>{error}</ErrorComponent>
+
       <EditExpenseButton expense={expense} />
       {!expense.settled && (
         <button className="settle-btn btn" onClick={handleSettleClick}>

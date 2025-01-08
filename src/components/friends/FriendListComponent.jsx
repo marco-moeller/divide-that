@@ -12,7 +12,8 @@ function FriendListComponent({ friendId }) {
   const { friend, profileImgUrl } = useFriend(friendId);
   const { user } = useAuth();
 
-  const totalDebtInDefaultCurrency = useTotalDebtInDefaultCurrency(friendId);
+  const { totalDebtInDefaultCurrency } =
+    useTotalDebtInDefaultCurrency(friendId);
 
   const getOweOrOwes = (amount) => {
     return amount >= 0 ? `Owes you` : `You owe`;

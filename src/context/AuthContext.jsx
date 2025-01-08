@@ -56,15 +56,6 @@ export function AuthProvider({ children }) {
     }
   }, [user]);
 
-  // useEffect(() => {
-  //   const handleUserUpdate = async () => {
-  //     initializeUser(auth.currentUser);
-  //   };
-
-  //   window.addEventListener("userUpdate", handleUserUpdate);
-  //   return () => window.removeEventListener("userUpdate", handleUserUpdate);
-  // }, []);
-
   const value = { user, isLoggedIn, isLoading, profileImgUrl };
 
   return (

@@ -4,22 +4,21 @@ import { NavLink, useParams } from "react-router-dom";
 import useFriend from "../../hooks/useFriend";
 import Expense from "../../components/expenses/Expense";
 import NoExpenses from "../../components/expenses/NoExpenses";
-import useExpensesList from "../../hooks/useExpensesList";
 import { convertToMonthYear } from "../../utility/date";
 import AddExpenseButton from "../../components/expenses/AddExpenseButton";
 import { addExpenseToDatabase } from "../../database/expenses";
 import DebtInfo from "../../components/friends/DebtInfo";
+import useFriendExpenses from "../../hooks/useFriendExpenses";
 
 function Friend() {
   const { id } = useParams();
-
-  const expensesList = useExpensesList(id);
+  const { expenses } = useFriendExpenses(id);
   const { friend, profileImgUrl } = useFriend(id);
 
   const renderExpenses = () => {
     let currentMonth = null;
 
-    return expensesList.map((expense) => {
+    return expenses.map((expense) => {
       if (currentMonth !== expense.date.toDate().getMonth()) {
         currentMonth = expense.date.toDate().getMonth();
         return (
@@ -41,7 +40,7 @@ function Friend() {
   };
 
   const handleSettleUp = async () => {
-    expensesList.forEach(async (expense) => {
+    expenses.forEach(async (expense) => {
       await addExpenseToDatabase({ ...expense, settled: true });
     });
   };
@@ -53,7 +52,7 @@ function Friend() {
   return (
     <>
       <Hero friend={friend} profileImgUrl={profileImgUrl} />
-      <DebtInfo friend={friend} expensesList={expensesList} />
+      <DebtInfo friend={friend} expenses={expenses} />
       <main className="friend-main">
         <section className="control-btns">
           <button className="bg-purple purple-bnt" onClick={handleSettleUp}>
@@ -64,8 +63,8 @@ function Friend() {
           </NavLink>
         </section>
         <section className="expenses">
-          {!expensesList.length && <NoExpenses />}
-          {expensesList.length > 0 && renderExpenses()}
+          {!expenses.length && <NoExpenses />}
+          {expenses.length > 0 && renderExpenses()}
         </section>
         <AddExpenseButton />
       </main>

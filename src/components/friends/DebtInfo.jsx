@@ -8,9 +8,11 @@ import {
 } from "../../utility/money";
 import HideElement from "../layout/HideElement";
 
-function DebtInfo({ friend, expensesList }) {
-  const totalDebt = useTotalDebt(friend.id, expensesList);
-  const totalDebtInDefaultCurrency = useTotalDebtInDefaultCurrency(friend.id);
+function DebtInfo({ friend, expenses }) {
+  const totalDebt = useTotalDebt(friend.id, expenses);
+  const { totalDebtInDefaultCurrency } = useTotalDebtInDefaultCurrency(
+    friend.id
+  );
   const { user } = useAuth();
 
   const getOweOrOwes = (amount) => {

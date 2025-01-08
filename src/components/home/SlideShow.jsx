@@ -13,7 +13,7 @@ function SlideShow() {
   const slides = ["hero-1.png", "hero-2.png", "hero-3.png", "hero-4.png"];
 
   const [emblaRef, emblaApi] = useEmblaCarousel(OPTIONS, [
-    Autoplay({ delay: 5000 })
+    Autoplay({ delay: 3000 })
   ]);
   const tweenFactor = useRef(0);
 

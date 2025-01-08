@@ -12,5 +12,5 @@
   letter-spacing: 0.05em;
   background-color: var(--colorWhite);
   color: var(--colorBlack);
-  z-index: 1;
+  z-index: 100;
 }

@@ -3,7 +3,7 @@ import { doc, onSnapshot } from "firebase/firestore";
 import { database } from "../database/firebase";
 import { useAuth } from "../context/AuthContext";
 
-function useSettledExpensesList(friendID) {
+function useFriendExpenses(friendID) {
   const [expenses, setExpenses] = useState([]);
   const { user } = useAuth();
 
@@ -20,7 +20,8 @@ function useSettledExpensesList(friendID) {
 
             return [...updated, { ...docSnapshot.data() }]
               .filter(
-                (expense) => expense.users.includes(friendID) && expense.settled
+                (expense) =>
+                  expense.users.includes(friendID) && !expense.settled
               )
               .sort((a, b) => b.date - a.date);
           });
@@ -34,4 +35,4 @@ function useSettledExpensesList(friendID) {
   return { expenses };
 }
 
-export default useSettledExpensesList;
+export default useFriendExpenses;

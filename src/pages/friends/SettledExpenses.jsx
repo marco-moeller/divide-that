@@ -8,12 +8,12 @@ import NoExpenses from "../../components/expenses/NoExpenses";
 
 function SettledExpenses() {
   const { id } = useParams();
-  const expensesList = useSettledExpensesList(id);
+  const { expenses } = useSettledExpensesList(id);
 
   const renderExpenses = () => {
     let currentMonth = null;
 
-    return expensesList.map((expense) => {
+    return expenses.map((expense) => {
       if (currentMonth !== expense.date.toDate().getMonth()) {
         currentMonth = expense.date.toDate().getMonth();
         return (
@@ -37,7 +37,7 @@ function SettledExpenses() {
       <BackButton />
       <h2 className="page-title">settled expenses</h2>
       {}
-      {expensesList.length === 0 ? <NoExpenses /> : renderExpenses()}
+      {expenses.length === 0 ? <NoExpenses /> : renderExpenses()}
     </main>
   );
 }

@@ -23,10 +23,21 @@ function EditGroupExpenseModal({ toggleModal, oldExpense, group }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    const newExpense = {
+      ...expense
+    };
     try {
-      const newExpense = {
-        ...expense
-      };
+      if (
+        Object.values(newExpense.split).reduce((split, acc) => split + acc) < 1
+      )
+        throw new Error("The Splits don't line up to 100%");
+
+      if (newExpense.title === "")
+        throw new Error("Your Expense must have a title");
+
+      if (newExpense.amount === "" || expense.amount <= 0)
+        throw new Error("Amount must be greater than zero");
+
       await addExpenseToDatabase(newExpense);
       await handleNewActivity();
       showPopup("Expense Updated");

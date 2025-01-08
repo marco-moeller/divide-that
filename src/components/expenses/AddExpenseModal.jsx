@@ -12,6 +12,8 @@ import ExpenseForm from "./ExpenseForm";
 import { usePopup } from "../../context/PopupContext";
 import { activityTypes, getNewActivity } from "../../utility/interfaces";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
+import useError from "../error/useError";
+import ErrorComponent from "../error/ErrorComponent";
 
 function AddExpenseModal({ toggleModal }) {
   const { user, profileImgUrl: userProfileUrl } = useAuth();
@@ -28,18 +30,26 @@ function AddExpenseModal({ toggleModal }) {
     sucker: user.id
   });
 
+  const { error, setError } = useError();
   const { showPopup } = usePopup();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    toggleModal();
     try {
+      if (expense.title === "")
+        throw new Error("Your Expense must have a title");
+
+      if (expense.amount === "" || expense.amount <= 0)
+        throw new Error("Amount must be greater than zero");
+
       await handleNewExpense();
       await handleNewActivity();
 
+      toggleModal();
+      setError(null);
       showPopup("Expense Added");
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   };
 
@@ -80,6 +90,7 @@ function AddExpenseModal({ toggleModal }) {
       <ModalHeader toggleModal={toggleModal} handleSubmit={handleSubmit}>
         Add expense
       </ModalHeader>
+      <ErrorComponent>{error}</ErrorComponent>
       <ExpenseForm
         expense={expense}
         setExpense={setExpense}

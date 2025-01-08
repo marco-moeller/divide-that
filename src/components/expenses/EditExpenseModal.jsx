@@ -8,6 +8,8 @@ import ExpenseForm from "./ExpenseForm";
 import { usePopup } from "../../context/PopupContext";
 import { activityTypes, getNewActivity } from "../../utility/interfaces";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
+import useError from "../error/useError";
+import ErrorComponent from "../error/ErrorComponent";
 
 function EditExpenseModal({ toggleModal, oldExpense }) {
   const [expense, setExpense] = useState({
@@ -16,6 +18,8 @@ function EditExpenseModal({ toggleModal, oldExpense }) {
   });
 
   const { user, profileImgUrl: userProfileUrl } = useAuth();
+
+  const { error, setError } = useError();
   const { showPopup } = usePopup();
 
   const friendID =
@@ -29,13 +33,20 @@ function EditExpenseModal({ toggleModal, oldExpense }) {
     const newExpense = {
       ...expense
     };
-    toggleModal();
     try {
+      if (newExpense.title === "")
+        throw new Error("Your Expense must have a title");
+
+      if (newExpense.amount === "" || expense.amount <= 0)
+        throw new Error("Amount must be greater than zero");
+
       await addExpenseToDatabase(newExpense);
       await handleNewActivity();
+      toggleModal();
+      setError(null);
       showPopup("Expense Updated");
     } catch (error) {
-      console.log(error);
+      setError(error.message);
     }
   };
 
@@ -56,6 +67,7 @@ function EditExpenseModal({ toggleModal, oldExpense }) {
       <ModalHeader toggleModal={toggleModal} handleSubmit={handleSubmit}>
         Edit expense
       </ModalHeader>
+      <ErrorComponent>{error}</ErrorComponent>
       <ExpenseForm
         expense={expense}
         setExpense={setExpense}

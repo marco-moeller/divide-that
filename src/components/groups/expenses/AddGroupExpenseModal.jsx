@@ -49,8 +49,8 @@ function AddGroupExpenseModal({ toggleModal }) {
       await handleNewExpense();
       await handleNewActivity();
 
-      setError(null);
       toggleModal();
+      setError(null);
       showPopup("expense added");
     } catch (error) {
       setError(error.message);

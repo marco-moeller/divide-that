@@ -36,6 +36,8 @@ function useTotalGroupDebtFromAllMembersInDefaultCurrency(group) {
   };
 
   const getTotalDebtInDefaultCurrency = (member) => {
+    if (member === user.id) return 0;
+
     const totalDebt = getTotalDebt(member);
 
     return Object.keys(totalDebt)

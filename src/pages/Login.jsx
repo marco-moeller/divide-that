@@ -88,7 +88,9 @@ function Login() {
           value={loginFormData.password}
           autoComplete="on"
         />
-        <button disabled={status === "submitting"}>Log in</button>
+        <button disabled={status === "submitting"} className="btn">
+          Log in
+        </button>
         <p className="red">{error?.message}</p>
       </form>
       <p>

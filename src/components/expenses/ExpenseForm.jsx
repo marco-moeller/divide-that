@@ -194,14 +194,14 @@ function ExpenseForm({
       <div className="sucker">
         <button
           type="button"
-          className={getSuckerBtnBg(user.id)}
+          className={getSuckerBtnBg(user.id) + " btn"}
           onClick={() => setSucker(user.id)}
         >
           You Paid
         </button>
         <button
           type="button"
-          className={getSuckerBtnBg(friend.id)}
+          className={getSuckerBtnBg(friend.id) + " btn"}
           onClick={() => setSucker(friend.id)}
         >
           {friend.userName + " Paid"}

@@ -47,7 +47,7 @@ function SettledExpense({ expense }) {
           {addZeros(getSplitAmount())}
         </span>
       </div>
-      <button className="unsettle-btn" onClick={handleClick}>
+      <button className="unsettle-btn btn" onClick={handleClick}>
         unsettle
       </button>
     </div>

@@ -182,13 +182,13 @@ function GroupExpenseForm({ expense, setExpense, group, user, members }) {
 
       <div className="split">
         <button
-          className={getSplitTypeBtnBg("even")}
+          className={getSplitTypeBtnBg("even") + " btn"}
           onClick={handleEvenSplitClick}
         >
           Even Split
         </button>
         <button
-          className={getSplitTypeBtnBg("percent")}
+          className={getSplitTypeBtnBg("percent") + " btn"}
           onClick={(e) => {
             e.preventDefault();
             setSplitType("percent");
@@ -197,7 +197,7 @@ function GroupExpenseForm({ expense, setExpense, group, user, members }) {
           % - Split
         </button>
         <button
-          className={getSplitTypeBtnBg("absolute")}
+          className={getSplitTypeBtnBg("absolute") + " btn"}
           onClick={(e) => {
             e.preventDefault();
             setSplitType("absolute");
@@ -260,7 +260,7 @@ function GroupExpenseForm({ expense, setExpense, group, user, members }) {
       <div className="sucker">
         <button
           type="button"
-          className={getSuckerBtnBg(user.id)}
+          className={getSuckerBtnBg(user.id) + " btn"}
           onClick={() => setSucker(user.id)}
         >
           You Paid
@@ -270,7 +270,7 @@ function GroupExpenseForm({ expense, setExpense, group, user, members }) {
           .map((member) => (
             <button
               type="button"
-              className={getSuckerBtnBg(member.id)}
+              className={getSuckerBtnBg(member.id) + " btn"}
               onClick={() => setSucker(member.id)}
               key={nanoid()}
             >

@@ -55,7 +55,7 @@ function Friend() {
       <DebtInfo friend={friend} expenses={expenses} />
       <main className="friend-main">
         <section className="control-btns">
-          <button className="bg-purple purple-bnt" onClick={handleSettleUp}>
+          <button className="bg-purple purple-btn" onClick={handleSettleUp}>
             settle up
           </button>
           <NavLink to={"./settledExpenses"} className="btn">

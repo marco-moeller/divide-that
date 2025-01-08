@@ -115,7 +115,9 @@ function Register() {
           autoComplete="on"
           value={registerFormData.confirmPassword}
         />
-        <button disabled={status === "submitting"}>Register</button>
+        <button disabled={status === "submitting"} className="btn">
+          Register
+        </button>
         <input
           type="checkbox"
           name="checkbox"

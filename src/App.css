@@ -84,9 +84,7 @@ p.hide-arrows {
 .control-btns button:hover,
 .control-btns button:active,
 .btn:hover,
-.btn:active,
-.settled-expenses button:hover,
-.settled-expenses button:active {
+.btn:active {
   background-color: var(--colorPurple);
   color: var(--colorWhite);
   box-shadow: none;
@@ -1169,6 +1167,11 @@ button.red {
 }
 
 .bg-purple {
+  background-color: var(--colorPurple);
+  color: var(--colorWhite);
+}
+
+button.bg-purple {
   background-color: var(--colorPurple);
   color: var(--colorWhite);
 }

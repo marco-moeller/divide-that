@@ -10,6 +10,7 @@ import { activityTypes, getNewActivity } from "../../utility/interfaces";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 import useError from "../error/useError";
 import ErrorComponent from "../error/ErrorComponent";
+import { updateLatestFriendInteraction } from "../../API/userAPI";
 
 function EditExpenseModal({ toggleModal, oldExpense }) {
   const [expense, setExpense] = useState({
@@ -42,6 +43,7 @@ function EditExpenseModal({ toggleModal, oldExpense }) {
 
       await addExpenseToDatabase(newExpense);
       await handleNewActivity();
+      await updateLatestFriendInteraction(user.id, friend.id);
       toggleModal();
       setError(null);
       showPopup("Expense Updated");

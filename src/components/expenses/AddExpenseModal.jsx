@@ -4,7 +4,10 @@ import "react-calendar/dist/Calendar.css";
 import { nanoid } from "nanoid";
 import { useAuth } from "../../context/AuthContext";
 import { addExpenseToDatabase } from "../../database/expenses";
-import { addExpenseToUser } from "../../API/userAPI";
+import {
+  addExpenseToUser,
+  updateLatestFriendInteraction
+} from "../../API/userAPI";
 import useFriend from "../../hooks/useFriend";
 import { useParams } from "react-router-dom";
 import { getCurrencyIconFromSymbol } from "../../utility/money";
@@ -44,6 +47,7 @@ function AddExpenseModal({ toggleModal }) {
 
       await handleNewExpense();
       await handleNewActivity();
+      await updateLatestFriendInteraction(user.id, friend.id);
 
       toggleModal();
       setError(null);

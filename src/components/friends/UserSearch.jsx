@@ -58,7 +58,7 @@ function UserSearch() {
           currentSearch.toLowerCase()
         ) &&
         userFromAllUsers.userName !== user.userName &&
-        !user.friends.includes(userFromAllUsers.id)
+        !user.friends.some((friend) => friend.id === userFromAllUsers.id)
       );
     };
 
@@ -69,7 +69,7 @@ function UserSearch() {
           currentSearch.toLowerCase()
         ) &&
         userFromAllUsers.userName !== user.userName &&
-        !user.friends.includes(userFromAllUsers.id)
+        !user.friends.some((friend) => friend.id === userFromAllUsers.id)
       );
     };
 

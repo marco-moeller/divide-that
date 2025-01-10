@@ -7,7 +7,11 @@ function ProtectedFriend() {
 
   if (!user) return <></>;
 
-  return user.friends.includes(id) ? <Outlet /> : <Navigate to="/" />;
+  return user.friends.some((friend) => friend.id === id) ? (
+    <Outlet />
+  ) : (
+    <Navigate to="/" />
+  );
 }
 
 export default ProtectedFriend;

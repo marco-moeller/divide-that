@@ -174,7 +174,9 @@ export const activityTypes = {
   receivedFriendRequest: "receivedFriendRequest",
   removedFriend: "removedFriend",
   blockedUser: "blockedUser",
-  reportedUser: "reportedUser"
+  reportedUser: "reportedUser",
+
+  settledWithFriend: "settledWithFriend"
 };
 
 export const formatActivity = (activity, currentUserID) => {

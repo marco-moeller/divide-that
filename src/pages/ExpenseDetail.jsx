@@ -18,6 +18,10 @@ import { activityTypes, getNewActivity } from "../utility/interfaces";
 import { addNewActivityToDatabase } from "../API/activitiesAPI";
 import useError from "../components/error/useError";
 import ErrorComponent from "../components/error/ErrorComponent";
+import {
+  removeExpenseFromUser,
+  updateLatestFriendInteraction
+} from "../API/userAPI";
 
 function ExpenseDetail() {
   const { id } = useParams();
@@ -78,6 +82,9 @@ function ExpenseDetail() {
   const handleDelete = () => {
     try {
       deleteExpenseFromDatabase(id);
+      removeExpenseFromUser(user, id);
+      removeExpenseFromUser(friend, id);
+      updateLatestFriendInteraction(user.id, friend.id);
       handleNewActivity();
       showPopup("Expense Deleted");
       setError(null);

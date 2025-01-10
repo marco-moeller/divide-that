@@ -15,9 +15,15 @@ function Friends() {
         <h3 className="no-friends">You have no friends yet</h3>
       )}
       <ul className="friends-list">
-        {user?.friends.map((friendId) => {
-          return <FriendListComponent friendId={friendId} key={friendId} />;
-        })}
+        {user?.friends
+          .sort(
+            (a, b) =>
+              new Date(JSON.parse(b.latestInteraction)) -
+              new Date(JSON.parse(a.latestInteraction))
+          )
+          .map((friend) => {
+            return <FriendListComponent friendId={friend.id} key={friend.id} />;
+          })}
       </ul>
       <UserSearch />
       <ul className="friend-req">

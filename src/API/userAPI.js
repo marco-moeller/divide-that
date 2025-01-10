@@ -7,7 +7,11 @@ import {
 } from "../database/auth";
 import { getExpensesFromDatabase } from "../database/expenses";
 import { deleteImageFromDatabase } from "../database/profileImages";
-import { addUserToDatabase, deleteUserFromDatabase } from "../database/user";
+import {
+  addUserToDatabase,
+  deleteUserFromDatabase,
+  getUserFromDatabase
+} from "../database/user";
 
 export const registerNewUser = async (userData, password) => {
   try {
@@ -80,20 +84,47 @@ export const removeGroupRequestFromUser = async (user, groupID) => {
 };
 
 export const addFriendToUser = async (user, friendID) => {
-  if (user.friends.includes(friendID)) {
+  if (user.friends.some((friend) => friend.id === friendID)) {
     return;
   }
   await addUserToDatabase({
     ...user,
-    friends: [...user.friends, friendID]
+    friends: [
+      ...user.friends,
+      { id: friendID, latestInteraction: JSON.stringify(new Date()) }
+    ]
   });
 };
 
 export const removeFriendFromUser = async (user, friendID) => {
   await addUserToDatabase({
     ...user,
-    friends: user.friends.filter((friend) => friend !== friendID)
+    friends: user.friends.filter((friend) => friend.id !== friendID)
   });
+};
+
+export const updateLatestFriendInteraction = async (userID, user2ID) => {
+  const user = await getUserFromDatabase(userID);
+  const user2 = await getUserFromDatabase(user2ID);
+
+  const updatedUser = {
+    ...user,
+    friends: user.friends.map((friend) =>
+      friend.id === user2.id
+        ? { ...friend, latestInteraction: JSON.stringify(new Date()) }
+        : friend
+    )
+  };
+  await addUserToDatabase(updatedUser);
+  const updatedUser2 = {
+    ...user2,
+    friends: user2.friends.map((friend) =>
+      friend.id === user.id
+        ? { ...friend, latestInteraction: JSON.stringify(new Date()) }
+        : friend
+    )
+  };
+  await addUserToDatabase(updatedUser2);
 };
 
 export const addExpenseToUser = async (user, expenseID) => {
@@ -149,4 +180,12 @@ export const getAllUserExpensesIDsAndAddThemToTheUser = async (user) => {
       .filter((expense) => expense.users.includes(user.id))
       .map((expense) => expense.id)
   });
+};
+
+export const removeExpenseFromUser = async (user, expenseID) => {
+  const updatedUser = {
+    ...user,
+    expenses: user.expenses.filter((expense) => expense.id !== expenseID)
+  };
+  await addUserToDatabase(updatedUser);
 };

@@ -7,7 +7,6 @@ import {
 import { useAuth } from "../../context/AuthContext";
 import { addNewGroupToDatabase } from "../../API/groupsAPI";
 import GroupListComponent from "../../components/groups/GroupListComponent";
-import { nanoid } from "nanoid";
 import GroupRequest from "../../components/groups/GroupRequest";
 import GroupTotalDebtComponent from "../../components/groups/GroupTotalDebtComponent";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
@@ -50,7 +49,7 @@ function Groups() {
         {user?.groups.map((groupId) => {
           return (
             <div key={groupId}>
-              <GroupListComponent groupID={groupId} key={nanoid()} />
+              <GroupListComponent groupID={groupId} key={groupId} />
               <GroupTotalDebtComponent groupID={groupId} />
             </div>
           );
@@ -62,7 +61,7 @@ function Groups() {
       </ul>
       <ul className="group-req">
         {user?.groupRequests?.map((request) => (
-          <GroupRequest key={nanoid()} request={request} />
+          <GroupRequest key={request} request={request} />
         ))}
       </ul>
     </main>

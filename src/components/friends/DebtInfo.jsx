@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import { useAuth } from "../../context/AuthContext";
 import useTotalDebt from "../../hooks/useTotalDebt";
 import useTotalDebtInDefaultCurrency from "../../hooks/useTotalDebtInDefaultCurrency";
@@ -37,7 +36,7 @@ function DebtInfo({ friend, expenses }) {
           <HideElement>
             {totalDebt &&
               Object.keys(totalDebt).map((key) => (
-                <p key={nanoid()}>
+                <p key={key}>
                   {getOweOrOwes(totalDebt[key])}
                   <span className={getOwedAmountColor(totalDebt[key])}>
                     {key}

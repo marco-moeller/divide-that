@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
-import { nanoid } from "nanoid";
 import { addFriendRequestToFriend } from "../../API/userAPI";
 import { getAllUsersFromDatabase } from "../../database/user";
 import { usePopup } from "../../context/PopupContext";
@@ -102,7 +101,7 @@ function UserSearch() {
           .map((userFromAllUsers) => (
             <div
               className="search-list"
-              key={nanoid()}
+              key={userFromAllUsers.id}
               onClick={() => {
                 setSelectedUser(userFromAllUsers);
                 setCurrentSearch(userFromAllUsers.userName);

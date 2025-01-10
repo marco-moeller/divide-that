@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import ActivityComponent from "../components/activities/ActivityComponent";
 import { useAuth } from "../context/AuthContext";
 import useAllUserActivities from "../hooks/useAllUserActivities";
@@ -18,7 +17,7 @@ function Activity() {
         {activities
           .sort((a, b) => b.date - a.date)
           .map((activity) => (
-            <ActivityComponent activity={activity} key={nanoid()} />
+            <ActivityComponent activity={activity} key={activity.id} />
           ))}
       </div>
     </main>

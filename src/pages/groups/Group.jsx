@@ -3,7 +3,6 @@ import GroupHero from "../../components/groups/GroupHero";
 import GroupMember from "../../components/groups/GroupMember";
 import { useState } from "react";
 import useGroup from "../../hooks/useGroup";
-import { nanoid } from "nanoid";
 import NoExpenses from "../../components/expenses/NoExpenses";
 import GroupUserSearch from "../../components/groups/GroupUserSearch";
 import AddGroupExpenseButton from "../../components/groups/expenses/AddGroupExpenseButton";
@@ -75,7 +74,7 @@ function Group() {
       if (currentMonth !== expense.date.toDate().getMonth()) {
         currentMonth = expense.date.toDate().getMonth();
         return (
-          <div key={nanoid()}>
+          <div key={expense.id}>
             <p className="expense">
               {convertToMonthYear(expense.date.toDate())}
             </p>
@@ -84,7 +83,7 @@ function Group() {
         );
       } else {
         return (
-          <div key={nanoid()}>
+          <div key={expense.id}>
             <GroupExpense expense={expense} />
           </div>
         );

@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import useGroup from "../../hooks/useGroup";
 import GroupMemberImg from "./GroupMemberImg";
-import { nanoid } from "nanoid";
 import { memo } from "react";
 
 function GroupListComponent({ groupID }) {
@@ -16,9 +15,7 @@ function GroupListComponent({ groupID }) {
           if (index >= 5) {
             return;
           }
-          return (
-            <GroupMemberImg userID={userID} index={index} key={nanoid()} />
-          );
+          return <GroupMemberImg userID={userID} index={index} key={userID} />;
         })}
       </div>
       <p className="group-name">{group.name}</p>

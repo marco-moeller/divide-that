@@ -9,8 +9,6 @@ import {
 import { currencies } from "../../../data/data";
 import GroupListComponent from "../GroupListComponent";
 
-import { nanoid } from "nanoid";
-
 const PRECISION = 1e20;
 
 function GroupExpenseForm({ expense, setExpense, group, user, members }) {
@@ -272,7 +270,7 @@ function GroupExpenseForm({ expense, setExpense, group, user, members }) {
               type="button"
               className={getSuckerBtnBg(member.id) + " btn"}
               onClick={() => setSucker(member.id)}
-              key={nanoid()}
+              key={member.id}
             >
               {member.userName + " Paid"}
             </button>

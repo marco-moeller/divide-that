@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import useFriend from "../../hooks/useFriend";
 import {
   getCurrencyIconFromSymbol,
@@ -42,7 +41,7 @@ function GroupDebtInfo({ expenses, selectedMember }) {
           <HideElement>
             {totalDebt &&
               Object.keys(totalDebt).map((key) => (
-                <p key={nanoid()}>
+                <p key={key}>
                   {getOweOrOwes(totalDebt[key])}
                   <span className={getOwedAmountColor(totalDebt[key])}>
                     {key}

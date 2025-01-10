@@ -1,6 +1,5 @@
 import FriendListComponent from "../../components/friends/FriendListComponent";
 import { useAuth } from "../../context/AuthContext";
-import { nanoid } from "nanoid";
 import FriendRequest from "../../components/friends/FriendsRequest";
 import UserSearch from "../../components/friends/UserSearch";
 
@@ -17,13 +16,13 @@ function Friends() {
       )}
       <ul className="friends-list">
         {user?.friends.map((friendId) => {
-          return <FriendListComponent friendId={friendId} key={nanoid()} />;
+          return <FriendListComponent friendId={friendId} key={friendId} />;
         })}
       </ul>
       <UserSearch />
       <ul className="friend-req">
         {user?.friendRequests?.map((request) => (
-          <FriendRequest key={nanoid()} request={request} />
+          <FriendRequest key={request} request={request} />
         ))}
       </ul>
     </main>

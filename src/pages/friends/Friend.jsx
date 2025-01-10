@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import Hero from "../../components/friends/Hero";
 import { NavLink, useParams } from "react-router-dom";
 import useFriend from "../../hooks/useFriend";
@@ -25,7 +24,7 @@ function Friend() {
       if (currentMonth !== expense.date.toDate().getMonth()) {
         currentMonth = expense.date.toDate().getMonth();
         return (
-          <div key={nanoid()}>
+          <div key={expense.id}>
             <p className="expense">
               {convertToMonthYear(expense.date.toDate())}
             </p>
@@ -34,7 +33,7 @@ function Friend() {
         );
       } else {
         return (
-          <div key={nanoid()}>
+          <div key={expense.id}>
             <Expense friend={friend} expense={expense} />
           </div>
         );

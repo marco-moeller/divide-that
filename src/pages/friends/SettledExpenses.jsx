@@ -1,4 +1,3 @@
-import { nanoid } from "nanoid";
 import useSettledExpensesList from "../../hooks/useSettledExpensesList";
 import { useParams } from "react-router-dom";
 import { convertToMonthYear } from "../../utility/date";
@@ -17,14 +16,14 @@ function SettledExpenses() {
       if (currentMonth !== expense.date.toDate().getMonth()) {
         currentMonth = expense.date.toDate().getMonth();
         return (
-          <div key={nanoid()}>
+          <div key={expense.id}>
             <p>{convertToMonthYear(expense.date.toDate())}</p>
             <SettledExpense expense={expense} />
           </div>
         );
       } else {
         return (
-          <div key={nanoid()}>
+          <div key={expense.id}>
             <SettledExpense expense={expense} />
           </div>
         );

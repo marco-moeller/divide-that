@@ -106,8 +106,6 @@ function AddGroupExpenseModal({ toggleModal }) {
     if (!members || !expense?.users) return;
 
     const evenSplitPercentage = Math.round(100 / expense.users.length) / 100;
-    console.log("setting expense");
-    console.log(expense);
 
     setExpense((prevState) => ({
       ...prevState,

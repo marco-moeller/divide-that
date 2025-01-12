@@ -17,6 +17,7 @@ import { activityTypes, getNewActivity } from "../../utility/interfaces";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 import useError from "../error/useError";
 import ErrorComponent from "../error/ErrorComponent";
+import ModalBody from "../modals/ModalBody";
 
 function AddExpenseModal({ toggleModal }) {
   const { user, profileImgUrl: userProfileUrl } = useAuth();
@@ -94,15 +95,17 @@ function AddExpenseModal({ toggleModal }) {
       <ModalHeader toggleModal={toggleModal} handleSubmit={handleSubmit}>
         Add expense
       </ModalHeader>
-      <ErrorComponent>{error}</ErrorComponent>
-      <ExpenseForm
-        expense={expense}
-        setExpense={setExpense}
-        userProfileUrl={userProfileUrl}
-        profileImgUrl={profileImgUrl}
-        friend={friend}
-        user={user}
-      />
+      <ModalBody>
+        <ErrorComponent>{error}</ErrorComponent>
+        <ExpenseForm
+          expense={expense}
+          setExpense={setExpense}
+          userProfileUrl={userProfileUrl}
+          profileImgUrl={profileImgUrl}
+          friend={friend}
+          user={user}
+        />
+      </ModalBody>
     </>
   );
 }

@@ -9,6 +9,7 @@ import { addExpenseToDatabase } from "../../../database/expenses";
 import useGroupMembers from "../../../hooks/useGroupMembers";
 import { activityTypes, getNewActivity } from "../../../utility/interfaces";
 import { addNewActivityToDatabase } from "../../../API/activitiesAPI";
+import ModalBody from "../../modals/ModalBody";
 
 function EditGroupExpenseModal({ toggleModal, oldExpense, group }) {
   const { error, setError } = useError();
@@ -66,14 +67,16 @@ function EditGroupExpenseModal({ toggleModal, oldExpense, group }) {
       <ModalHeader toggleModal={toggleModal} handleSubmit={handleSubmit}>
         Edit expense
       </ModalHeader>
-      <ErrorComponent>{error}</ErrorComponent>
-      <GroupExpenseForm
-        expense={expense}
-        setExpense={setExpense}
-        group={group}
-        user={user}
-        members={members}
-      />
+      <ModalBody>
+        <ErrorComponent>{error}</ErrorComponent>
+        <GroupExpenseForm
+          expense={expense}
+          setExpense={setExpense}
+          group={group}
+          user={user}
+          members={members}
+        />
+      </ModalBody>
     </>
   );
 }

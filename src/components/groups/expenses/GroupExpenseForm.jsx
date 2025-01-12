@@ -57,7 +57,6 @@ function GroupExpenseForm({ expense, setExpense, group, user, members }) {
     setExpense((prevState) => ({ ...prevState, [name]: value }));
   };
 
-  //split need to be an object now
   // [{userid: split}, {...}]
   const handlePercentSplitChange = (event) => {
     const { value, name } = event.target;
@@ -88,7 +87,7 @@ function GroupExpenseForm({ expense, setExpense, group, user, members }) {
 
   const handleEvenSplitClick = (event) => {
     event.preventDefault();
-    const evenSplitPercentage = Math.round(100 / group.users.length) / 100;
+    const evenSplitPercentage = Math.round(100 / expense.users.length) / 100;
 
     setSplitType("even");
     setExpense((prevState) => ({
@@ -111,18 +110,6 @@ function GroupExpenseForm({ expense, setExpense, group, user, members }) {
   const setSucker = (id) => {
     setExpense((prevState) => ({ ...prevState, sucker: id }));
   };
-
-  useEffect(() => {
-    const evenSplitPercentage = Math.round(100 / group.users.length) / 100;
-
-    setExpense((prevState) => ({
-      ...prevState,
-      split: members.reduce((acc, member) => {
-        acc[member.id] = evenSplitPercentage;
-        return acc;
-      }, {})
-    }));
-  }, [members]);
 
   if (!members) return <></>;
 

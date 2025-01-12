@@ -4,7 +4,7 @@ import { useAuth } from "../../../context/AuthContext";
 import { nanoid } from "nanoid";
 import { getCurrencyIconFromSymbol } from "../../../utility/money";
 import useGroup from "../../../hooks/useGroup";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import GroupExpenseForm from "./GroupExpenseForm";
 import { addExpenseToDatabase } from "../../../database/expenses";
 import { addGroupToDatabase } from "../../../database/groups";
@@ -14,6 +14,7 @@ import { usePopup } from "../../../context/PopupContext";
 import { activityTypes, getNewActivity } from "../../../utility/interfaces";
 import { addNewActivityToDatabase } from "../../../API/activitiesAPI";
 import useGroupMembers from "../../../hooks/useGroupMembers";
+import ModalBody from "../../modals/ModalBody";
 
 function AddGroupExpenseModal({ toggleModal }) {
   const { id } = useParams();
@@ -29,7 +30,8 @@ function AddGroupExpenseModal({ toggleModal }) {
     split: {},
     id: nanoid(),
     sucker: user.id,
-    group: id
+    group: id,
+    users: []
   });
   const { error, setError } = useError();
   const { showPopup } = usePopup();
@@ -67,7 +69,7 @@ function AddGroupExpenseModal({ toggleModal }) {
       id: expense.id,
       sucker: expense.sucker,
       group: id,
-      users: [...group.users],
+      users: expense.users,
       settled: false,
       creationTime: new Date(),
       creator: user.id,
@@ -91,6 +93,31 @@ function AddGroupExpenseModal({ toggleModal }) {
     addNewActivityToDatabase(newActivity);
   };
 
+  useEffect(() => {
+    if (group?.users) {
+      setExpense((prev) => ({
+        ...prev,
+        users: group.users
+      }));
+    }
+  }, [group?.users]);
+
+  useEffect(() => {
+    if (!members || !expense?.users) return;
+
+    const evenSplitPercentage = Math.round(100 / expense.users.length) / 100;
+    console.log("setting expense");
+    console.log(expense);
+
+    setExpense((prevState) => ({
+      ...prevState,
+      split: members.reduce((acc, member) => {
+        acc[member.id] = evenSplitPercentage;
+        return acc;
+      }, {})
+    }));
+  }, [members, expense?.users]);
+
   if (!group || !user || !members) return;
 
   return (
@@ -98,14 +125,16 @@ function AddGroupExpenseModal({ toggleModal }) {
       <ModalHeader toggleModal={toggleModal} handleSubmit={handleSubmit}>
         Add group expense
       </ModalHeader>
-      <ErrorComponent>{error}</ErrorComponent>
-      <GroupExpenseForm
-        expense={expense}
-        setExpense={setExpense}
-        group={group}
-        user={user}
-        members={members}
-      />
+      <ModalBody>
+        <ErrorComponent>{error}</ErrorComponent>
+        <GroupExpenseForm
+          expense={expense}
+          setExpense={setExpense}
+          group={group}
+          user={user}
+          members={members}
+        />
+      </ModalBody>
     </>
   );
 }

@@ -6,10 +6,16 @@ import {
   updateUserPassword
 } from "../database/auth";
 import { getExpensesFromDatabase } from "../database/expenses";
+import {
+  addGroupToDatabase,
+  deleteGroupFromDatabase,
+  getGroupFromDatabase
+} from "../database/groups";
 import { deleteImageFromDatabase } from "../database/profileImages";
 import {
   addUserToDatabase,
   deleteUserFromDatabase,
+  getAllUsersFromDatabase,
   getUserFromDatabase
 } from "../database/user";
 
@@ -36,8 +42,16 @@ export const registerNewUser = async (userData, password) => {
   }
 };
 
-export const acceptFriendRequest = async (user, friend) => {
-  const updatedUser = await removeFriendRequestFromUser(user, friend.id);
+export const acceptFriendRequest = async (userID, friendID) => {
+  const user = getUserFromDatabase(userID);
+  const friend = getUserFromDatabase(friendID);
+
+  const updatedUser = {
+    ...user,
+    friendRequests: user.friendRequests.filter(
+      (request) => request !== friendID
+    )
+  };
   await addFriendToUser(updatedUser, friend.id);
   await addFriendToUser(friend, user.id);
 };
@@ -52,6 +66,19 @@ export const addFriendRequestToFriend = async (friend, user) => {
   });
 };
 
+const addFriendToUser = async (user, friendID) => {
+  if (user.friends.some((friend) => friend.id === friendID)) {
+    return;
+  }
+  await addUserToDatabase({
+    ...user,
+    friends: [
+      ...user.friends,
+      { id: friendID, latestInteraction: JSON.stringify(new Date()) }
+    ]
+  });
+};
+
 export const removeFriendRequestFromUser = async (user, friendID) => {
   const updatedUser = {
     ...user,
@@ -60,7 +87,6 @@ export const removeFriendRequestFromUser = async (user, friendID) => {
     )
   };
   await addUserToDatabase(updatedUser);
-  return updatedUser;
 };
 
 export const addGroupRequestToUser = async (user, groupID) => {
@@ -81,19 +107,6 @@ export const removeGroupRequestFromUser = async (user, groupID) => {
   };
   await addUserToDatabase(updatedUser);
   return updatedUser;
-};
-
-export const addFriendToUser = async (user, friendID) => {
-  if (user.friends.some((friend) => friend.id === friendID)) {
-    return;
-  }
-  await addUserToDatabase({
-    ...user,
-    friends: [
-      ...user.friends,
-      { id: friendID, latestInteraction: JSON.stringify(new Date()) }
-    ]
-  });
 };
 
 export const removeFriendFromUser = async (user, friendID) => {
@@ -154,11 +167,73 @@ export const updateUserData = async (user, userData) => {
 
 export const deleteUserAccount = async (userID, profileImage) => {
   try {
+    const user = await getUserFromDatabase(userID);
+
+    //remove user from all friends
+    console.log(user.friends);
+
+    await Promise.all(
+      user.friends.map(async (friendObject) => {
+        const friend = await getUserFromDatabase(friendObject.id);
+        await addUserToDatabase({
+          ...friend,
+          friends: friend.friends.filter(
+            (friendObject) => friendObject.id !== userID
+          )
+        });
+      })
+    );
+
+    //delete all pending friend request
+    const allUsers = await getAllUsersFromDatabase();
+
+    await Promise.all(
+      allUsers.map(async (user) => {
+        if (user.friendRequests.includes(userID)) {
+          await addUserToDatabase({
+            ...user,
+            friendRequests: user.friendRequests.filter(
+              (friendID) => friendID !== user.id
+            )
+          });
+        }
+      })
+    );
+
+    //transfer group ownerships
+    await Promise.all(
+      user.groups.map(async (groupID) => {
+        const group = await getGroupFromDatabase(groupID);
+        if (group.users.length === 1) {
+          deleteGroupFromDatabase(groupID);
+        } else if (group.creator === user.id) {
+          addGroupToDatabase({
+            ...group,
+            creator: group.users.filter((memberID) => memberID !== user.id)[0]
+          });
+        }
+      })
+    );
+
+    //for everything else just turn the user into an deleted account
+    addUserToDatabase({
+      email: "deleted@email.com",
+      userName: "Deleted User",
+      id: user.id,
+      groups: [],
+      defaultCurrency: "USD",
+      friends: [],
+      friendRequests: [],
+      groupInvites: [],
+      activities: [],
+      profileImage: "",
+      expenses: []
+    });
+
     if (profileImage !== "") {
       deleteImageFromDatabase("profileImages/" + profileImage);
     }
     await deleteUserFromAuth();
-    await deleteUserFromDatabase(userID);
     await logoutUser();
   } catch (error) {
     console.log(error);

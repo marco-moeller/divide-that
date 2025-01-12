@@ -17,6 +17,7 @@ import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 import { activityTypes, getNewActivity } from "../../utility/interfaces";
 import useGroupMembers from "../../hooks/useGroupMembers";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
+import ModalBody from "../modals/ModalBody";
 
 function GroupSettingsModal({ toggle, group }) {
   const { user } = useAuth();
@@ -107,44 +108,46 @@ function GroupSettingsModal({ toggle, group }) {
       <ModalHeader toggleModal={toggle} handleSubmit={handleSubmit}>
         Group Settings
       </ModalHeader>
-      <section className="group-settings fd-column flex">
-        <GroupListComponent groupID={group.id} />
-        <div className="divider"></div>
+      <ModalBody>
+        <section className="group-settings fd-column flex">
+          <GroupListComponent groupID={group.id} />
+          <div className="divider"></div>
 
-        <label htmlFor="group-name">Group Name</label>
-        {!isShowingGroupName && (
-          <h2 className="group-name" name="group-name">
-            {groupName}
-            <MdOutlineModeEdit onClick={toggleGroupName} />
-          </h2>
-        )}
-        {isShowingGroupName && (
-          <input
-            name="groupName"
-            id="groupName"
-            onChange={handleChange}
-            type="groupName"
-            placeholder={groupName}
-            value={groupName}
-            autoComplete="on"
-          />
-        )}
-        <div className="group-settings-option">
-          <MdGroupOff />
-          <div onClick={toggleDeleteConfirmButton}>
-            <p className="red">Delete {group.name}</p>
-            <p className="subtitle">
-              Delete this group and all its expenses. This action is final!
-            </p>
+          <label htmlFor="group-name">Group Name</label>
+          {!isShowingGroupName && (
+            <h2 className="group-name" name="group-name">
+              {groupName}
+              <MdOutlineModeEdit onClick={toggleGroupName} />
+            </h2>
+          )}
+          {isShowingGroupName && (
+            <input
+              name="groupName"
+              id="groupName"
+              onChange={handleChange}
+              type="groupName"
+              placeholder={groupName}
+              value={groupName}
+              autoComplete="on"
+            />
+          )}
+          <div className="group-settings-option">
+            <MdGroupOff />
+            <div onClick={toggleDeleteConfirmButton}>
+              <p className="red">Delete {group.name}</p>
+              <p className="subtitle">
+                Delete this group and all its expenses. This action is final!
+              </p>
+            </div>
           </div>
-        </div>
-        {isShowing && (
-          <button className="red btn" onClick={handleDeleteClick}>
-            Confirm Delete Group
-          </button>
-        )}
-      </section>
-      <ErrorComponent>{error}</ErrorComponent>
+          {isShowing && (
+            <button className="red btn" onClick={handleDeleteClick}>
+              Confirm Delete Group
+            </button>
+          )}
+        </section>
+        <ErrorComponent>{error}</ErrorComponent>
+      </ModalBody>
     </>
   );
 }

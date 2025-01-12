@@ -11,6 +11,7 @@ import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 import useError from "../error/useError";
 import ErrorComponent from "../error/ErrorComponent";
 import { updateLatestFriendInteraction } from "../../API/userAPI";
+import ModalBody from "../modals/ModalBody";
 
 function EditExpenseModal({ toggleModal, oldExpense }) {
   const [expense, setExpense] = useState({
@@ -69,15 +70,17 @@ function EditExpenseModal({ toggleModal, oldExpense }) {
       <ModalHeader toggleModal={toggleModal} handleSubmit={handleSubmit}>
         Edit expense
       </ModalHeader>
-      <ErrorComponent>{error}</ErrorComponent>
-      <ExpenseForm
-        expense={expense}
-        setExpense={setExpense}
-        userProfileUrl={userProfileUrl}
-        profileImgUrl={profileImgUrl}
-        friend={friend}
-        user={user}
-      />
+      <ModalBody>
+        <ErrorComponent>{error}</ErrorComponent>
+        <ExpenseForm
+          expense={expense}
+          setExpense={setExpense}
+          userProfileUrl={userProfileUrl}
+          profileImgUrl={profileImgUrl}
+          friend={friend}
+          user={user}
+        />
+      </ModalBody>
     </>
   );
 }

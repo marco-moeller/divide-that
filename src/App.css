@@ -137,7 +137,7 @@ button.add-expense {
 }
 
 .back-btn {
-  margin-right: auto;
+  margin-left: auto;
 }
 
 .about svg {
@@ -163,7 +163,7 @@ button.add-expense {
 }
 
 .save-btn {
-  margin-left: auto;
+  margin-right: auto;
   height: 24px;
 }
 
@@ -556,22 +556,14 @@ div.expense :nth-child(3) {
   position: fixed;
   display: flex;
   flex-direction: column;
-  max-height: 120dvh;
+  min-height: 120dvh;
   inset: 0;
   width: 100%;
   z-index: 100;
   top: 0;
   left: 0;
   right: 0;
-  bottom: 0;
   background-color: var(--colorBlack);
-}
-
-.modal > * {
-  max-width: 500px;
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
 }
 
 .modal-header {
@@ -608,6 +600,21 @@ div.expense :nth-child(3) {
 
 .modal-header button {
   padding: 0;
+}
+
+.modal-body {
+  width: 100%;
+  max-height: 80%;
+  overflow: scroll;
+  height: 1000px;
+  padding-bottom: 100px;
+}
+
+.modal-body > * {
+  max-width: 500px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .modal form {
@@ -761,6 +768,7 @@ select {
 .friends {
   padding-left: 0;
   padding-right: 0;
+  padding-bottom: 20em;
 }
 
 .friend {
@@ -1101,6 +1109,7 @@ div.reactEasyCrop_CropArea {
   bottom: 0;
   width: 100%;
   background-color: var(--colorDark);
+  z-index: 10;
 }
 
 nav {

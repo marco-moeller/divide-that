@@ -8,6 +8,7 @@ import { activityTypes, getNewActivity } from "../../utility/interfaces";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 import useError from "../error/useError";
 import ErrorComponent from "../error/ErrorComponent";
+import ModalBody from "../modals/ModalBody";
 
 function ProfileImageUpload({ toggleModal }) {
   const [file, setFile] = useState(null);
@@ -85,23 +86,29 @@ function ProfileImageUpload({ toggleModal }) {
       <ModalHeader toggleModal={toggleModal} handleSubmit={handleSubmit}>
         Upload your avatar
       </ModalHeader>
-      <div className="profile-img-upload">
-        <ErrorComponent>{error}</ErrorComponent>
-        <input type="file" accept=".png, .jpg, .jpeg" onChange={handleChange} />
+      <ModalBody>
+        <div className="profile-img-upload">
+          <ErrorComponent>{error}</ErrorComponent>
+          <input
+            type="file"
+            accept=".png, .jpg, .jpeg"
+            onChange={handleChange}
+          />
 
-        {file && (
-          <div className="profile-img-preview-wrapper">
-            <Cropper
-              image={imageSrc}
-              crop={crop}
-              aspect={1 / 1}
-              onCropChange={setCrop}
-              onCropComplete={onCropComplete}
-              showGrid={false}
-            />
-          </div>
-        )}
-      </div>
+          {file && (
+            <div className="profile-img-preview-wrapper">
+              <Cropper
+                image={imageSrc}
+                crop={crop}
+                aspect={1 / 1}
+                onCropChange={setCrop}
+                onCropComplete={onCropComplete}
+                showGrid={false}
+              />
+            </div>
+          )}
+        </div>
+      </ModalBody>
     </>
   );
 }

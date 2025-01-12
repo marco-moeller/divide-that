@@ -16,6 +16,7 @@ import { activityTypes, getNewActivity } from "../../utility/interfaces";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 import useAllUsers from "../../hooks/useAllUsers";
 import ErrorComponent from "../error/ErrorComponent";
+import ModalBody from "../modals/ModalBody";
 
 function AccountSettings({ toggleModal }) {
   const { allUsers } = useAllUsers();
@@ -111,116 +112,118 @@ function AccountSettings({ toggleModal }) {
       <ModalHeader toggleModal={toggleModal} handleSubmit={handleSubmit}>
         Account Settings
       </ModalHeader>
-      <div className="account-settings fd-column flex">
-        <ErrorComponent>{error}</ErrorComponent>
+      <ModalBody>
+        <div className="account-settings fd-column flex">
+          <ErrorComponent>{error}</ErrorComponent>
 
-        <label htmlFor="user-name">Username</label>
-        {!isShowingUserName && (
-          <h2 name="user-name">
-            {formData.userName}
-            <MdOutlineModeEdit onClick={toggleUserName} />
-          </h2>
-        )}
-        {isShowingUserName && (
-          <input
-            name="userName"
-            id="userName"
-            onChange={handleChange}
-            type="userName"
-            placeholder={user.userName}
-            value={formData.userName}
-            autoComplete="on"
-          />
-        )}
-        <label htmlFor="email">Email</label>
-        {!isShowingEmail && (
-          <h2 className="user-email" name="email">
-            {formData.email}
-            <MdOutlineModeEdit onClick={toggleEmail} />
-          </h2>
-        )}
-        {isShowingEmail && (
-          <input
-            name="email"
-            id="email"
-            onChange={handleChange}
-            type="email"
-            placeholder="Email address"
-            autoComplete="on"
-            value={formData.email}
-          />
-        )}
-        <label htmlFor="currency">Default Currency</label>
-        {!isShowingCurrency && (
-          <h2 className="user-currency" name="currency">
-            {getCurrencyName(formData.defaultCurrency)}
-            <MdOutlineModeEdit onClick={toggleCurrency} />
-          </h2>
-        )}
-        {isShowingCurrency && (
-          <select
-            name="defaultCurrency"
-            id="defaultCurrency"
-            value={formData?.defaultCurrency}
-            onChange={handleChange}
-          >
-            <option value={getCurrencyIconFromSymbol(user.defaultCurrency)}>
-              {getCurrencyIconFromSymbol(user.defaultCurrency)}
-            </option>
-            {currencies
-              .filter((currency) => currency.symbol !== user.defaultCurrency)
-              .map((currency) => (
-                <option value={currency.icon} key={currency.icon}>
-                  {currency.icon}
-                </option>
-              ))}
-          </select>
-        )}
-        <label htmlFor="password">Password</label>
-        {!isShowingPassword && (
-          <h2 className="user-password " id="password" name="password">
-            {"******"}
-            <MdOutlineModeEdit onClick={togglePassword} />
-          </h2>
-        )}
-        {isShowingPassword && (
-          <>
+          <label htmlFor="user-name">Username</label>
+          {!isShowingUserName && (
+            <h2 name="user-name">
+              {formData.userName}
+              <MdOutlineModeEdit onClick={toggleUserName} />
+            </h2>
+          )}
+          {isShowingUserName && (
             <input
-              name="password"
+              name="userName"
+              id="userName"
               onChange={handleChange}
-              type="password"
-              placeholder="New Password"
+              type="userName"
+              placeholder={user.userName}
+              value={formData.userName}
               autoComplete="on"
-              value={formData.newPassword}
             />
+          )}
+          <label htmlFor="email">Email</label>
+          {!isShowingEmail && (
+            <h2 className="user-email" name="email">
+              {formData.email}
+              <MdOutlineModeEdit onClick={toggleEmail} />
+            </h2>
+          )}
+          {isShowingEmail && (
             <input
-              name="confirmPassword"
+              name="email"
+              id="email"
               onChange={handleChange}
-              type="password"
-              placeholder="Confirm Password"
+              type="email"
+              placeholder="Email address"
               autoComplete="on"
-              value={formData.confirmPassword}
+              value={formData.email}
             />
-          </>
-        )}
-        <div className="divider"></div>
-        <button
-          onClick={toggleDeleteBtn}
-          disabled={status !== "idle"}
-          className="btn"
-        >
-          Delete Account
-        </button>
-        {isShowingDeleteBtn && (
+          )}
+          <label htmlFor="currency">Default Currency</label>
+          {!isShowingCurrency && (
+            <h2 className="user-currency" name="currency">
+              {getCurrencyName(formData.defaultCurrency)}
+              <MdOutlineModeEdit onClick={toggleCurrency} />
+            </h2>
+          )}
+          {isShowingCurrency && (
+            <select
+              name="defaultCurrency"
+              id="defaultCurrency"
+              value={formData?.defaultCurrency}
+              onChange={handleChange}
+            >
+              <option value={getCurrencyIconFromSymbol(user.defaultCurrency)}>
+                {getCurrencyIconFromSymbol(user.defaultCurrency)}
+              </option>
+              {currencies
+                .filter((currency) => currency.symbol !== user.defaultCurrency)
+                .map((currency) => (
+                  <option value={currency.icon} key={currency.icon}>
+                    {currency.icon}
+                  </option>
+                ))}
+            </select>
+          )}
+          <label htmlFor="password">Password</label>
+          {!isShowingPassword && (
+            <h2 className="user-password " id="password" name="password">
+              {"******"}
+              <MdOutlineModeEdit onClick={togglePassword} />
+            </h2>
+          )}
+          {isShowingPassword && (
+            <>
+              <input
+                name="password"
+                onChange={handleChange}
+                type="password"
+                placeholder="New Password"
+                autoComplete="on"
+                value={formData.newPassword}
+              />
+              <input
+                name="confirmPassword"
+                onChange={handleChange}
+                type="password"
+                placeholder="Confirm Password"
+                autoComplete="on"
+                value={formData.confirmPassword}
+              />
+            </>
+          )}
+          <div className="divider"></div>
           <button
-            className="red btn"
-            onClick={handleDeleteAccount}
+            onClick={toggleDeleteBtn}
             disabled={status !== "idle"}
+            className="btn"
           >
-            Confirm Delete Account
+            Delete Account
           </button>
-        )}
-      </div>
+          {isShowingDeleteBtn && (
+            <button
+              className="red btn"
+              onClick={handleDeleteAccount}
+              disabled={status !== "idle"}
+            >
+              Confirm Delete Account
+            </button>
+          )}
+        </div>
+      </ModalBody>
     </>
   );
 }

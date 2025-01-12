@@ -14,7 +14,7 @@ function FriendRequest({ request }) {
 
   const handleAcceptClick = async () => {
     try {
-      await acceptFriendRequest(user, friend);
+      await acceptFriendRequest(user.id, friend.id);
       setError(null);
     } catch (error) {
       setError(error.message);

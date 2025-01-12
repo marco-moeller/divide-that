@@ -60,11 +60,13 @@ function useTotalGroupDebtFromAllMembersInDefaultCurrency(group) {
       return;
     }
     setTotalGroupDebtFromAllMembersInDefaultCurrency(
-      group?.users.reduce(
-        (acc, current) =>
-          (acc += Number(getTotalDebtInDefaultCurrency(current))),
-        0
-      )
+      group?.users
+        .reduce(
+          (acc, current) =>
+            (acc += Number(getTotalDebtInDefaultCurrency(current))),
+          0
+        )
+        .toFixed(2)
     );
   }, [group, conversionRates, expenses, user]);
 

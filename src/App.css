@@ -719,17 +719,6 @@ select {
 
 .split,
 .sucker {
-  grid-column: 1/-1;
-}
-
-.sucker {
-  display: flex;
-  gap: 1em;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.split {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 1em;
@@ -738,10 +727,6 @@ select {
 
 .split img {
   margin: auto;
-}
-
-.sucker * {
-  width: 50%;
 }
 
 .split-input-wrapper,

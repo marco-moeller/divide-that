@@ -76,6 +76,7 @@ function AddExpenseModal({ toggleModal }) {
     };
     await addExpenseToDatabase(newExpense);
     await addExpenseToUser(user, expense.id);
+    await addExpenseToUser(friend, expense.id);
   };
 
   const handleNewActivity = async () => {

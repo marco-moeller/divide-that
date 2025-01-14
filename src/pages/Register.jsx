@@ -33,6 +33,10 @@ function Register() {
         throw new Error("Try again!");
       }
 
+      if (registerFormData.userName === "Deleted User") {
+        throw new Error("Invalid name!");
+      }
+
       if (registerFormData.password !== registerFormData.confirmPassword) {
         throw new Error("Passwords don't match!");
       }

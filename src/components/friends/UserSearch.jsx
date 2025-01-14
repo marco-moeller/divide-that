@@ -96,7 +96,8 @@ function UserSearch() {
             (userFromAllUsers) =>
               (userExistsAndINotFriendOrSelf(userFromAllUsers) ||
                 emailExistsAndINotFriendOrSelf(userFromAllUsers)) &&
-              !hasRequestFromUserAlready(userFromAllUsers)
+              !hasRequestFromUserAlready(userFromAllUsers) &&
+              userFromAllUsers.userName !== "Deleted User"
           )
           .map((userFromAllUsers) => (
             <div

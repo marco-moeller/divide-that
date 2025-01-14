@@ -3,6 +3,7 @@ import {
   deleteUser,
   sendPasswordResetEmail,
   signInWithEmailAndPassword,
+  signOut,
   updateEmail,
   updatePassword
 } from "firebase/auth";
@@ -28,7 +29,11 @@ export const loginUser = async (userData) => {
 };
 
 export const logoutUser = async () => {
-  return auth.signOut();
+  try {
+    await signOut(auth);
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const doPasswordReset = (email) => {

@@ -31,7 +31,7 @@ function Account() {
     try {
       await logoutUser();
       setError(null);
-      navigate("/home");
+      navigate("/");
     } catch (error) {
       setError(error.message);
     }

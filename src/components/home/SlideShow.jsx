@@ -80,7 +80,7 @@ function SlideShow() {
       <div className="embla__viewport" ref={emblaRef}>
         <div className="embla__container">
           {slides.map((image, index) => (
-            <div className="embla__slide">
+            <div className="embla__slide" key={index}>
               <img src={image} alt="slide" key={index} className="slide" />
             </div>
           ))}

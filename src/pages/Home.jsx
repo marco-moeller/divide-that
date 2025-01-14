@@ -1,7 +1,12 @@
-import { NavLink } from "react-router-dom";
+import { Navigate, NavLink, useNavigate } from "react-router-dom";
 import SlideShow from "../components/home/SlideShow";
+import { useAuth } from "../context/AuthContext";
 
 function Home() {
+  const { isLoggedIn } = useAuth();
+
+  if (isLoggedIn) return <Navigate to="/" />;
+
   return (
     <main className="home">
       {" "}

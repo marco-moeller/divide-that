@@ -94,6 +94,8 @@ p.hide-arrows {
 .delete-btn:active,
 .control-btns .purple-btn:hover,
 .control-btns .purple-btn:active,
+.friend-settings-option .purple-btn:hover,
+.friend-settings-option .purple-btn:active,
 button.add-expense:active,
 button.add-expense:hover {
   background-color: var(--colorGreen);

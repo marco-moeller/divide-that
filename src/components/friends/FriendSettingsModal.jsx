@@ -3,7 +3,7 @@ import { useAuth } from "../../context/AuthContext";
 import ModalHeader from "../modals/ModalHeader";
 import { FaUserAltSlash } from "react-icons/fa";
 import { MdBlock } from "react-icons/md";
-import { removeFriendFromUser } from "../../API/userAPI";
+import { blockUser, removeFriendFromUser } from "../../API/userAPI";
 import { MdOutlineReport } from "react-icons/md";
 import FriendProfilePicture from "./FriendProfilePicture";
 import ErrorComponent from "../error/ErrorComponent";
@@ -11,6 +11,7 @@ import useError from "../error/useError";
 import ModalBody from "../modals/ModalBody";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 import ReportFriendModal from "../reports/reportFriendModal";
+import { usePopup } from "../../context/PopupContext";
 
 function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
   const { user } = useAuth();
@@ -18,6 +19,11 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
   const { isShowing, toggle: toggleReportFriendModal } = useVisibilityToggle();
   const { isShowing: isShowingConfirmBtn, toggle: toggleConfirmBtn } =
     useVisibilityToggle();
+  const {
+    isShowing: isShowingConfirmBlockUSer,
+    toggle: toggleConfirmBlockUSer
+  } = useVisibilityToggle();
+  const { showPopup } = usePopup();
 
   const navigate = useNavigate();
 
@@ -28,6 +34,7 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
       toggleModal();
       setError(null);
       navigate("/");
+      showPopup(`removed ${friend.userName} from your friends`);
     } catch (error) {
       setError(error.message);
     }
@@ -37,7 +44,19 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
     toggleReportFriendModal();
   };
 
-  const handleBlockClick = async () => {};
+  const handleBlockClick = async () => {
+    try {
+      await blockUser(user.id, friend.id);
+      await removeFriendFromUser(user, friend.id);
+      await removeFriendFromUser(friend, user.id);
+      toggleModal();
+      setError(null);
+      navigate("/");
+      showPopup(`${friend.userName} has been blocked`);
+    } catch (error) {
+      setError(error.message);
+    }
+  };
 
   return (
     <>
@@ -71,7 +90,10 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
               </>
             )}
           </div>{" "}
-          <div className="friend-settings-option" onClick={handleBlockClick}>
+          <div
+            className="friend-settings-option"
+            onClick={toggleConfirmBlockUSer}
+          >
             <MdBlock />
             <div>
               <p className="red">Block User</p>
@@ -80,6 +102,17 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
                 share, and suppress future expenses/notifications from them.
               </p>
             </div>{" "}
+            {isShowingConfirmBlockUSer && (
+              <>
+                <div></div>
+                <button
+                  className="purple-btn bg-purple"
+                  onClick={handleBlockClick}
+                >
+                  Confirm here
+                </button>
+              </>
+            )}
           </div>{" "}
           <div
             className="friend-settings-option"

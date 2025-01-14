@@ -44,8 +44,8 @@ export const registerNewUser = async (userData, password) => {
 };
 
 export const acceptFriendRequest = async (userID, friendID) => {
-  const user = getUserFromDatabase(userID);
-  const friend = getUserFromDatabase(friendID);
+  const user = await getUserFromDatabase(userID);
+  const friend = await getUserFromDatabase(friendID);
 
   const updatedUser = {
     ...user,
@@ -111,9 +111,10 @@ export const removeGroupRequestFromUser = async (user, groupID) => {
 };
 
 export const removeFriendFromUser = async (user, friendID) => {
+  const userFromDatabase = await getUserFromDatabase(user.id);
   await addUserToDatabase({
-    ...user,
-    friends: user.friends.filter((friend) => friend.id !== friendID)
+    ...userFromDatabase,
+    friends: userFromDatabase.friends.filter((friend) => friend.id !== friendID)
   });
 };
 
@@ -267,7 +268,7 @@ export const removeExpenseFromUser = async (user, expenseID) => {
 };
 
 export const blockUser = async (userID, userToBeBlockedID) => {
-  const user = await getUserFromDatabase();
+  const user = await getUserFromDatabase(userID);
   await addUserToDatabase({
     ...user,
     blockedUsers: [...user.blockedUsers, userToBeBlockedID]

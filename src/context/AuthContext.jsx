@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useState } from "react";
-import { getUserFromDatabase } from "../database/user";
 import { getProfileImage } from "../API/profileImageAPI";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth, database } from "../database/firebase";
@@ -12,39 +11,75 @@ export function useAuth() {
 }
 
 export function AuthProvider({ children }) {
+  const [userID, setUserID] = useState(null);
   const [user, setUser] = useState(null);
   const [profileImgUrl, setProfileImgUrl] = useState(null);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
+  // useEffect(() => {
+  //   let unsubscribeSnapshot = null;
+
+  //   const initializeUser = async (user) => {
+  //     if (user) {
+  //       const userDocRef = doc(database, "users", user.uid);
+  //       unsubscribeSnapshot = onSnapshot(userDocRef, (doc) => {
+  //         if (doc.exists()) {
+  //           setUser({ ...doc.data() });
+  //         }
+  //       });
+  //       setIsLoggedIn(true);
+  //     } else {
+  //       setUser(null);
+  //       setIsLoggedIn(false);
+  //     }
+  //     setIsLoading(false);
+  //   };
+
+  //   const unsubscribe = onAuthStateChanged(auth, (user) =>
+  //     initializeUser(user)
+  //   );
+
+  //   return () => {
+  //     unsubscribe();
+  //     unsubscribeSnapshot();
+  //   };
+  // }, []);
+
   useEffect(() => {
-    let unsubscribeSnapshot = null;
-
-    const initializeUser = async (user) => {
-      if (user) {
-        const userDocRef = doc(database, "users", user.uid);
-        unsubscribeSnapshot = onSnapshot(userDocRef, (doc) => {
-          if (doc.exists()) {
-            setUser({ ...doc.data() });
-          }
-        });
-        setIsLoggedIn(true);
-      } else {
-        setUser(null);
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (!user) {
         setIsLoggedIn(false);
+        setUserID(null);
+      } else {
+        setUserID(user.uid);
+        setIsLoading(false);
       }
-      setIsLoading(false);
-    };
+    });
 
-    const unsubscribe = onAuthStateChanged(auth, (user) =>
-      initializeUser(user)
-    );
-
-    return () => {
-      unsubscribe();
-      unsubscribeSnapshot();
-    };
+    return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    let unsubscribe = () => {};
+
+    if (userID) {
+      const userDocRef = doc(database, "users", userID);
+      unsubscribe = onSnapshot(userDocRef, (doc) => {
+        if (doc.exists()) {
+          setUser({ ...doc.data() });
+        }
+      });
+      setIsLoggedIn(true);
+    } else {
+      setUser(null);
+      setUserID(null);
+      setIsLoggedIn(false);
+    }
+    setIsLoading(false);
+
+    return () => unsubscribe();
+  }, [userID]);
 
   useEffect(() => {
     const getImgUrl = async () => {

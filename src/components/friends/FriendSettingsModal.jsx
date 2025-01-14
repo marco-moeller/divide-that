@@ -9,10 +9,13 @@ import FriendProfilePicture from "./FriendProfilePicture";
 import ErrorComponent from "../error/ErrorComponent";
 import useError from "../error/useError";
 import ModalBody from "../modals/ModalBody";
+import useVisibilityToggle from "../../hooks/useVisibilityToggle";
+import ReportFriendModal from "../reports/reportFriendModal";
 
 function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
   const { user } = useAuth();
   const { error, setError } = useError();
+  const { isShowing, toggle: toggleReportFriendModal } = useVisibilityToggle();
 
   const navigate = useNavigate();
 
@@ -27,6 +30,12 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
       setError(error.message);
     }
   };
+
+  const handleReportUserClick = async () => {
+    toggleReportFriendModal();
+  };
+
+  const handleBlockClick = async () => {};
 
   return (
     <>
@@ -52,7 +61,7 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
               <p className="subtitle">Remove this user from your friend list</p>
             </div>{" "}
           </div>{" "}
-          <div className="friend-settings-option">
+          <div className="friend-settings-option" onClick={handleBlockClick}>
             <MdBlock />
             <div>
               <p className="red">Block User</p>
@@ -62,7 +71,10 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
               </p>
             </div>{" "}
           </div>{" "}
-          <div className="friend-settings-option">
+          <div
+            className="friend-settings-option"
+            onClick={handleReportUserClick}
+          >
             <MdOutlineReport />
             <div>
               <p className="red">Report User</p>
@@ -73,6 +85,13 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
           </div>
         </section>
       </ModalBody>
+      {isShowing && (
+        <ReportFriendModal
+          userID={user.id}
+          friendID={friend.id}
+          toggle={toggleReportFriendModal}
+        />
+      )}
     </>
   );
 }

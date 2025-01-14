@@ -35,7 +35,8 @@ export const registerNewUser = async (userData, password) => {
       groupInvites: [],
       activities: [],
       profileImage: "",
-      expenses: []
+      expenses: [],
+      blockedUsers: []
     });
   } catch (error) {
     console.log(error);
@@ -263,4 +264,12 @@ export const removeExpenseFromUser = async (user, expenseID) => {
     expenses: user.expenses.filter((expense) => expense.id !== expenseID)
   };
   await addUserToDatabase(updatedUser);
+};
+
+export const blockUser = async (userID, userToBeBlockedID) => {
+  const user = await getUserFromDatabase();
+  await addUserToDatabase({
+    ...user,
+    blockedUsers: [...user.blockedUsers, userToBeBlockedID]
+  });
 };

@@ -210,3 +210,22 @@ export const getNewActivity = (activity) => {
 
   return newActivity;
 };
+
+export const reportTypes = {
+  idle: "idle",
+  active: "active",
+  closed: "closed"
+};
+
+export const getNewReport = (creator, userToBeReported, disc) => {
+  const newReport = {
+    id: nanoid(),
+    creator,
+    userToBeReported,
+    disc,
+    status: reportTypes.idle,
+    admin: ""
+  };
+
+  return newReport;
+};

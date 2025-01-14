@@ -23,6 +23,7 @@ export const usersRef = collection(database, "users");
 export const conversionRatesRef = collection(database, "conversionRates");
 export const groupsRef = collection(database, "groups");
 export const activitiesRef = collection(database, "activities");
+export const reportsRef = collection(database, "reports");
 
 /* -- STORAGE -- */
 export const imageDB = getStorage(app);

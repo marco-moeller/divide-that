@@ -748,7 +748,7 @@ select {
   pointer-events: none;
 }
 
-/* -- Friends -- */
+/* -- FRIENDS -- */
 
 .friends {
   padding-left: 0;
@@ -905,6 +905,42 @@ select {
   padding-left: 1em;
 }
 
+.report-friend-form > .modal {
+  align-items: center;
+  background-color: transparent;
+  justify-content: center;
+}
+
+.report-friend-form .modal-body {
+  padding: 1em;
+  border-radius: 10px;
+  background-color: var(--colorBlack);
+  border: 2px solid var(--colorPurple);
+  height: auto;
+  width: 500px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  color: var(--colorWhite);
+}
+
+.report-friend-form svg:first-child {
+  margin-left: auto;
+  margin-right: 0;
+  width: 35px;
+  height: 35px;
+}
+
+.report-friend-form svg {
+  color: var(--colorWhite);
+}
+
+.report-friend-form textarea {
+  resize: none;
+  height: 250px;
+}
+
 /* -- LOGIN/REGISTER -- */
 .login,
 .register {
@@ -924,6 +960,7 @@ select {
 
 .login-form input,
 .register-form input,
+textarea,
 .search {
   font-size: 1rem;
   padding: 0.75em 1em;

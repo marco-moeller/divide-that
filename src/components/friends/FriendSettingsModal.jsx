@@ -10,7 +10,7 @@ import ErrorComponent from "../error/ErrorComponent";
 import useError from "../error/useError";
 import ModalBody from "../modals/ModalBody";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
-import ReportFriendModal from "../reports/reportFriendModal";
+import ReportFriendModal from "../reports/ReportFriendModal";
 import { usePopup } from "../../context/PopupContext";
 
 function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {

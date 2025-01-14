@@ -12,7 +12,7 @@ function Home() {
       {" "}
       <section>
         <img src="icon-144.png" alt="logo" className="home-logo" />
-        <h1 className="title">Divide That!!</h1>{" "}
+        <h1 className="title">Divide That!</h1>{" "}
         <p className="subtitle">
           Split expenses easily with friends, family, and groups!
         </p>

@@ -16,6 +16,8 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
   const { user } = useAuth();
   const { error, setError } = useError();
   const { isShowing, toggle: toggleReportFriendModal } = useVisibilityToggle();
+  const { isShowing: isShowingConfirmBtn, toggle: toggleConfirmBtn } =
+    useVisibilityToggle();
 
   const navigate = useNavigate();
 
@@ -51,15 +53,23 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
             </div>
           </div>
           <div className="divider"></div>
-          <div
-            className="friend-settings-option"
-            onClick={handleRemoveFriendClick}
-          >
+          <div className="friend-settings-option" onClick={toggleConfirmBtn}>
             <FaUserAltSlash />
             <div>
               <p className="red">Remove from friends list</p>
               <p className="subtitle">Remove this user from your friend list</p>
             </div>{" "}
+            {isShowingConfirmBtn && (
+              <>
+                <div></div>
+                <button
+                  className="purple-btn bg-purple"
+                  onClick={handleRemoveFriendClick}
+                >
+                  Confirm here
+                </button>
+              </>
+            )}
           </div>{" "}
           <div className="friend-settings-option" onClick={handleBlockClick}>
             <MdBlock />

@@ -46,7 +46,7 @@ function ReportFriendModal({ userID, friendID, toggle }) {
             name="reportDisc"
             id="reportDisc"
             placeholder="Discribe your issue..."
-            maxlength="500"
+            maxLength="500"
             value={reportDisc}
             onChange={handleChange}
             required

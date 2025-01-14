@@ -155,6 +155,7 @@ button.add-expense {
   margin-top: 2em;
   display: grid;
   grid-template-columns: auto 1fr;
+  gap: 0.5em;
 }
 
 .friend-settings-option svg,

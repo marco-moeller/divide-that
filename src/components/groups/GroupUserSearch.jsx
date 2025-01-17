@@ -88,6 +88,10 @@ function GroupUserSearch({ group }) {
       );
     };
 
+    const userHasBeenBlocked = (userFromAllUsers) => {
+      return user.blockedUsers.includes(userFromAllUsers?.id);
+    };
+
     const hasRequestFromThisGroupAlready = (userFromAllUsers) => {
       return userFromAllUsers.groupRequests.includes(group.id);
     };
@@ -99,7 +103,9 @@ function GroupUserSearch({ group }) {
         (userFromAllUsers) =>
           (userExistsAndINotInGroupOrSelf(userFromAllUsers) ||
             emailExistsAndINotInGroupOrSelf(userFromAllUsers)) &&
-          !hasRequestFromThisGroupAlready(userFromAllUsers)
+          !hasRequestFromThisGroupAlready(userFromAllUsers) &&
+          userFromAllUsers.userName !== "Deleted User" &&
+          !userHasBeenBlocked(userFromAllUsers)
       ).length === 0
     )
       return;
@@ -111,7 +117,9 @@ function GroupUserSearch({ group }) {
             (userFromAllUsers) =>
               (userExistsAndINotInGroupOrSelf(userFromAllUsers) ||
                 emailExistsAndINotInGroupOrSelf(userFromAllUsers)) &&
-              !hasRequestFromThisGroupAlready(userFromAllUsers)
+              !hasRequestFromThisGroupAlready(userFromAllUsers) &&
+              userFromAllUsers.userName !== "Deleted User" &&
+              !userHasBeenBlocked(userFromAllUsers)
           )
           .map((userFromAllUsers) => (
             <div

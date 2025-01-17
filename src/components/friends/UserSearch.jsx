@@ -73,6 +73,10 @@ function UserSearch() {
       );
     };
 
+    const userHasBeenBlocked = (userFromAllUsers) => {
+      return user.blockedUsers.includes(userFromAllUsers?.id);
+    };
+
     const hasRequestFromUserAlready = (userFromAllUsers) => {
       return userFromAllUsers.friendRequests.includes(user.id);
     };
@@ -84,7 +88,9 @@ function UserSearch() {
         (userFromAllUsers) =>
           (userExistsAndINotFriendOrSelf(userFromAllUsers) ||
             emailExistsAndINotFriendOrSelf(userFromAllUsers)) &&
-          !hasRequestFromUserAlready(userFromAllUsers)
+          !hasRequestFromUserAlready(userFromAllUsers) &&
+          userFromAllUsers.userName !== "Deleted User" &&
+          !userHasBeenBlocked(userFromAllUsers)
       ).length === 0
     )
       return;
@@ -97,7 +103,8 @@ function UserSearch() {
               (userExistsAndINotFriendOrSelf(userFromAllUsers) ||
                 emailExistsAndINotFriendOrSelf(userFromAllUsers)) &&
               !hasRequestFromUserAlready(userFromAllUsers) &&
-              userFromAllUsers.userName !== "Deleted User"
+              userFromAllUsers.userName !== "Deleted User" &&
+              !userHasBeenBlocked(userFromAllUsers)
           )
           .map((userFromAllUsers) => (
             <div

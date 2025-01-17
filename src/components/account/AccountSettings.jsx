@@ -167,13 +167,13 @@ function AccountSettings({ toggleModal }) {
               onChange={handleChange}
             >
               <option value={getCurrencyIconFromSymbol(user.defaultCurrency)}>
-                {getCurrencyIconFromSymbol(user.defaultCurrency)}
+                {getCurrencyName(user.defaultCurrency)}
               </option>
               {currencies
                 .filter((currency) => currency.symbol !== user.defaultCurrency)
                 .map((currency) => (
                   <option value={currency.icon} key={currency.icon}>
-                    {currency.icon}
+                    {currency.name}
                   </option>
                 ))}
             </select>

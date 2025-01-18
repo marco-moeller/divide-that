@@ -12,9 +12,12 @@
 
 /* -- TYPO -- */
 h1 {
-  font-size: 2rem;
+  font-size: 1.5rem;
   color: var(--colorWhite);
   text-align: center;
+}
+
+.group-hero h1 {
   line-height: 0.9em;
 }
 
@@ -330,6 +333,7 @@ svg {
   font-weight: 700;
   font-size: 1.25rem;
   letter-spacing: 0.25rem;
+  overflow: hidden;
 }
 
 .total-group-debt {
@@ -899,7 +903,7 @@ select {
 
 .friend-request,
 .group-request {
-  margin: 1em 0;
+  margin: 1em;
 }
 
 .friend-request-info,

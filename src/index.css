@@ -80,6 +80,8 @@ body,
   flex-direction: column;
   font-family: "Montserrat", sans-serif;
   background-color: var(--colorBlack);
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 
 main,

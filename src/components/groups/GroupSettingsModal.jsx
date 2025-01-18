@@ -65,6 +65,10 @@ function GroupSettingsModal({ toggle, group }) {
 
   const handleSubmit = async () => {
     try {
+      if (groupName.length > 15) {
+        throw new Error("Group names can only have up to 15 characters!");
+      }
+
       toggle();
       await addGroupToDatabase({ ...group, name: groupName });
       await handleNewActivity();

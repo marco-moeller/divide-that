@@ -38,10 +38,7 @@ function SettledExpense({ expense }) {
         <h3 className="date">{convertToLocaleDate(expense.date.toDate())}</h3>
         <div className="title-container">
           <NavLink to={`../expense/${expense.id}`}>
-            <h2 className="title">{expense.title}</h2>
-            <p className="subtitle">
-              {expense.payer} paid {expense.currency + addZeros(expense.amount)}
-            </p>
+            <h2 className="expense-title">{expense.title}</h2>
           </NavLink>
         </div>
         <div
@@ -56,10 +53,10 @@ function SettledExpense({ expense }) {
             {addZeros(getSplitAmount())}
           </span>
         </div>
-        <button className="unsettle-btn btn" onClick={handleClick}>
-          unsettle
-        </button>
       </div>
+      <button className="unsettle-btn btn" onClick={handleClick}>
+        unsettle
+      </button>
       <ErrorComponent>{error}</ErrorComponent>
     </>
   );

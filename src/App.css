@@ -15,6 +15,7 @@ h1 {
   font-size: 2rem;
   color: var(--colorWhite);
   text-align: center;
+  line-height: 0.9em;
 }
 
 h1.name {
@@ -74,6 +75,7 @@ header p {
 
 p.hide-arrows {
   width: min-content;
+  display: inline-block;
 }
 
 /* -- BTN/LINK -- */
@@ -185,6 +187,12 @@ button:disabled:active {
 .group-settings button {
   margin: auto;
   margin-top: 1em;
+}
+
+.unsettle-btn {
+  margin-bottom: 1em;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 /* -- LAYOUT -- */
@@ -381,6 +389,9 @@ svg {
 
 .member {
   padding: 0.25em 0.5em;
+  width: 120px;
+  text-align: center;
+  overflow: hidden;
 }
 
 /* .selected {
@@ -451,16 +462,34 @@ header > .profile-pic {
 
 .hero-content {
   margin-top: 25px;
-  padding: 1em 5em 0;
+  padding: 1em 0.25em 0;
   text-align: left;
   color: var(--colorWhite);
 }
 
 .total-debt-info {
-  display: grid;
-  grid-template-columns: max-content min-content;
-  margin: auto;
-  width: min-content;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+}
+
+.total-debt-info > :nth-child(1) {
+  flex: 0 0 90%;
+}
+
+.total-debt-info > :nth-child(2) {
+  flex: 0 0 10%;
+  display: inline-block;
+  margin-left: auto;
+  margin-top: -1.5em;
+}
+
+.owes-you-in-total {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  display: inline-block;
 }
 
 .hero-content .name {
@@ -624,7 +653,7 @@ div.expense :nth-child(3) {
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.75em;
-  padding: 1em 5em;
+  padding: 1em 2em;
 }
 
 .modal form input,
@@ -637,6 +666,10 @@ div.expense :nth-child(3) {
   border-radius: var(--borderRadius);
   font-size: 1.5rem;
   padding: 0.25em 2.75em 0.25em 0.5em;
+}
+
+.account-settings input {
+  padding: 0.25em 0.5em 0.25em 0.5em;
 }
 
 #amount,
@@ -767,12 +800,13 @@ select {
   color: var(--colorWhite);
   background: var(--colorBlack);
   padding: 0.5em;
+  text-align: center;
 }
 
 .friend p {
   font-weight: 700;
   font-size: 1.25rem;
-  letter-spacing: 0.25rem;
+  letter-spacing: 0.15rem;
 }
 
 .friend span {
@@ -830,6 +864,8 @@ select {
   display: flex;
   justify-content: center;
   align-items: center;
+  text-align: center;
+  flex-wrap: wrap;
 }
 
 .find-your-friends-below * {
@@ -920,7 +956,8 @@ select {
   background-color: var(--colorBlack);
   border: 2px solid var(--colorPurple);
   height: auto;
-  width: 500px;
+  max-width: 500px;
+  width: 90%;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -1034,12 +1071,12 @@ textarea,
 .user-name {
   overflow-wrap: anywhere;
   font-size: 2.5rem;
+  margin-top: 2em;
 }
 
 /* -- ACCOUNT SETTINGS */
 
 .account-settings,
-.account-info,
 .friend-settings,
 .group-settings {
   padding: 1em 3em;
@@ -1054,6 +1091,10 @@ textarea,
 label {
   font-size: 0.8rem;
   margin-bottom: -1em;
+}
+
+.account label {
+  margin-bottom: -0.5em;
 }
 
 .account-settings h2,
@@ -1129,7 +1170,7 @@ div.reactEasyCrop_CropArea {
 
 /* -- FOOTER -- */
 .footer-nav {
-  padding: 0.5em 3em;
+  padding: 0.5em 1.5em;
   font-size: 0.75rem;
   position: fixed;
   bottom: 0;

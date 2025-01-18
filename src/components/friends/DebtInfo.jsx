@@ -24,29 +24,29 @@ function DebtInfo({ friend, expenses }) {
     <>
       <div className="hero-content">
         <h1 className="name">{friend.userName}</h1>
-        <span className="total-debt-info">
-          <p>
+        <div className="total-debt-info">
+          <p className="owes-you-in-total">
             {getOweOrOwes(totalDebtInDefaultCurrency)}
             <span className={getOwedAmountColor(totalDebtInDefaultCurrency)}>
-              {getCurrencyIconFromSymbol(user.defaultCurrency)}
-              {Math.abs(totalDebtInDefaultCurrency)}
+              &nbsp;{getCurrencyIconFromSymbol(user.defaultCurrency)}
+              {Math.abs(totalDebtInDefaultCurrency)}&nbsp;
             </span>
             {" in total."}
           </p>
           <HideElement>
             {totalDebt &&
               Object.keys(totalDebt).map((key) => (
-                <p key={key}>
+                <p key={key} className="owes-you-in-total">
                   {getOweOrOwes(totalDebt[key])}
                   <span className={getOwedAmountColor(totalDebt[key])}>
-                    {key}
+                    &nbsp;{key}
                     {Math.abs(totalDebt[key]).toFixed(2)}
                   </span>
                   .
                 </p>
               ))}
           </HideElement>
-        </span>
+        </div>
       </div>
     </>
   );

@@ -28,23 +28,23 @@ function GroupDebtInfo({ expenses, selectedMember }) {
     <>
       <div className="hero-content">
         <span className="total-debt-info">
-          <p>
+          <p className="owes-you-in-total">
             {getOweOrOwes(totalGroupDebtInDefaultCurrency)}
             <span
               className={getOwedAmountColor(totalGroupDebtInDefaultCurrency)}
             >
-              {getCurrencyIconFromSymbol(user.defaultCurrency)}
-              {Math.abs(totalGroupDebtInDefaultCurrency)}
+              &nbsp;{getCurrencyIconFromSymbol(user.defaultCurrency)}
+              {Math.abs(totalGroupDebtInDefaultCurrency)}&nbsp;
             </span>
             {" in total."}
           </p>
           <HideElement>
             {totalDebt &&
               Object.keys(totalDebt).map((key) => (
-                <p key={key}>
+                <p key={key} className="owes-you-in-total">
                   {getOweOrOwes(totalDebt[key])}
                   <span className={getOwedAmountColor(totalDebt[key])}>
-                    {key}
+                    &nbsp; {key}
                     {Math.abs(totalDebt[key]).toFixed(2)}
                   </span>
                   .

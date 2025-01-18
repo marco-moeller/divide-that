@@ -8,6 +8,8 @@ import useError from "../components/error/useError";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+const MAX_USERNAME_CHARS = 15;
+
 function Register() {
   const [registerFormData, setRegisterFormData] = useState({
     email: "",
@@ -47,6 +49,10 @@ function Register() {
           .length !== 0
       ) {
         throw new Error("Username already taken!");
+      }
+
+      if (registerFormData.userName.length > 15) {
+        throw new Error("Name can't be longer than 15 characters!");
       }
 
       if (

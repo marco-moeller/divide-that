@@ -70,6 +70,10 @@ function AccountSettings({ toggleModal }) {
         throw new Error("This email is already in use!");
       }
 
+      if (formData.userName.length > 15) {
+        throw new Error("Name can't be longer than 15 characters!");
+      }
+
       setStatus("submitting");
       await updateUserData(user, {
         ...formData,

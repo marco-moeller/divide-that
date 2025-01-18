@@ -27,7 +27,7 @@ function GroupTotalDebtComponent({ groupID }) {
       )}`}
     >
       {getOweOrOwed(totalGroupDebtFromAllMembersInDefaultCurrency)}
-      {totalGroupDebtFromAllMembersInDefaultCurrency}
+      {Math.abs(totalGroupDebtFromAllMembersInDefaultCurrency)}
       {getCurrencyIconFromSymbol(user.defaultCurrency)}
     </p>
   );

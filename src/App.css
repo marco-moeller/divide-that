@@ -424,9 +424,13 @@ svg {
   align-items: center;
 }
 
+.group-split > div > * {
+  width: 50%;
+}
+
 .individual-settle-wrapper {
   display: grid;
-  grid-template-columns: auto min-content;
+  grid-template-columns: auto max-content;
   gap: 1em;
   align-items: center;
 }

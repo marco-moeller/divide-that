@@ -20,7 +20,8 @@ function useTotalGroupDebtFromAllMembersInDefaultCurrency(group) {
       .filter(
         (expense) =>
           !expense.paidBy.includes(member) &&
-          Object.keys(expense.split).includes(user.id)
+          Object.keys(expense.split).includes(user.id) &&
+          Object.keys(expense.split).includes(member)
       )
       .reduce((total, current) => {
         if (!total[current.currency]) {

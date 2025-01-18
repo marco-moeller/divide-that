@@ -3,6 +3,8 @@ import { useAuth } from "../context/AuthContext";
 import { userHasPaid } from "../utility/expenseDisplay";
 
 function useTotalGroupDebt(debtorID, expensesList) {
+  console.log("loading total debt");
+
   const [totalDebt, setTotalDebt] = useState(0);
 
   const { user } = useAuth();
@@ -19,7 +21,8 @@ function useTotalGroupDebt(debtorID, expensesList) {
             (expense) =>
               !expense.paidBy.includes(debtorID) &&
               !expense.paidBy.includes(user.id) &&
-              Object.keys(expense.split).includes(user.id)
+              Object.keys(expense.split).includes(user.id) &&
+              Object.keys(expense.split).includes(debtorID)
           )
           .reduce((total, current) => {
             if (!total[current.currency]) {

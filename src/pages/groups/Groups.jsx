@@ -19,6 +19,9 @@ function Groups() {
 
   const handleAddNewGroup = async () => {
     try {
+      if (user.groups.length >= 20)
+        throw new Error("You can't be in more than 20 groups");
+
       const newGroup = getNewGroup(user.id);
 
       await addNewGroupToDatabase(newGroup, user);

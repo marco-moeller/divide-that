@@ -42,6 +42,9 @@ function EditExpenseModal({ toggleModal, oldExpense }) {
       if (newExpense.amount === "" || expense.amount <= 0)
         throw new Error("Amount must be greater than zero");
 
+      if (newExpense.title.length > 20)
+        throw new Error("Title can't be longer than 20 characters");
+
       await addExpenseToDatabase(newExpense);
       await handleNewActivity();
       await updateLatestFriendInteraction(user.id, friend.id);

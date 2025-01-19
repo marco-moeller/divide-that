@@ -48,6 +48,9 @@ function AddGroupExpenseModal({ toggleModal }) {
       if (expense.amount === "" || expense.amount <= 0)
         throw new Error("Amount must be greater than zero");
 
+      if (expense.title.length > 20)
+        throw new Error("Title can't be longer than 20 characters");
+
       await handleNewExpense();
       await handleNewActivity();
 

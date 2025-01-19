@@ -123,6 +123,7 @@ function GroupExpenseForm({ expense, setExpense, group, user, members }) {
         placeholder="Title"
         value={expense.title}
         onChange={handleChange}
+        maxLength={20}
       />
       <div className="amount-input-wrapper">
         <input
@@ -134,6 +135,7 @@ function GroupExpenseForm({ expense, setExpense, group, user, members }) {
           value={expense.amount}
           onChange={handleChange}
           onBlur={handleAmountBlur}
+          maxLength={15}
         />
         <select
           className="currency"

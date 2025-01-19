@@ -133,6 +133,7 @@ function GroupSettingsModal({ toggle, group }) {
               placeholder={groupName}
               value={groupName}
               autoComplete="on"
+              maxLength={15}
             />
           )}
           <div className="group-settings-option">

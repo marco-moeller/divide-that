@@ -102,6 +102,7 @@ function Register() {
           placeholder="Name"
           value={registerFormData.userName}
           autoComplete="on"
+          maxLength={MAX_USERNAME_CHARS}
         />
         <input
           name="email"

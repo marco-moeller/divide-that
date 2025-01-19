@@ -322,6 +322,10 @@ svg {
   text-align: center;
 }
 
+.group-list-component {
+  margin-bottom: -1em;
+}
+
 .group-list-component,
 .group-list-component p.group-name {
   display: flex;
@@ -334,10 +338,6 @@ svg {
   font-size: 1.25rem;
   letter-spacing: 0.25rem;
   overflow: hidden;
-}
-
-.total-group-debt {
-  margin-top: -1.25em;
 }
 
 .img-stack {

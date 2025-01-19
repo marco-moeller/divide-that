@@ -21,15 +21,21 @@ function GroupTotalDebtComponent({ groupID }) {
   }
 
   return (
-    <p
-      className={`total-group-debt ${getOwedAmountColor(
-        totalGroupDebtFromAllMembersInDefaultCurrency
-      )}`}
-    >
-      {getOweOrOwed(totalGroupDebtFromAllMembersInDefaultCurrency)}
-      {Math.abs(totalGroupDebtFromAllMembersInDefaultCurrency)}
-      {getCurrencyIconFromSymbol(user.defaultCurrency)}
-    </p>
+    <>
+      {Object.keys(totalGroupDebtFromAllMembersInDefaultCurrency).map(
+        (debt) => (
+          <p
+            className={`total-group-debt ${getOwedAmountColor(
+              totalGroupDebtFromAllMembersInDefaultCurrency[debt]
+            )}`}
+          >
+            {getOweOrOwed(totalGroupDebtFromAllMembersInDefaultCurrency[debt])}
+            {Math.abs(totalGroupDebtFromAllMembersInDefaultCurrency[debt])}
+            {getCurrencyIconFromSymbol(user.defaultCurrency)}
+          </p>
+        )
+      )}
+    </>
   );
 }
 

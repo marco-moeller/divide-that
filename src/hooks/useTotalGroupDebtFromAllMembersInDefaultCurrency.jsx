@@ -9,7 +9,7 @@ function useTotalGroupDebtFromAllMembersInDefaultCurrency(group) {
   const [
     totalGroupDebtFromAllMembersInDefaultCurrency,
     setTotalGroupDebtFromAllMembersInDefaultCurrency
-  ] = useState(0);
+  ] = useState({ owes: 0, owed: 0 });
   const { conversionRates } = useCurrencyRates();
 
   const { expenses } = useGroupExpenses(group?.expenses);
@@ -57,17 +57,22 @@ function useTotalGroupDebtFromAllMembersInDefaultCurrency(group) {
   };
 
   useEffect(() => {
-    if (!group) {
+    if (!group || !conversionRates || !user || !expenses) {
       return;
     }
+
+    const memberDebts = group?.users.map((member) =>
+      Number(getTotalDebtInDefaultCurrency(member))
+    );
+
     setTotalGroupDebtFromAllMembersInDefaultCurrency(
-      group?.users
-        .reduce(
-          (acc, current) =>
-            (acc += Number(getTotalDebtInDefaultCurrency(current))),
-          0
-        )
-        .toFixed(2)
+      memberDebts.reduce(
+        (acc, current) => {
+          current > 0 ? (acc.owed += current) : (acc.owes += current);
+          return acc;
+        },
+        { owes: 0, owed: 0 }
+      )
     );
   }, [group, conversionRates, expenses, user]);
 

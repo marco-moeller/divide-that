@@ -6,6 +6,7 @@ import { addExpenseToDatabase } from "../../database/expenses";
 import { getExpenseColor, userHasPaid } from "../../utility/expenseDisplay";
 import ErrorComponent from "../error/ErrorComponent";
 import useError from "../error/useError";
+import SubmitButton from "../layout/SubmitButton";
 
 function SettledExpense({ expense }) {
   const { user } = useAuth();
@@ -54,9 +55,9 @@ function SettledExpense({ expense }) {
           </span>
         </div>
       </div>
-      <button className="unsettle-btn btn" onClick={handleClick}>
+      <SubmitButton className="unsettle-btn btn" onClick={handleClick}>
         unsettle
-      </button>
+      </SubmitButton>
       <ErrorComponent>{error}</ErrorComponent>
     </>
   );

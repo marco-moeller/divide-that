@@ -22,6 +22,7 @@ import {
   removeExpenseFromUser,
   updateLatestFriendInteraction
 } from "../API/userAPI";
+import SubmitButton from "../components/layout/SubmitButton";
 
 function ExpenseDetail() {
   const { id } = useParams();
@@ -168,21 +169,21 @@ function ExpenseDetail() {
 
       <EditExpenseButton expense={expense} />
       {!expense.settled && (
-        <button className="settle-btn btn" onClick={handleSettleClick}>
+        <SubmitButton className="settle-btn btn" onClick={handleSettleClick}>
           settle expense
-        </button>
+        </SubmitButton>
       )}
       {expense.settled && (
-        <button className="settle-btn btn" onClick={handleUnsettleClick}>
+        <SubmitButton className="settle-btn btn" onClick={handleUnsettleClick}>
           unsettle expense
-        </button>
+        </SubmitButton>
       )}
-      <button
+      <SubmitButton
         className="delete-btn bg-purple"
         onClick={() => handleDelete(expense.id)}
       >
         Delete Expense
-      </button>
+      </SubmitButton>
     </main>
   );
 }

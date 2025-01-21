@@ -18,6 +18,7 @@ import { activityTypes, getNewActivity } from "../../utility/interfaces";
 import useGroupMembers from "../../hooks/useGroupMembers";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 import ModalBody from "../modals/ModalBody";
+import SubmitButton from "../layout/SubmitButton";
 
 function GroupSettingsModal({ toggle, group }) {
   const { user } = useAuth();
@@ -146,9 +147,9 @@ function GroupSettingsModal({ toggle, group }) {
             </div>
           </div>
           {isShowing && (
-            <button className="red btn" onClick={handleDeleteClick}>
+            <SubmitButton className="red btn" onClick={handleDeleteClick}>
               Confirm Delete Group
-            </button>
+            </SubmitButton>
           )}
         </section>
         <ErrorComponent>{error}</ErrorComponent>

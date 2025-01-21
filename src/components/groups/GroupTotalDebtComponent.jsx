@@ -23,8 +23,9 @@ function GroupTotalDebtComponent({ groupID }) {
   return (
     <>
       {Object.keys(totalGroupDebtFromAllMembersInDefaultCurrency).map(
-        (debt) => (
+        (debt, index) => (
           <p
+            key={index}
             className={`total-group-debt ${getOwedAmountColor(
               totalGroupDebtFromAllMembersInDefaultCurrency[debt]
             )}`}

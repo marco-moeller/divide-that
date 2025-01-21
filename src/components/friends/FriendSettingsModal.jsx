@@ -12,6 +12,7 @@ import ModalBody from "../modals/ModalBody";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 import ReportFriendModal from "../reports/ReportFriendModal";
 import { usePopup } from "../../context/PopupContext";
+import SubmitButton from "../layout/SubmitButton";
 
 function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
   const { user } = useAuth();
@@ -40,7 +41,7 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
     }
   };
 
-  const handleReportUserClick = async () => {
+  const handleReportUserClick = () => {
     toggleReportFriendModal();
   };
 
@@ -81,12 +82,12 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
             {isShowingConfirmBtn && (
               <>
                 <div></div>
-                <button
+                <SubmitButton
                   className="purple-btn bg-purple"
                   onClick={handleRemoveFriendClick}
                 >
                   Confirm here
-                </button>
+                </SubmitButton>
               </>
             )}
           </div>{" "}
@@ -105,12 +106,12 @@ function FriendSettingsModal({ toggleModal, friend, profileImgUrl }) {
             {isShowingConfirmBlockUSer && (
               <>
                 <div></div>
-                <button
+                <SubmitButton
                   className="purple-btn bg-purple"
                   onClick={handleBlockClick}
                 >
                   Confirm here
-                </button>
+                </SubmitButton>
               </>
             )}
           </div>{" "}

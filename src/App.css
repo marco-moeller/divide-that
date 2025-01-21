@@ -130,6 +130,14 @@ button.add-expense {
   color: var(--colorWhite);
 }
 
+.modal-header button:disabled,
+.modal-header button:disabled:active,
+.modal-header button:disabled:hover {
+  border: none !important;
+  background-color: transparent !important;
+  color: var(--colorWhite) !important;
+}
+
 .delete-btn,
 .edit-btn,
 .logout-btn,

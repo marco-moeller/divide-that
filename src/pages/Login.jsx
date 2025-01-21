@@ -6,6 +6,7 @@ import { usePopup } from "../context/PopupContext";
 import BackButton from "../components/layout/BackButton";
 import ErrorComponent from "../components/error/ErrorComponent";
 import useError from "../components/error/useError";
+import { useStatus } from "../context/StatusContext";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -18,31 +19,35 @@ function Login() {
     email: "",
     password: ""
   });
-  const [status, setStatus] = useState("idle");
+  const { status, setStatus, STATUS_TYPES } = useStatus();
   const { error, setError } = useError();
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (status !== STATUS_TYPES.IDLE) {
+      return;
+    }
+
     try {
       if (!EMAIL_REGEX.test(loginFormData.email)) {
         throw new Error("Invalid Email!");
       }
 
-      if (status !== "submitting") {
-        setStatus("submitting");
-        const loginResult = await loginUser(loginFormData);
-        if (loginResult) {
-          throw new Error(loginResult.message);
-        }
-        navigate("/");
+      setStatus(STATUS_TYPES.SUBMITTING);
+      const loginResult = await loginUser(loginFormData);
+      if (loginResult) {
+        throw new Error(loginResult.message);
       }
+      navigate("/");
+
       setError(null);
     } catch (error) {
       setError(error.message);
     } finally {
-      setStatus("idle");
+      setStatus(STATUS_TYPES.IDLE);
     }
   };
 
@@ -92,7 +97,7 @@ function Login() {
           value={loginFormData.password}
           autoComplete="on"
         />
-        <button disabled={status === "submitting"} className="btn">
+        <button disabled={status !== STATUS_TYPES.IDLE} className="btn">
           Log in
         </button>
         <ErrorComponent>{error}</ErrorComponent>

@@ -5,7 +5,6 @@ import ModalHeader from "../modals/ModalHeader";
 import { MdOutlineModeEdit } from "react-icons/md";
 import useVisibilityToggle from "../../hooks/useVisibilityToggle";
 import { deleteUserAccount, updateUserData } from "../../API/userAPI";
-import { useStatus } from "../../context/StatusContext";
 import { useNavigate } from "react-router-dom";
 import {
   getCurrencyIconFromSymbol,
@@ -17,6 +16,8 @@ import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 import useAllUsers from "../../hooks/useAllUsers";
 import ErrorComponent from "../error/ErrorComponent";
 import ModalBody from "../modals/ModalBody";
+import useError from "../error/useError";
+import SubmitButton from "../layout/SubmitButton";
 
 function AccountSettings({ toggleModal }) {
   const { allUsers } = useAllUsers();
@@ -27,7 +28,7 @@ function AccountSettings({ toggleModal }) {
     confirmPassword: "",
     password: ""
   });
-  const { status, setStatus, error, setError } = useStatus();
+  const { error, setError } = useError();
   const navigate = useNavigate();
 
   const { isShowing: isShowingUserName, toggle: toggleUserName } =
@@ -59,9 +60,6 @@ function AccountSettings({ toggleModal }) {
   };
 
   const handleSubmit = async () => {
-    if (status !== "idle") {
-      return;
-    }
     try {
       if (formData.password !== formData.confirmPassword) {
         throw new Error("Passwords don't match!");
@@ -74,7 +72,6 @@ function AccountSettings({ toggleModal }) {
         throw new Error("Name can't be longer than 15 characters!");
       }
 
-      setStatus("submitting");
       await updateUserData(user, {
         ...formData,
         defaultCurrency:
@@ -86,8 +83,6 @@ function AccountSettings({ toggleModal }) {
       setError(null);
     } catch (error) {
       setError(error.message);
-    } finally {
-      setStatus("idle");
     }
   };
 
@@ -210,21 +205,13 @@ function AccountSettings({ toggleModal }) {
             </>
           )}
           <div className="divider"></div>
-          <button
-            onClick={toggleDeleteBtn}
-            disabled={status !== "idle"}
-            className="btn"
-          >
+          <SubmitButton onClick={toggleDeleteBtn} className="btn">
             Delete Account
-          </button>
+          </SubmitButton>
           {isShowingDeleteBtn && (
-            <button
-              className="red btn"
-              onClick={handleDeleteAccount}
-              disabled={status !== "idle"}
-            >
+            <SubmitButton className="red btn" onClick={handleDeleteAccount}>
               Confirm Delete Account
-            </button>
+            </SubmitButton>
           )}
         </div>
       </ModalBody>

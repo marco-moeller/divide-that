@@ -6,6 +6,7 @@ import { useAuth } from "../../context/AuthContext";
 import useFriend from "../../hooks/useFriend";
 import ErrorComponent from "../error/ErrorComponent";
 import useError from "../error/useError";
+import SubmitButton from "../layout/SubmitButton";
 
 function FriendRequest({ request }) {
   const { friend, profileImgUrl } = useFriend(request);
@@ -39,12 +40,18 @@ function FriendRequest({ request }) {
       </div>
       <ErrorComponent>{error}</ErrorComponent>
       <div className="btns">
-        <button className="accept-req-btn btn" onClick={handleAcceptClick}>
+        <SubmitButton
+          className="accept-req-btn btn"
+          onClick={handleAcceptClick}
+        >
           accept
-        </button>
-        <button className="accept-req-btn btn" onClick={handleRejectClick}>
+        </SubmitButton>
+        <SubmitButton
+          className="accept-req-btn btn"
+          onClick={handleRejectClick}
+        >
           reject
-        </button>{" "}
+        </SubmitButton>{" "}
       </div>
     </div>
   );

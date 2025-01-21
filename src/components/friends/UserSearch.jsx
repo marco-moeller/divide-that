@@ -5,23 +5,20 @@ import { getAllUsersFromDatabase } from "../../database/user";
 import { usePopup } from "../../context/PopupContext";
 import { IoMdArrowRoundDown } from "react-icons/io";
 import ErrorComponent from "../error/ErrorComponent";
+import SubmitButton from "../layout/SubmitButton";
 
 function UserSearch() {
   const { user } = useAuth();
   const [currentSearch, setCurrentSearch] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
   const [allUsers, setAllUsers] = useState(null);
-  const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
   const [isHidden, setIsHidden] = useState(false);
 
   const { showPopup } = usePopup();
 
   const sendFriendRequest = async () => {
-    if (status === "submitting") return;
-
     try {
-      setStatus("submitting");
       if (!selectedUser) throw new Error("No user selected.");
       if (selectedUser.friendRequests.includes(user.id))
         throw new Error(
@@ -37,8 +34,6 @@ function UserSearch() {
       setAllUsers(await getAllUsersFromDatabase());
     } catch (error) {
       setError(error.message);
-    } finally {
-      setStatus("idle");
     }
   };
 
@@ -167,13 +162,13 @@ function UserSearch() {
         onFocus={showDropdown}
       />
       {currentSearch && !isHidden && renderDropdown()}
-      <button
+      <SubmitButton
         className="add-friend-btn btn"
-        disabled={status === "submitting" || !selectedUser}
+        disabled={!selectedUser}
         onClick={sendFriendRequest}
       >
         send friend request
-      </button>
+      </SubmitButton>
       <ErrorComponent>{error}</ErrorComponent>
     </div>
   );

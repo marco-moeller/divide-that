@@ -1,32 +1,27 @@
-import { useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { useAuth } from "../../context/AuthContext";
 import { addGroupRequestToUser } from "../../API/userAPI";
 import { getAllUsersFromDatabase } from "../../database/user";
 import { usePopup } from "../../context/PopupContext";
 import { IoMdArrowRoundDown } from "react-icons/io";
-import useGroupMembers from "../../hooks/useGroupMembers";
 import { activityTypes, getNewActivity } from "../../utility/interfaces";
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 import ErrorComponent from "../error/ErrorComponent";
+import SubmitButton from "../layout/SubmitButton";
 
 function GroupUserSearch({ group }) {
   const { user } = useAuth();
-  const { members } = useGroupMembers(group.users);
 
   const [currentSearch, setCurrentSearch] = useState("");
   const [selectedUser, setSelectedUser] = useState(null);
   const [allUsers, setAllUsers] = useState(null);
-  const [status, setStatus] = useState("idle");
   const [error, setError] = useState(null);
   const [isHidden, setIsHidden] = useState(false);
 
   const { showPopup } = usePopup();
 
   const sendGroupInvite = async () => {
-    if (status === "submitting") return;
-
     try {
-      setStatus("submitting");
       if (!selectedUser) throw new Error("No user selected.");
       if (selectedUser.groupRequests.includes(group.id))
         throw new Error(
@@ -42,8 +37,6 @@ function GroupUserSearch({ group }) {
       setError(null);
     } catch (error) {
       setError(error.message);
-    } finally {
-      setStatus("idle");
     }
   };
 
@@ -182,16 +175,16 @@ function GroupUserSearch({ group }) {
         onFocus={showDropdown}
       />
       {currentSearch && !isHidden && renderDropdown()}
-      <button
+      <SubmitButton
         className="add-group-member-btn btn"
-        disabled={status === "submitting" || !selectedUser}
+        disabled={!selectedUser}
         onClick={sendGroupInvite}
       >
         send group invite
-      </button>
+      </SubmitButton>
       <ErrorComponent>{error}</ErrorComponent>
     </div>
   );
 }
 
-export default GroupUserSearch;
+export default memo(GroupUserSearch);

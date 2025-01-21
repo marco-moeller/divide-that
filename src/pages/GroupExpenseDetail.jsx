@@ -20,6 +20,7 @@ import { activityTypes, getNewActivity } from "../utility/interfaces";
 import { addNewActivityToDatabase } from "../API/activitiesAPI";
 import ErrorComponent from "../components/error/ErrorComponent";
 import useError from "../components/error/useError";
+import SubmitButton from "../components/layout/SubmitButton";
 
 function GroupExpenseDetail() {
   const { id } = useParams();
@@ -230,22 +231,22 @@ function GroupExpenseDetail() {
                         <p>{` ${getMemberNameOrYou(member)} paid already.`}</p>
                       )}
                       {!memberHasPaid(member) && (
-                        <button
+                        <SubmitButton
                           onClick={() => settleMember(member)}
                           disabled={!userIsSucker()}
                           className="btn"
                         >
                           settle
-                        </button>
+                        </SubmitButton>
                       )}
                       {memberHasPaid(member) && (
-                        <button
+                        <SubmitButton
                           onClick={() => unsettleMember(member)}
                           disabled={!userIsSucker()}
                           className="btn"
                         >
                           unsettle
-                        </button>
+                        </SubmitButton>
                       )}
                     </React.Fragment>
                   ))}
@@ -257,30 +258,30 @@ function GroupExpenseDetail() {
       <ErrorComponent>{error}</ErrorComponent>
       <EditGroupExpenseButton expense={expense} group={group} />
       {!expense.settled && (
-        <button
+        <SubmitButton
           className="settle-btn btn"
           onClick={handleSettleClick}
           disabled={!userIsSucker()}
         >
           settle expense
-        </button>
+        </SubmitButton>
       )}
       {expense.settled && (
-        <button
+        <SubmitButton
           className="settle-btn btn"
           onClick={handleUnsettleClick}
           disabled={!userIsSucker()}
         >
           unsettle expense
-        </button>
+        </SubmitButton>
       )}
-      <button
+      <SubmitButton
         className="delete-btn bg-purple"
         onClick={() => handleDelete(expense.id)}
         disabled={!userIsSucker()}
       >
         Delete Expense
-      </button>
+      </SubmitButton>
     </main>
   );
 }

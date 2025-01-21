@@ -5,6 +5,7 @@ import { registerNewUser } from "../API/userAPI";
 import BackButton from "../components/layout/BackButton";
 import ErrorComponent from "../components/error/ErrorComponent";
 import useError from "../components/error/useError";
+import { useStatus } from "../context/StatusContext";
 
 const EMAIL_REGEX = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -18,18 +19,18 @@ function Register() {
     userName: "",
     checkbox: false
   });
-  const [status, setStatus] = useState("idle");
+  const { status, setStatus, STATUS_TYPES } = useStatus();
   const { error, setError } = useError();
 
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (status === "submitting") {
+    if (status !== STATUS_TYPES.IDLE) {
       return;
     }
     try {
-      setStatus("submitting");
+      setStatus(STATUS_TYPES.SUBMITTING);
 
       if (registerFormData.checkbox) {
         throw new Error("Try again!");
@@ -78,7 +79,7 @@ function Register() {
     } catch (error) {
       setError(error.message);
     } finally {
-      setStatus("idle");
+      setStatus(STATUS_TYPES.IDLE);
     }
   };
 
@@ -128,7 +129,7 @@ function Register() {
           autoComplete="on"
           value={registerFormData.confirmPassword}
         />
-        <button disabled={status === "submitting"} className="btn">
+        <button disabled={status !== STATUS_TYPES.IDLE} className="btn">
           Register
         </button>
         <input

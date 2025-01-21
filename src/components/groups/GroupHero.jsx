@@ -4,6 +4,7 @@ import useModal from "../../hooks/useModal";
 import GroupSettingsModal from "./GroupSettingsModal";
 import Modal from "../modals/Modal";
 import { useAuth } from "../../context/AuthContext";
+import { memo } from "react";
 
 function GroupHero({ group }) {
   const { toggle, isShowing } = useModal();
@@ -28,4 +29,4 @@ function GroupHero({ group }) {
   );
 }
 
-export default GroupHero;
+export default memo(GroupHero);

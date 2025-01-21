@@ -10,6 +10,7 @@ import DebtInfo from "../../components/friends/DebtInfo";
 import useFriendExpenses from "../../hooks/useFriendExpenses";
 import ErrorComponent from "../../components/error/ErrorComponent";
 import useError from "../../components/error/useError";
+import SubmitButton from "../../components/layout/SubmitButton";
 
 function Friend() {
   const { id } = useParams();
@@ -62,9 +63,12 @@ function Friend() {
       <DebtInfo friend={friend} expenses={expenses} />
       <main className="friend-main">
         <section className="control-btns">
-          <button className="bg-purple purple-btn" onClick={handleSettleUp}>
+          <SubmitButton
+            className="bg-purple purple-btn"
+            onClick={handleSettleUp}
+          >
             settle up
-          </button>
+          </SubmitButton>
           <NavLink to={"./settledExpenses"} className="btn">
             History
           </NavLink>

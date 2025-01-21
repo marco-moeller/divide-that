@@ -12,6 +12,7 @@ import useVisibilityToggle from "../hooks/useVisibilityToggle";
 import { TbCameraPlus } from "react-icons/tb";
 import ErrorComponent from "../components/error/ErrorComponent";
 import useError from "../components/error/useError";
+import SubmitButton from "../components/layout/SubmitButton";
 
 function Account() {
   const { user, profileImgUrl } = useAuth();
@@ -87,10 +88,10 @@ function Account() {
           <HiOutlineCog8Tooth />
           Settings
         </button>
-        <button className="logout-btn btn" onClick={handleLogout}>
+        <SubmitButton className="logout-btn btn" onClick={handleLogout}>
           <IoMdExit />
           Logout
-        </button>
+        </SubmitButton>
       </div>
       {isShowingProfileImageUpload && (
         <Modal>

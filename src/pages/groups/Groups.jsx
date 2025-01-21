@@ -12,6 +12,7 @@ import GroupTotalDebtComponent from "../../components/groups/GroupTotalDebtCompo
 import { addNewActivityToDatabase } from "../../API/activitiesAPI";
 import ErrorComponent from "../../components/error/ErrorComponent";
 import useError from "../../components/error/useError";
+import SubmitButton from "../../components/layout/SubmitButton";
 
 function Groups() {
   const { user } = useAuth();
@@ -57,9 +58,9 @@ function Groups() {
             </div>
           );
         })}
-        <button className="add-group-btn" onClick={handleAddNewGroup}>
+        <SubmitButton className="add-group-btn" onClick={handleAddNewGroup}>
           <FaPlus />
-        </button>
+        </SubmitButton>
         <p>create a new group</p>
       </ul>
       <ul className="group-req">

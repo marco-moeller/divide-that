@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import GroupHero from "../../components/groups/GroupHero";
 import GroupMember from "../../components/groups/GroupMember";
-import { useState } from "react";
+import { memo, useState } from "react";
 import useGroup from "../../hooks/useGroup";
 import NoExpenses from "../../components/expenses/NoExpenses";
 import GroupUserSearch from "../../components/groups/GroupUserSearch";
@@ -18,6 +18,7 @@ import useTotalGroupDebt from "../../hooks/useTotalGroupDebt";
 import useTotalGroupDebtInDefaultCurrency from "../../hooks/useTotalGroupDebtInDefaultCurrency";
 import ErrorComponent from "../../components/error/ErrorComponent";
 import useError from "../../components/error/useError";
+import SubmitButton from "../../components/layout/SubmitButton";
 
 function Group() {
   const { id } = useParams();
@@ -117,13 +118,13 @@ function Group() {
               selectedMember={selectedMember}
             />{" "}
             <section className="control-btns">
-              <button
+              <SubmitButton
                 className="bg-purple purple-btn"
                 onClick={handleSettleClick}
                 disabled={totalGroupDebtInDefaultCurrency === "0.00"}
               >
                 settle up
-              </button>
+              </SubmitButton>
             </section>
           </>
         )}
@@ -140,4 +141,4 @@ function Group() {
   );
 }
 
-export default Group;
+export default memo(Group);

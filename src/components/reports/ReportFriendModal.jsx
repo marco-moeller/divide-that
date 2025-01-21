@@ -7,6 +7,7 @@ import useError from "../error/useError";
 import ErrorComponent from "../error/ErrorComponent";
 import { IoMdArrowRoundDown, IoMdClose } from "react-icons/io";
 import { usePopup } from "../../context/PopupContext";
+import SubmitButton from "../layout/SubmitButton";
 
 function ReportFriendModal({ userID, friendID, toggle }) {
   const [reportDisc, setReportDisc] = useState("");
@@ -52,9 +53,9 @@ function ReportFriendModal({ userID, friendID, toggle }) {
             required
           />
           <ErrorComponent>{error}</ErrorComponent>
-          <button onClick={handleSubmit} className="btn">
+          <SubmitButton onClick={handleSubmit} className="btn">
             submit
-          </button>
+          </SubmitButton>
         </ModalBody>
       </Modal>
     </div>

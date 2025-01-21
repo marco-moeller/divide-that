@@ -4,6 +4,7 @@ import { useAuth } from "../../context/AuthContext";
 import useGroup from "../../hooks/useGroup";
 import ErrorComponent from "../error/ErrorComponent";
 import useError from "../error/useError";
+import SubmitButton from "../layout/SubmitButton";
 
 function GroupRequest({ request }) {
   const { group } = useGroup(request);
@@ -42,12 +43,18 @@ function GroupRequest({ request }) {
       </div>
       <ErrorComponent>{error}</ErrorComponent>
       <div className="btns">
-        <button className="accept-req-btn btn" onClick={handleAcceptClick}>
+        <SubmitButton
+          className="accept-req-btn btn"
+          onClick={handleAcceptClick}
+        >
           accept
-        </button>
-        <button className="accept-req-btn btn" onClick={handleRejectClick}>
+        </SubmitButton>
+        <SubmitButton
+          className="accept-req-btn btn"
+          onClick={handleRejectClick}
+        >
           reject
-        </button>{" "}
+        </SubmitButton>{" "}
       </div>
     </div>
   );

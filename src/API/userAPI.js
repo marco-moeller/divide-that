@@ -14,7 +14,6 @@ import {
 import { deleteImageFromDatabase } from "../database/profileImages";
 import {
   addUserToDatabase,
-  deleteUserFromDatabase,
   getAllUsersFromDatabase,
   getUserFromDatabase
 } from "../database/user";
@@ -36,7 +35,8 @@ export const registerNewUser = async (userData, password) => {
       activities: [],
       profileImage: "",
       expenses: [],
-      blockedUsers: []
+      blockedUsers: [],
+      profileImgIsApproved: true
     });
   } catch (error) {
     console.log(error);

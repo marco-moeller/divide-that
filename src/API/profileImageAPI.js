@@ -11,7 +11,11 @@ export const UploadProfileImage = async (file, user) => {
   const newStoragePath = "profileImages/" + id;
   try {
     await uploadImageToDataBase(file, newStoragePath);
-    await addUserToDatabase({ ...user, profileImage: id });
+    await addUserToDatabase({
+      ...user,
+      profileImage: id,
+      profileImgIsApproved: false
+    });
     if (user.profileImage) {
       const oldStoragePath = "profileImages/" + user.profileImage;
       await deleteImageFromDatabase(oldStoragePath);

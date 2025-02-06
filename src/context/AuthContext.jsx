@@ -71,12 +71,12 @@ export function AuthProvider({ children }) {
         }
       });
       setIsLoggedIn(true);
+      setIsLoading(false);
     } else {
       setUser(null);
       setUserID(null);
       setIsLoggedIn(false);
     }
-    setIsLoading(false);
 
     return () => unsubscribe();
   }, [userID]);

@@ -172,8 +172,6 @@ export const deleteUserAccount = async (userID, profileImage) => {
     const user = await getUserFromDatabase(userID);
 
     //remove user from all friends
-    console.log(user.friends);
-
     await Promise.all(
       user.friends.map(async (friendObject) => {
         const friend = await getUserFromDatabase(friendObject.id);
@@ -188,7 +186,6 @@ export const deleteUserAccount = async (userID, profileImage) => {
 
     //delete all pending friend request
     const allUsers = await getAllUsersFromDatabase();
-
     await Promise.all(
       allUsers.map(async (user) => {
         if (user.friendRequests.includes(userID)) {

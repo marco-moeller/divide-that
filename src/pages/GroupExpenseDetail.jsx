@@ -30,7 +30,10 @@ function GroupExpenseDetail() {
   const { expense } = useExpense(id);
 
   const { group } = useGroup(expense?.group || 0);
-  const { members } = useGroupMembers(group?.users || []);
+
+  const { members } = useGroupMembers(
+    [...Object.keys({ ...expense?.split })] || []
+  );
   const { user } = useAuth();
 
   const { error, setError } = useError();
@@ -104,9 +107,7 @@ function GroupExpenseDetail() {
   const getLentOrBorrowed = () => {
     const membersWhoStillHaveToPay = members.filter(
       (member) =>
-        member.id !== expense.sucker &&
-        !expense.paidBy.includes(member.id) &&
-        Object.keys(expense.split).includes(member.id)
+        member.id !== expense.sucker && !expense.paidBy.includes(member.id)
     );
 
     return `${membersWhoStillHaveToPay.reduce((acc, member, index, array) => {

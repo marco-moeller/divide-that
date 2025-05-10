@@ -51,6 +51,7 @@ export function AuthProvider({ children }) {
       if (!user) {
         setIsLoggedIn(false);
         setUserID(null);
+        setIsLoading(false);
       } else {
         setUserID(user.uid);
         setIsLoading(false);

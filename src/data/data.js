@@ -23,5 +23,6 @@ export const currencies = [
   { name: "New Zealand Dollar", symbol: "NZD", icon: "NZ$" },
   { name: "Mexican Pesos", symbol: "MXN", icon: "MX$" },
   { name: "Polish Zloty", symbol: "PLN", icon: "zł" },
-  { name: "Danish Krone", symbol: "DKK", icon: "kr" }
+  { name: "Danish Krone", symbol: "DKK", icon: "kr" },
+  { name: "Norwegian Krone", symbol: "NOK", icon: "kr" }
 ];

@@ -81,6 +81,11 @@ p.hide-arrows {
   display: inline-block;
 }
 
+div.hide-element {
+  display: flex;
+  flex-direction: column;
+}
+
 /* -- BTN/LINK -- */
 .control-btns button,
 .btn {

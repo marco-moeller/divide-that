@@ -24,5 +24,5 @@ export const currencies = [
   { name: "Mexican Pesos", symbol: "MXN", icon: "MX$" },
   { name: "Polish Zloty", symbol: "PLN", icon: "zł" },
   { name: "Danish Krone", symbol: "DKK", icon: "kr" },
-  { name: "Norwegian Krone", symbol: "NOK", icon: "kr" }
+  { name: "Norwegian Krone", symbol: "NOK", icon: "NOK" }
 ];
